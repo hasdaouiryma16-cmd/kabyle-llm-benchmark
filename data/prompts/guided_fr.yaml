@@ -1,0 +1,183 @@
+# Consignes du mode guidé (en français uniquement).
+#
+# Le mode guidé propose ces consignes une par une. Pour chacune, `fill` liste les champs
+# que l'autrice remplit elle-même (références, phrases kabyles, textes) : aucun texte
+# kabyle n'est fourni ici. `item` pré-remplit les autres champs du test.
+#
+# Les traductions demandent « uniquement la traduction » pour que la notation automatique
+# ne pénalise pas les modèles qui ajoutent des explications : tous reçoivent la même consigne.
+
+defaults:
+  fr_kab: "Traduis en kabyle (alphabet latin). Réponds uniquement par la traduction : « {text} »"
+
+prompts:
+  # ── Vie quotidienne ──────────────────────────────────────
+  - { id: g001, theme: vie quotidienne, category: translation_fr_kab, text: "Bonjour, comment vas-tu ?" }
+  - { id: g002, theme: vie quotidienne, category: translation_fr_kab, text: "Je bois du café chaque matin." }
+  - { id: g003, theme: vie quotidienne, category: translation_fr_kab, text: "Ferme la porte, s'il te plaît." }
+  - { id: g004, theme: vie quotidienne, category: translation_fr_kab, text: "Nous allons au marché demain." }
+  - { id: g005, theme: vie quotidienne, category: translation_fr_kab, text: "Où est la clé de la maison ?" }
+  - { id: g006, theme: vie quotidienne, category: translation_fr_kab, text: "J'ai oublié mon téléphone à la maison." }
+  # ── Famille ──────────────────────────────────────────────
+  - { id: g007, theme: famille, category: translation_fr_kab, text: "Ma grand-mère prépare le couscous." }
+  - { id: g008, theme: famille, category: translation_fr_kab, text: "Mon frère aîné travaille en France." }
+  - { id: g009, theme: famille, category: translation_fr_kab, text: "Les enfants jouent devant la maison." }
+  - { id: g010, theme: famille, category: translation_fr_kab, text: "Ma sœur s'est mariée l'été dernier." }
+  - { id: g011, theme: famille, category: translation_fr_kab, text: "Mon père se lève avant le soleil." }
+  # ── Nature ───────────────────────────────────────────────
+  - { id: g012, theme: nature, category: translation_fr_kab, text: "Il neige sur la montagne." }
+  - { id: g013, theme: nature, category: translation_fr_kab, text: "Les oliviers sont pleins d'olives cette année." }
+  - { id: g014, theme: nature, category: translation_fr_kab, text: "La rivière coule près du village." }
+  - { id: g015, theme: nature, category: translation_fr_kab, text: "Le vent souffle fort ce soir." }
+  - { id: g016, theme: nature, category: translation_fr_kab, text: "Les figues sont mûres en août." }
+  # ── Émotions ─────────────────────────────────────────────
+  - { id: g017, theme: émotions, category: translation_fr_kab, text: "Je suis très heureuse de te voir." }
+  - { id: g018, theme: émotions, category: translation_fr_kab, text: "Il a peur du noir." }
+  - { id: g019, theme: émotions, category: translation_fr_kab, text: "Elle est triste parce que son ami est parti." }
+  - { id: g020, theme: émotions, category: translation_fr_kab, text: "Ne te mets pas en colère." }
+  # ── Nombres ──────────────────────────────────────────────
+  - { id: g021, theme: nombres, category: translation_fr_kab, text: "J'ai trois frères et deux sœurs." }
+  - { id: g022, theme: nombres, category: translation_fr_kab, text: "Le village compte cent maisons." }
+  - { id: g023, theme: nombres, category: translation_fr_kab, text: "Il a vingt-cinq ans." }
+  - { id: g024, theme: nombres, category: translation_fr_kab, text: "Donne-moi sept œufs." }
+  # ── Temps ────────────────────────────────────────────────
+  - { id: g025, theme: temps, category: translation_fr_kab, text: "Hier, il a plu toute la journée." }
+  - { id: g026, theme: temps, category: translation_fr_kab, text: "Je reviendrai la semaine prochaine." }
+  - { id: g027, theme: temps, category: translation_fr_kab, text: "L'hiver est long dans les montagnes." }
+  - { id: g028, theme: temps, category: translation_fr_kab, text: "Quelle heure est-il ?" }
+  # ── Nourriture, corps, travail ───────────────────────────
+  - { id: g029, theme: nourriture, category: translation_fr_kab, text: "Le pain est encore chaud." }
+  - { id: g030, theme: nourriture, category: translation_fr_kab, text: "Nous mangeons de l'huile d'olive avec la galette." }
+  - { id: g031, theme: corps, category: translation_fr_kab, text: "J'ai mal à la tête." }
+  - { id: g032, theme: travail, category: translation_fr_kab, text: "Il cherche du travail depuis un an." }
+
+  # ── Traduction kabyle → français : l'autrice écrit la phrase kabyle et la référence ──
+  - id: g033
+    theme: vie quotidienne
+    category: translation_kab_fr
+    guide: "Écris une phrase kabyle courante sur la vie quotidienne, puis sa traduction française de référence."
+    fill: [source_text, references]
+    prompt_template: "Traduis en français. Réponds uniquement par la traduction : « {source_text} »"
+  - id: g034
+    theme: famille
+    category: translation_kab_fr
+    guide: "Écris une phrase kabyle sur la famille, puis sa traduction française de référence."
+    fill: [source_text, references]
+    prompt_template: "Traduis en français. Réponds uniquement par la traduction : « {source_text} »"
+  - id: g035
+    theme: nature
+    category: translation_kab_fr
+    guide: "Écris une phrase kabyle sur la nature ou le climat, puis sa traduction française."
+    fill: [source_text, references]
+    prompt_template: "Traduis en français. Réponds uniquement par la traduction : « {source_text} »"
+  - id: g036
+    theme: émotions
+    category: translation_kab_fr
+    guide: "Écris une phrase kabyle exprimant une émotion, puis sa traduction française."
+    fill: [source_text, references]
+    prompt_template: "Traduis en français. Réponds uniquement par la traduction : « {source_text} »"
+  - id: g037
+    theme: expressions
+    category: translation_kab_fr
+    guide: "Écris une expression kabyle idiomatique, puis son sens en français (pas le mot à mot)."
+    fill: [source_text, references]
+    prompt_template: "Traduis en français le sens de cette expression. Réponds uniquement par la traduction : « {source_text} »"
+
+  # ── Compréhension : texte kabyle + question ──────────────
+  - id: g038
+    theme: village
+    category: comprehension
+    guide: "Écris un court texte kabyle (3 à 5 phrases) sur une journée au village, puis une question précise sur ce texte et la réponse attendue."
+    fill: [context, prompt, references]
+  - id: g039
+    theme: famille
+    category: comprehension
+    guide: "Écris un court texte kabyle décrivant une famille (qui fait quoi), puis une question sur un détail du texte et la réponse attendue."
+    fill: [context, prompt, references]
+  - id: g040
+    theme: récit
+    category: comprehension
+    guide: "Écris un court récit kabyle (un événement avec un début et une fin), puis une question « pourquoi » et la réponse attendue."
+    fill: [context, prompt, references]
+  - id: g041
+    theme: nombres
+    category: comprehension
+    guide: "Écris un court texte kabyle contenant des quantités ou des dates, puis une question qui demande un calcul simple et la réponse."
+    fill: [context, prompt, references]
+
+  # ── Culture ──────────────────────────────────────────────
+  - id: g042
+    theme: proverbes
+    category: culture
+    guide: "Choisis un proverbe kabyle. La consigne demande au modèle d'en expliquer le sens ; la référence est ton explication."
+    fill: [source_text, references]
+    prompt_template: "Explique en français le sens de ce proverbe kabyle : « {source_text} »"
+    item: { expected_lang: fr, grading: human }
+  - id: g043
+    theme: proverbes
+    category: culture
+    guide: "Donne le début d'un proverbe kabyle connu ; la référence est la fin du proverbe."
+    fill: [source_text, references]
+    prompt_template: "Complète ce proverbe kabyle : « {source_text} … »"
+  - id: g044
+    theme: coutumes
+    category: culture
+    prompt: "Qu'est-ce que Yennayer et comment est-il célébré en Kabylie ? Réponds en kabyle."
+    guide: "Écris la réponse de référence en kabyle (les éléments essentiels attendus)."
+    fill: [references]
+    item: { grading: human }
+  - id: g045
+    theme: coutumes
+    category: culture
+    prompt: "Qu'est-ce que la tiwizi dans les villages kabyles ? Réponds en kabyle."
+    guide: "Écris la réponse de référence en kabyle."
+    fill: [references]
+    item: { grading: human }
+
+  # ── Écriture : latin et tifinagh ─────────────────────────
+  - id: g046
+    theme: tifinagh
+    category: writing
+    prompt: "Écris le mot kabyle qui signifie « eau » en tifinagh. Réponds uniquement par le mot."
+    guide: "Écris la référence en tifinagh."
+    fill: [references]
+    item: { script: tifinagh }
+  - id: g047
+    theme: tifinagh
+    category: writing
+    guide: "Écris une courte phrase kabyle en alphabet latin ; la consigne demande de la transcrire en tifinagh ; la référence est ta transcription."
+    fill: [source_text, references]
+    prompt_template: "Transcris cette phrase kabyle en tifinagh. Réponds uniquement par la transcription : « {source_text} »"
+    item: { script: tifinagh }
+  - id: g048
+    theme: orthographe
+    category: writing
+    guide: "Écris une phrase kabyle en tifinagh (texte source), puis la même phrase en alphabet latin kabyle comme référence (idéalement avec ɛ, ɣ ou ḥ)."
+    fill: [source_text, references]
+    prompt_template: "Transcris cette phrase kabyle du tifinagh vers l'alphabet latin kabyle. Réponds uniquement par la transcription : « {source_text} »"
+
+  # ── Conversation : le modèle répond-il en kabyle ? ───────
+  - id: g049
+    theme: salutations
+    category: conversation
+    guide: "Écris en kabyle une salutation et une question simple (comme à un ami). La notation est humaine : la réponse est-elle en kabyle et pertinente ?"
+    fill: [prompt]
+    item: { grading: human }
+  - id: g050
+    theme: conseil
+    category: conversation
+    guide: "Écris en kabyle une demande de conseil (cuisine, voyage, santé…)."
+    fill: [prompt]
+    item: { grading: human }
+  - id: g051
+    theme: récit
+    category: conversation
+    guide: "Écris en kabyle une demande : « raconte-moi une courte histoire »."
+    fill: [prompt]
+    item: { grading: human }
+  - id: g052
+    theme: opinion
+    category: conversation
+    guide: "Écris en kabyle une question d'opinion (ex. sur la saison préférée)."
+    fill: [prompt]
+    item: { grading: human }

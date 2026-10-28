@@ -1,0 +1,35 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: system-ui, -apple-system, "Segoe UI", "Noto Sans Tifinagh", "Ebrima", sans-serif;
+}
+
+/* Couleurs des séries (palette validée daltonisme, voir src/lib/palette.ts) */
+:root {
+  --chart-surface: #fcfcfb;
+  --chart-grid: #e1e0d9;
+  --chart-axis: #898781;
+  --chart-ink: #0b0b0b;
+}
+.dark {
+  --chart-surface: #1a1a19;
+  --chart-grid: #2c2c2a;
+  --chart-axis: #898781;
+  --chart-ink: #f0efec;
+}
+
+body {
+  @apply bg-stone-50 text-stone-900 antialiased dark:bg-neutral-950 dark:text-stone-100;
+}
+
+/* Texte kabyle (latin et tifinagh) : un peu plus grand, police couvrant le tifinagh */
+.kab {
+  font-family: system-ui, "Segoe UI", "Noto Sans Tifinagh", "Ebrima", sans-serif;
+  font-size: 1.05em;
+}
+
+kbd {
+  @apply rounded border border-stone-300 bg-white px-1.5 py-0.5 font-mono text-[0.7rem] text-stone-600 dark:border-neutral-700 dark:bg-neutral-800 dark:text-stone-300;
+}

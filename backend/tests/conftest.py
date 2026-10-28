@@ -42,6 +42,7 @@ def settings(tmp_path):
         testset_dir=tmp_path / "test",
         train_dir=tmp_path / "train",
         results_dir=tmp_path / "results",
+        prompts_file=tmp_path / "prompts" / "guided.yaml",
         models_config=config,
         glotlid_model_path=tmp_path / "absent.bin",
         anthropic_api_key=None,

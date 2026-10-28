@@ -21,6 +21,7 @@ class Settings(BaseSettings):
     # Données d'amélioration (phase 2) : seule source autorisée pour le few-shot et le RAG
     train_dir: Path = REPO_ROOT / "data" / "train" / "processed"
     results_dir: Path = REPO_ROOT / "data" / "results" / "public"
+    prompts_file: Path = REPO_ROOT / "data" / "prompts" / "guided_fr.yaml"
     models_config: Path = BACKEND_ROOT / "config" / "models.yaml"
     cors_origins: list[str] = ["http://localhost:5173", "http://127.0.0.1:5173"]
 
