@@ -1,4 +1,4 @@
-﻿# ─────────────────────────────────────────────────────────────
+# ─────────────────────────────────────────────────────────────
 #  Secrets : ne JAMAIS commiter (seul .env.example est suivi)
 # ─────────────────────────────────────────────────────────────
 .env
@@ -25,6 +25,10 @@ data/test/private/
 # Corpus bruts téléchargés (reproductibles via pipelines/, souvent volumineux)
 data/train/raw/*
 !data/train/raw/.gitkeep
+# Données préparées (reproductibles via pipelines/) : seules les statistiques sont versionnées
+data/train/processed/*
+!data/train/processed/.gitkeep
+!data/train/processed/STATS.json
 # Index vectoriels RAG (regénérables)
 *.lance/
 lancedb/

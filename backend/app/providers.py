@@ -165,12 +165,12 @@ class OllamaProvider(_HttpProvider):
 
     async def chat(self, model, system, messages):
         all_messages = ([{"role": "system", "content": system}] if system else []) + messages
-        body = {
-            "model": model.model,
-            "messages": all_messages,
-            "stream": False,
-            "options": model.params,
-        }
+        options = dict(model.params)
+        body: dict[str, Any] = {"model": model.model, "messages": all_messages, "stream": False}
+        # « think » est un paramètre de premier niveau d'Ollama (modèles à raisonnement)
+        if "think" in options:
+            body["think"] = options.pop("think")
+        body["options"] = options
         data, latency = await self._post(f"{self._base}/api/chat", {}, body)
         return ChatResult(
             text=data["message"]["content"],
