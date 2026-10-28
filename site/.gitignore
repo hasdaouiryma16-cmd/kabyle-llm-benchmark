@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.astro/
+# Copiés depuis data/results/public/ au build (scripts/sync-data.mjs)
+src/data/results.json
+public/visuals/
+public/og.png

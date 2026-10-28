@@ -18,3 +18,14 @@ Chaque décision importante est notée ici avec sa justification, pour pouvoir l
 | 12 | 2026-10-28 | Empreinte SHA-256 du benchmark limitée aux champs évalués | Deux scores ne sont comparables que sur un jeu identique ; une note ou une date modifiée ne doit pas casser la comparabilité. |
 | 13 | 2026-10-28 | Import « tout ou rien » avec rapport ligne par ligne | Évite un jeu de tests à moitié importé, difficile à diagnostiquer. |
 | 14 | 2026-10-28 | Statuts `draft` / `ready` | Permet de saisir progressivement ; seul un test complet et validé entre dans le benchmark. |
+| 15 | 2026-10-28 | SDK officiel Anthropic ; API HTTP directes (httpx) pour OpenAI, Mistral, OpenRouter, Ollama | OpenAI, Mistral et OpenRouter partagent l'API « chat/completions » : une seule classe suffit. Les nouvelles tentatives sont gérées par le runner, pas par les SDK, pour une politique identique pour tous. |
+| 16 | 2026-10-28 | Pas de repli automatique vers un autre modèle en cas de refus | Dans un benchmark, une réponse doit toujours provenir du modèle évalué ; un refus est une information. |
+| 17 | 2026-10-28 | Température 0 quand l'API l'accepte, paramètres réels enregistrés | Les modèles Claude actuels refusent `temperature` : plutôt que masquer cet écart, il est documenté et tracé réponse par réponse. |
+| 18 | 2026-10-28 | Runner asynchrone dans le processus de l'API (asyncio), lignes « pending » créées à l'avance | Pas de file de messages externe pour un outil local ; l'idempotence vient de la base (une ligne par test × modèle). |
+| 19 | 2026-10-28 | Recherche vectorielle RAG avec numpy plutôt qu'une base vectorielle (LanceDB envisagé) | < 100 000 entrées : un produit matriciel suffit, sans serveur ni dépendance lourde, et reste transparent. |
+| 20 | 2026-10-28 | Embeddings via Ollama (bge-m3) | Évite d'embarquer PyTorch dans l'image du labo ; même service que pour les modèles locaux. |
+| 21 | 2026-10-28 | Petit modèle par défaut : Qwen3.5 4B (candidats : Gemma 4 E4B, Apertus 8B) | Apache 2.0, rapide sur T4 gratuit, bien supporté par Unsloth ; les trois bases sont mesurées avant de choisir définitivement. |
+| 22 | 2026-10-28 | Données préparées non versionnées (seul STATS.json l'est), pipeline reproductible avec empreintes | Volumes importants et licences tierces ; la CI rejoue le pipeline et le contrôle de contamination. |
+| 23 | 2026-10-28 | Site Astro statique, îlots React (Recharts) | HTML rapide et indexable, balises Open Graph soignées, interactivité seulement où elle sert (graphiques). |
+| 24 | 2026-10-28 | Palette de graphiques validée (daltonisme), couleur liée au modèle et non au rang | Lisibilité pour tous ; un filtre ne repeint pas les séries restantes. |
+| 25 | 2026-10-28 | Alembic reporté : schéma créé par `create_all` | Pas encore de données réelles ; Alembic à introduire avant toute modification de schéma une fois des notations saisies. |

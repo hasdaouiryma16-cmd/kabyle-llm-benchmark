@@ -25,6 +25,7 @@ services:
       - ./backend/tests:/app/tests
       - ./backend/config:/app/config # modèles (models.yaml)
       - ./pipelines:/app/pipelines # pipelines de données (phase 2)
+      - ./scripts:/app/scripts # visuels de partage
     ports:
       - "127.0.0.1:${LAB_PORT:-8800}:8000"
     command: uvicorn app.main:create_app --factory --host 0.0.0.0 --port 8000 --reload
