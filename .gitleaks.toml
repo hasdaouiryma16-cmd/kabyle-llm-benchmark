@@ -1,0 +1,10 @@
+# Configuration gitleaks : règles par défaut + exceptions ciblées et justifiées.
+title = "kabyle-llm-benchmark"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Identifiants de modèles (« key: qwen3.5-4b-rag ») dans models.yaml et la doc : pas des secrets"
+regexTarget = "line"
+regexes = ['''^\s*-?\s*key:\s*[a-z0-9][a-z0-9.\-]*\s*$''']
