@@ -1,0 +1,129 @@
+# Modèles disponibles dans le labo.
+#
+# Chaque entrée devient une ligne du classement. Une « variante » (few-shot, RAG, fine-tuné)
+# est un modèle comme un autre, rattaché à son modèle de base par `base`, ce qui permet de
+# calculer automatiquement le gain avant/après.
+#
+# `params` est transmis tel quel au fournisseur (noms de paramètres propres à chaque API) et
+# enregistré avec chaque réponse. Principe : température 0 partout où l'API l'accepte.
+# Exception documentée : les modèles Claude actuels n'acceptent plus `temperature`.
+#
+# `pricing` : prix en USD par million de tokens (entrée, sortie), pour estimer et plafonner
+# les coûts. Laisser null si inconnu : le coût ne sera alors pas estimé (jamais inventé).
+# Vérifier les prix sur le site de chaque fournisseur avant un gros run.
+
+models:
+  # ── Anthropic ──────────────────────────────────────────────
+  - key: claude-opus-5-5
+    label: Claude Opus 5.5
+    provider: anthropic
+    model: claude-opus-5-5
+    params: { max_tokens: 4096, effort: medium }
+    pricing: { input: 4.0, output: 20.0 }
+
+  - key: claude-sonnet-5-5
+    label: Claude Sonnet 5.5
+    provider: anthropic
+    model: claude-sonnet-5-5
+    params: { max_tokens: 4096, effort: medium }
+    pricing: { input: 2.0, output: 10.0 }
+
+  - key: claude-haiku-5-5
+    label: Claude Haiku 5.5
+    provider: anthropic
+    model: claude-haiku-5-5
+    params: { max_tokens: 4096, effort: medium }
+    pricing: { input: 0.1, output: 0.5 }
+
+  # ── OpenAI (identifiants et prix à vérifier sur platform.openai.com) ──
+  - key: gpt-5
+    label: GPT-5
+    provider: openai
+    model: gpt-5
+    params: { max_completion_tokens: 4096 }
+    pricing: null
+
+  - key: gpt-5-mini
+    label: GPT-5 mini
+    provider: openai
+    model: gpt-5-mini
+    params: { max_completion_tokens: 4096 }
+    pricing: null
+
+  # ── Mistral (alias « latest » maintenus par Mistral) ───────
+  - key: mistral-large
+    label: Mistral Large
+    provider: mistral
+    model: mistral-large-latest
+    params: { max_tokens: 2048, temperature: 0 }
+    pricing: null
+
+  - key: mistral-small
+    label: Mistral Small
+    provider: mistral
+    model: mistral-small-latest
+    params: { max_tokens: 2048, temperature: 0 }
+    pricing: null
+
+  # ── OpenRouter : n'importe quel modèle du catalogue openrouter.ai ──
+  # - key: llama-3.3-70b
+  #   label: Llama 3.3 70B
+  #   provider: openrouter
+  #   model: meta-llama/llama-3.3-70b-instruct
+  #   params: { max_tokens: 2048, temperature: 0 }
+  #   pricing: null
+
+  # ── Petits modèles open source via Ollama (phase 2) ────────
+  # Candidats (vérifiés le 2026-10-28, voir docs/phase2.md). Télécharger : ollama pull <model>
+  # On mesure d'abord les trois modèles de base, puis on améliore le modèle retenu.
+  - key: qwen3.5-4b
+    label: Qwen3.5 4B
+    provider: ollama
+    model: qwen3.5:4b
+    params: { temperature: 0, num_predict: 1024 }
+    pricing: { input: 0, output: 0 }
+
+  - key: gemma4-e4b
+    label: Gemma 4 E4B
+    provider: ollama
+    model: gemma4:e4b
+    params: { temperature: 0, num_predict: 1024 }
+    pricing: { input: 0, output: 0 }
+
+  - key: apertus-8b
+    label: Apertus 8B
+    provider: ollama
+    model: hf.co/unsloth/Apertus-8B-Instruct-2509-GGUF
+    params: { temperature: 0, num_predict: 1024 }
+    pricing: { input: 0, output: 0 }
+
+  # Variantes du modèle retenu (Qwen3.5 4B par défaut : licence Apache 2.0, 4,7 Md de
+  # paramètres, rapide sur un GPU T4 gratuit). Pour un autre modèle, dupliquer ces entrées.
+  - key: qwen3.5-4b-fewshot
+    label: Qwen3.5 4B + few-shot
+    provider: ollama
+    model: qwen3.5:4b
+    base: qwen3.5-4b
+    variant: fewshot
+    variant_params: { k: 5, selection: similar }
+    params: { temperature: 0, num_predict: 1024 }
+    pricing: { input: 0, output: 0 }
+
+  - key: qwen3.5-4b-rag
+    label: Qwen3.5 4B + RAG
+    provider: ollama
+    model: qwen3.5:4b
+    base: qwen3.5-4b
+    variant: rag
+    variant_params: { k: 8 }
+    params: { temperature: 0, num_predict: 1024 }
+    pricing: { input: 0, output: 0 }
+
+  - key: qwen3.5-4b-lora
+    label: Qwen3.5 4B fine-tuné (QLoRA)
+    provider: ollama
+    model: kab-qwen3.5-4b # créé par notebooks/ puis « ollama create »
+    base: qwen3.5-4b
+    variant: finetuned
+    params: { temperature: 0, num_predict: 1024 }
+    pricing: { input: 0, output: 0 }

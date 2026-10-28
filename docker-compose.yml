@@ -1,4 +1,4 @@
-﻿# Labo local : docker compose up
+# Labo local : docker compose up
 # L'API n'est exposée que sur la machine locale (127.0.0.1), jamais sur le réseau.
 name: kabyle-lab
 
@@ -11,6 +11,10 @@ services:
     environment:
       DATABASE_URL: sqlite:////app/var/lab.db
       TESTSET_DIR: /repo-data/test
+      TRAIN_DIR: /repo-data/train/processed
+      RESULTS_DIR: /repo-data/results/public
+      # Ollama tourne sur la machine hôte (Windows), joignable depuis le conteneur
+      OLLAMA_BASE_URL: ${OLLAMA_DOCKER_URL:-http://host.docker.internal:11434}
       # Les notifications de fichiers ne traversent pas les volumes Windows : on scrute
       WATCHFILES_FORCE_POLLING: "true"
     volumes:
@@ -18,6 +22,8 @@ services:
       - ./data:/repo-data # jeu de test versionné
       - ./backend/app:/app/app # code monté pour le rechargement à chaud
       - ./backend/tests:/app/tests
+      - ./backend/config:/app/config # modèles (models.yaml)
+      - ./pipelines:/app/pipelines # pipelines de données (phase 2)
     ports:
       - "127.0.0.1:${LAB_PORT:-8800}:8000"
     command: uvicorn app.main:create_app --factory --host 0.0.0.0 --port 8000 --reload
