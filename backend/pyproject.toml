@@ -39,3 +39,7 @@ target-version = "py312"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.ruff.lint.isort]
+# Même classement des imports dans le conteneur et en CI
+known-first-party = ["app", "pipelines", "scripts"]
