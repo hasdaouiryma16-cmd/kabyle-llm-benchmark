@@ -13,6 +13,7 @@ services:
       TESTSET_DIR: /repo-data/test
       TRAIN_DIR: /repo-data/train/processed
       RESULTS_DIR: /repo-data/results/public
+      PROMPTS_FILE: /repo-data/prompts/guided_fr.yaml
       # Ollama tourne sur la machine hôte (Windows), joignable depuis le conteneur
       OLLAMA_BASE_URL: ${OLLAMA_DOCKER_URL:-http://host.docker.internal:11434}
       # Les notifications de fichiers ne traversent pas les volumes Windows : on scrute
@@ -27,3 +28,21 @@ services:
     ports:
       - "127.0.0.1:${LAB_PORT:-8800}:8000"
     command: uvicorn app.main:create_app --factory --host 0.0.0.0 --port 8000 --reload
+
+  lab-ui:
+    image: node:22-alpine
+    working_dir: /app
+    environment:
+      API_PROXY_TARGET: http://api:8000
+      VITE_POLLING: "1"
+    volumes:
+      - ./lab-ui:/app
+      - lab-ui-node-modules:/app/node_modules # dépendances dans un volume Docker (plus rapide sous Windows)
+    ports:
+      - "127.0.0.1:${LAB_UI_PORT:-5173}:5173"
+    command: sh -c "npm ci --no-audit --no-fund && npm run dev -- --host 0.0.0.0"
+    depends_on:
+      - api
+
+volumes:
+  lab-ui-node-modules:

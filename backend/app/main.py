@@ -8,7 +8,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import grading, items, results, runs, testset
+from app.api import grading, guided, items, results, runs, testset
 from app.config import Settings
 from app.db import init_db, make_engine
 from app.providers import build_providers
@@ -45,7 +45,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         allow_methods=["*"],
         allow_headers=["*"],
     )
-    for module in (items, testset, runs, grading, results):
+    for module in (items, testset, guided, runs, grading, results):
         app.include_router(module.router)
 
     @app.get("/api/health", tags=["system"])
