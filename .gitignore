@@ -1,0 +1,74 @@
+# ─────────────────────────────────────────────────────────────
+#  Secrets : ne JAMAIS commiter (seul .env.example est suivi)
+# ─────────────────────────────────────────────────────────────
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+secrets/
+credentials*.json
+service-account*.json
+
+# ─────────────────────────────────────────────────────────────
+#  Données
+# ─────────────────────────────────────────────────────────────
+# Base locale du labo (contient réponses brutes et notations en cours)
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+backend/data/
+# Partie privée du jeu de test (jamais publiée, anti-contamination future)
+data/test/private/
+# Corpus bruts téléchargés (reproductibles via pipelines/, souvent volumineux)
+data/train/raw/*
+!data/train/raw/.gitkeep
+# Index vectoriels RAG (regénérables)
+*.lance/
+lancedb/
+# Poids de modèles
+*.gguf
+*.safetensors
+*.bin
+*.pt
+models/
+checkpoints/
+outputs/
+
+# ─────────────────────────────────────────────────────────────
+#  Python
+# ─────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+build/
+
+# ─────────────────────────────────────────────────────────────
+#  Node / front
+# ─────────────────────────────────────────────────────────────
+node_modules/
+dist/
+.astro/
+*.tsbuildinfo
+npm-debug.log*
+pnpm-debug.log*
+
+# ─────────────────────────────────────────────────────────────
+#  Notebooks / OS / éditeurs
+# ─────────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/*
+!.vscode/extensions.json
