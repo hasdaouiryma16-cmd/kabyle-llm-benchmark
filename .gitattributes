@@ -1,0 +1,14 @@
+# Fins de ligne normalisées (dépôt développé sous Windows, CI sous Linux)
+* text=auto eol=lf
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+
+# Données : texte UTF-8, diff ligne par ligne
+*.jsonl text eol=lf diff
+*.csv   text eol=lf
+
+# Binaires
+*.png  binary
+*.jpg  binary
+*.pdf  binary
+*.gguf binary
