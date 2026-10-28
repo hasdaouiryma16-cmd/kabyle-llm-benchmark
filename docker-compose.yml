@@ -1,0 +1,23 @@
+﻿# Labo local : docker compose up
+# L'API n'est exposée que sur la machine locale (127.0.0.1), jamais sur le réseau.
+name: kabyle-lab
+
+services:
+  api:
+    build: ./backend
+    env_file:
+      - path: .env
+        required: false
+    environment:
+      DATABASE_URL: sqlite:////app/var/lab.db
+      TESTSET_DIR: /repo-data/test
+      # Les notifications de fichiers ne traversent pas les volumes Windows : on scrute
+      WATCHFILES_FORCE_POLLING: "true"
+    volumes:
+      - ./backend/var:/app/var # base SQLite (ignorée par Git)
+      - ./data:/repo-data # jeu de test versionné
+      - ./backend/app:/app/app # code monté pour le rechargement à chaud
+      - ./backend/tests:/app/tests
+    ports:
+      - "127.0.0.1:${LAB_PORT:-8800}:8000"
+    command: uvicorn app.main:create_app --factory --host 0.0.0.0 --port 8000 --reload

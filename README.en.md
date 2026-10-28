@@ -52,7 +52,18 @@ The **lab** is a local application, never deployed, because it uses API keys. On
 
 ## Quick start
 
-*Available from step 1.* Target: `docker compose up`.
+Requirement: [Docker Desktop](https://www.docker.com/products/docker-desktop/).
+
+```bash
+cp .env.example .env          # then fill in API keys (optional for now)
+docker compose up -d          # start the lab
+```
+
+- API and interactive docs: http://127.0.0.1:8800/docs
+- Backend tests: `docker compose run --rm api pytest`
+
+The lab only listens on localhost. Change the port with `LAB_PORT` in `.env`.
+Test-set format: [docs/testset-format.md](docs/testset-format.md) (French).
 
 ## Licenses
 

@@ -65,7 +65,18 @@ docs/        méthodologie, métriques, décisions techniques
 
 ## Démarrage rapide
 
-*Disponible à partir de l'étape 1.* Objectif : `docker compose up`.
+Prérequis : [Docker Desktop](https://www.docker.com/products/docker-desktop/).
+
+```bash
+cp .env.example .env          # puis renseigner les clés API (facultatif à ce stade)
+docker compose up -d          # lance le labo
+```
+
+- API et documentation interactive : http://127.0.0.1:8800/docs
+- Tests du backend : `docker compose run --rm api pytest`
+
+Le labo n'écoute que sur la machine locale. Le port se change avec `LAB_PORT` dans `.env`.
+Format du jeu de tests : [docs/testset-format.md](docs/testset-format.md).
 
 ## Licences
 

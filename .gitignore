@@ -1,4 +1,4 @@
-# ─────────────────────────────────────────────────────────────
+﻿# ─────────────────────────────────────────────────────────────
 #  Secrets : ne JAMAIS commiter (seul .env.example est suivi)
 # ─────────────────────────────────────────────────────────────
 .env
@@ -19,7 +19,7 @@ service-account*.json
 *.db-journal
 *.sqlite
 *.sqlite3
-backend/data/
+backend/var/
 # Partie privée du jeu de test (jamais publiée, anti-contamination future)
 data/test/private/
 # Corpus bruts téléchargés (reproductibles via pipelines/, souvent volumineux)
