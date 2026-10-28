@@ -7,6 +7,7 @@
 # `params` est transmis tel quel au fournisseur (noms de paramètres propres à chaque API) et
 # enregistré avec chaque réponse. Principe : température 0 partout où l'API l'accepte.
 # Exception documentée : les modèles Claude actuels n'acceptent plus `temperature`.
+# Qwen3.5 : raisonnement désactivé (think: false) pour une réponse directe, comme les autres.
 #
 # `pricing` : prix en USD par million de tokens (entrée, sortie), pour estimer et plafonner
 # les coûts. Laisser null si inconnu : le coût ne sera alors pas estimé (jamais inventé).
@@ -80,7 +81,7 @@ models:
     label: Qwen3.5 4B
     provider: ollama
     model: qwen3.5:4b
-    params: { temperature: 0, num_predict: 1024 }
+    params: { temperature: 0, num_predict: 1024, think: false }
     pricing: { input: 0, output: 0 }
 
   - key: gemma4-e4b
@@ -106,7 +107,7 @@ models:
     base: qwen3.5-4b
     variant: fewshot
     variant_params: { k: 5, selection: similar }
-    params: { temperature: 0, num_predict: 1024 }
+    params: { temperature: 0, num_predict: 1024, think: false }
     pricing: { input: 0, output: 0 }
 
   - key: qwen3.5-4b-rag
@@ -116,7 +117,7 @@ models:
     base: qwen3.5-4b
     variant: rag
     variant_params: { k: 8 }
-    params: { temperature: 0, num_predict: 1024 }
+    params: { temperature: 0, num_predict: 1024, think: false }
     pricing: { input: 0, output: 0 }
 
   - key: qwen3.5-4b-lora
@@ -125,5 +126,5 @@ models:
     model: kab-qwen3.5-4b # créé par notebooks/ puis « ollama create »
     base: qwen3.5-4b
     variant: finetuned
-    params: { temperature: 0, num_predict: 1024 }
+    params: { temperature: 0, num_predict: 1024, think: false }
     pricing: { input: 0, output: 0 }

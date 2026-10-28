@@ -43,6 +43,23 @@ jobs:
       - run: uv run ruff check .
       - run: uv run pytest
 
+  contamination:
+    name: Séparation test / entraînement
+    runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.8.0"
+      - run: uv sync --frozen --project backend
+      # Reproduit la préparation des données (Tatoeba) puis vérifie qu'aucune phrase
+      # d'amélioration ne recoupe la partie publique du jeu de test
+      - run: uv run --project backend python -m pipelines.download --skip-commonvoice
+      - run: uv run --project backend python -m pipelines.prepare
+      - run: uv run --project backend python -m pipelines.check_contamination
+
   lab-ui:
     name: Interface du labo (lint + tests + build)
     runs-on: ubuntu-latest

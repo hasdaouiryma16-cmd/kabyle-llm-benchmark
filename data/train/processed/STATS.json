@@ -1,0 +1,40 @@
+{
+  "generated_at": "2026-10-28T21:38:10+00:00",
+  "protected_test_items": 0,
+  "pairs": {
+    "input": 93908,
+    "removed_duplicate": 196,
+    "removed_invalid": 67,
+    "kept": 93645
+  },
+  "pairs_by_source": {
+    "tatoeba": 93645
+  },
+  "monolingual": {
+    "input": 180682,
+    "removed_duplicate": 2587,
+    "kept": 178095
+  },
+  "outputs": {
+    "pairs.jsonl": {
+      "records": 93645,
+      "sha256": "77ed58e27e4ff4ebe49ab6cb4a26ed0a85a03dc17c946e631ff59224996ebce9"
+    },
+    "fewshot_pool.jsonl": {
+      "records": 93645,
+      "sha256": "77ed58e27e4ff4ebe49ab6cb4a26ed0a85a03dc17c946e631ff59224996ebce9"
+    },
+    "sft_train.jsonl": {
+      "records": 185418,
+      "sha256": "ad7ec4d92e938f273990a813a46665c0d27901ec5580294e04ad070d99f17065"
+    },
+    "sft_valid.jsonl": {
+      "records": 1872,
+      "sha256": "cd52545269fe433e0175b6f787b3db4884ce34e0ba329225e14591e35264092e"
+    },
+    "mono_kab.txt": {
+      "records": 178095,
+      "sha256": "9ab418c915a4195c2147f8c443fc11f8640dc153e532a8e656effd0656f47a32"
+    }
+  }
+}
