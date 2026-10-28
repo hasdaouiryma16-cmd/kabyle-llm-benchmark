@@ -1,0 +1,238 @@
+---
+import { BeforeAfterChart, CategoryChart } from "./Charts";
+import { type Lang, PROFILE_URL, REPO_URL, t } from "../lib/i18n";
+import { graded, results } from "../lib/results";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const d = t[lang];
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+const label = (c: { label_fr: string; label_en: string }) => (lang === "fr" ? c.label_fr : c.label_en);
+const catLabel = (id: string) => {
+  const c = results?.categories.find((x) => x.id === id);
+  return c ? label(c) : id;
+};
+const tagLabel = (id: string) => {
+  const tag = results?.error_tags.find((x) => x.id === id);
+  return tag ? label(tag) : id;
+};
+const fmt = (v: number | null | undefined) =>
+  v === null || v === undefined ? "—" : v.toLocaleString(lang === "fr" ? "fr-FR" : "en-US");
+
+const CATEGORY_NAMES = {
+  fr: ["Traduction fr → kab", "Traduction kab → fr", "Compréhension", "Culture", "Écriture (latin, tifinagh)", "Conversation"],
+  en: ["Translation fr → kab", "Translation kab → fr", "Comprehension", "Culture", "Writing (Latin, Tifinagh)", "Conversation"],
+}[lang];
+
+const ranked = (results ? graded(results) : []).sort((a, b) => (b.overall.human_pct ?? 0) - (a.overall.human_pct ?? 0));
+// La couleur suit le modèle (ordre d'apparition dans l'export), jamais son rang
+const colorIndex = new Map(results?.models.map((m, i) => [m.key, i]) ?? []);
+const chartModels = ranked.slice(0, 8).map((m) => ({ key: m.key, label: m.label, colorIndex: colorIndex.get(m.key) ?? 0 }));
+const categoryRows = (results?.categories ?? []).map((c) => ({
+  category: label(c),
+  ...Object.fromEntries(chartModels.map((m) => [m.key, ranked.find((r) => r.key === m.key)?.by_category[c.id]?.human_pct ?? null])),
+}));
+const labelOf = (key: string) => results?.models.find((m) => m.key === key)?.label ?? key;
+const date = results ? new Date(results.generated_at).toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", { dateStyle: "long" }) : "";
+---
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href={lang === "fr" ? base : `${base}en/`}><span class="brand-mark" aria-hidden="true">ⵣ</span> Kabyle LLM Benchmark</a>
+    <nav class="nav" aria-label="Sections">
+      <a href="#why">{d.nav.why}</a>
+      <a href="#method">{d.nav.method}</a>
+      <a href="#ranking">{d.nav.ranking}</a>
+      <a href="#gains">{d.nav.gains}</a>
+      <a href="#examples">{d.nav.examples}</a>
+      <a href="#limits">{d.nav.limits}</a>
+    </nav>
+    <div class="tools">
+      <a class="btn-ghost" href={`${base}${d.switchHref}`} hreflang={lang === "fr" ? "en" : "fr"}>{d.switchLang}</a>
+      <button class="btn-ghost" type="button" data-theme-toggle aria-label="Thème">◐</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <span class="hero-glyph" aria-hidden="true">ⵣ</span>
+    <div class="wrap">
+      <span class="eyebrow">{d.eyebrow}</span>
+      <h1>{d.title}</h1>
+      <p>{d.description}</p>
+      <div class="cta">
+        <a class="btn btn-primary" href="#ranking">{d.heroCta} →</a>
+        <a class="btn btn-secondary" href={REPO_URL}>{d.repo}</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="why">
+    <div class="wrap grid-2">
+      <div>
+        <h2>{d.whyTitle}</h2>
+        {d.whyBody.map((p) => <p class="lead" style="margin-bottom:16px">{p}</p>)}
+      </div>
+      <div class="card">
+        {d.facts.map((f) => (
+          <div class="fact"><strong>{f.value}</strong><span>{f.label}</span></div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="method">
+    <div class="wrap">
+      <h2>{d.methodTitle}</h2>
+      <div class="grid-3" style="margin-top:28px">
+        {d.method.map((m) => (
+          <div class="card"><h3>{m.h}</h3><p>{m.p}</p></div>
+        ))}
+      </div>
+      <div class="pills" aria-label={d.categories}>
+        {CATEGORY_NAMES.map((c) => <span class="pill">{c}</span>)}
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="ranking">
+    <div class="wrap">
+      <h2>{d.rankingTitle}</h2>
+      <p class="lead">{d.rankingSub}</p>
+      {ranked.length === 0 ? (
+        <div class="pending"><strong>{d.pending}</strong>{d.pendingBody}</div>
+      ) : (
+        <>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th><th>{d.model}</th><th class="num">{d.human}</th><th>{d.ci}</th>
+                  <th class="num">chrF++</th><th class="num">{d.langOk}</th><th class="num">{d.graded}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {ranked.map((m, i) => (
+                  <tr>
+                    <td class="rank">{i + 1}</td>
+                    <td>
+                      <strong>{m.label}</strong>
+                      {m.variant !== "base" && <span class="tag">{d.variant[m.variant] ?? m.variant}</span>}
+                    </td>
+                    <td class="num"><strong>{fmt(m.overall.human_pct)} %</strong></td>
+                    <td class="bar-cell">
+                      <div class="bar" title={m.overall.human_pct_ci95 ? `${m.overall.human_pct_ci95[0]}–${m.overall.human_pct_ci95[1]} %` : ""}>
+                        <span style={`width:${m.overall.human_pct ?? 0}%`}></span>
+                        {m.overall.human_pct_ci95 && (
+                          <i style={`left:${m.overall.human_pct_ci95[0]}%;width:${m.overall.human_pct_ci95[1] - m.overall.human_pct_ci95[0]}%`}></i>
+                        )}
+                      </div>
+                    </td>
+                    <td class="num">{fmt(m.overall.chrf)}</td>
+                    <td class="num">{m.overall.lang_ok_rate === null ? "—" : `${fmt(m.overall.lang_ok_rate)} %`}</td>
+                    <td class="num">{m.overall.n_graded}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+          <p class="meta">
+            {d.testSet} {results?.test_set.version ?? ""} · SHA-256 {results?.test_set.content_hash.slice(0, 12)}… · {d.generated} {date}
+          </p>
+          <div class="card" style="margin-top:32px">
+            <h3 style="margin-bottom:14px">{d.byCategoryTitle}</h3>
+            <CategoryChart client:load rows={categoryRows} models={chartModels} unit=" %" />
+          </div>
+        </>
+      )}
+    </div>
+  </section>
+
+  <section class="block" id="gains">
+    <div class="wrap">
+      <h2>{d.gainsTitle}</h2>
+      <p class="lead">{d.gainsSub}</p>
+      <div class="grid-3" style="margin-bottom:32px">
+        {d.approaches.map((a, i) => (
+          <div class="card"><h3>{i + 1}. {a.h}</h3><p>{a.p}</p></div>
+        ))}
+      </div>
+      {!results || results.gains.filter((g) => g.overall.gain_points !== undefined).length === 0 ? (
+        <div class="pending"><strong>{d.pending}</strong>{d.pendingBody}</div>
+      ) : (
+        <div class="grid-2" style="grid-template-columns:1fr 1fr">
+          {results.gains.filter((g) => g.overall.gain_points !== undefined).map((g) => (
+            <div class="card">
+              <h3>{g.variant_label}</h3>
+              <p style="margin-bottom:10px">vs {labelOf(g.base)}</p>
+              <div class={`gain-big ${(g.overall.gain_points ?? 0) >= 0 ? "up" : "down"}`}>
+                {(g.overall.gain_points ?? 0) >= 0 ? "▲ +" : "▼ "}{fmt(g.overall.gain_points)} {d.points}
+              </div>
+              <p>
+                {fmt(g.overall.before_pct)} % → {fmt(g.overall.after_pct)} %
+                {g.overall.gain_relative_pct !== null && g.overall.gain_relative_pct !== undefined && ` (${g.overall.gain_relative_pct > 0 ? "+" : ""}${fmt(g.overall.gain_relative_pct)} %)`}
+                · {g.overall.n_paired} {d.paired}
+              </p>
+              <BeforeAfterChart
+                client:load
+                rows={Object.entries(g.by_category).map(([cat, v]) => ({ category: catLabel(cat), before: v.before_pct ?? null, after: v.after_pct ?? null }))}
+                beforeLabel={labelOf(g.base)}
+                afterLabel={g.variant_label}
+                beforeColor={colorIndex.get(g.base) ?? 0}
+                afterColor={colorIndex.get(g.variant) ?? 1}
+                unit=" %"
+              />
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="block" id="examples">
+    <div class="wrap">
+      <h2>{d.examplesTitle}</h2>
+      {!results || results.examples.length === 0 ? (
+        <div class="pending" style="margin-top:24px"><strong>{d.pending}</strong>{d.pendingBody}</div>
+      ) : (
+        <div class="examples" style="margin-top:28px">
+          {results.examples.map((ex) => (
+            <article class={`card ex ${ex.kind}`}>
+              <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap">
+                <strong>{ex.kind === "success" ? `✓ ${d.success}` : `⚠ ${d.revealing}`}</strong>
+                <span class="meta" style="margin:0">{ex.model} · {catLabel(ex.item.category)} · {d.score} {ex.score}/3</span>
+              </div>
+              <dl>
+                {ex.item.context && (<><dt>{lang === "fr" ? "Texte" : "Text"}</dt><dd class="kab">{ex.item.context}</dd></>)}
+                <dt>{d.prompt}</dt><dd class="kab">{ex.item.prompt}</dd>
+                <dt>{d.answer}</dt><dd class="kab"><strong>{ex.output}</strong></dd>
+                {ex.item.references.length > 0 && (<><dt>{d.reference}</dt><dd class="kab">{ex.item.references.join(" · ")}</dd></>)}
+              </dl>
+              {ex.error_tags.length > 0 && <p class="meta">{ex.error_tags.map(tagLabel).join(" · ")}</p>}
+              {ex.note && <p class="note">{ex.note}</p>}
+            </article>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+
+  <section class="block" id="limits">
+    <div class="wrap">
+      <h2>{d.limitsTitle}</h2>
+      <ul class="limits" style="margin-top:24px">
+        {d.limits.map((l) => <li>{l}</li>)}
+      </ul>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>{d.footer} <a href={PROFILE_URL}>@hasdaouiryma16-cmd</a> · <a href={REPO_URL}>GitHub</a></span>
+    <span>{d.codeLicense}</span>
+  </div>
+</footer>
