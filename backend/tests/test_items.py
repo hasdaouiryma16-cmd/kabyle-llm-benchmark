@@ -2,7 +2,12 @@ from conftest import make_item
 
 
 def test_health(client):
-    assert client.get("/api/health").json() == {"status": "ok"}
+    assert client.get("/api/health").json()["status"] == "ok"
+
+
+def test_kab_fr_translation_expects_french_by_default(client):
+    payload = make_item(category="translation_kab_fr")
+    assert client.post("/api/tests", json=payload).json()["expected_lang"] == "fr"
 
 
 def test_create_assigns_sequential_ids_per_category(client):

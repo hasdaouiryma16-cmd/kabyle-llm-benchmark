@@ -117,6 +117,9 @@ class BenchItemFields(SQLModel):
         for key in ("subcategory", "source_text", "context", "author"):
             if data.get(key) == "":
                 data[key] = None
+        # Une traduction kabyle → français attend une réponse en français
+        if data.get("category") == Category.translation_kab_fr and not data.get("expected_lang"):
+            data["expected_lang"] = "fr"
         return data
 
 

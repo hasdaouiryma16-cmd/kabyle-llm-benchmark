@@ -28,7 +28,7 @@ def _enable_foreign_keys(dbapi_connection, _record) -> None:
 
 def init_db(engine: Engine) -> None:
     # Importé ici pour enregistrer les tables dans les métadonnées
-    from app import models  # noqa: F401
+    from app import models, run_models  # noqa: F401
 
     SQLModel.metadata.create_all(engine)
 
