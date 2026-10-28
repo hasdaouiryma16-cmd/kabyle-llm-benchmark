@@ -1,0 +1,36 @@
+[project]
+name = "kabyle-lab"
+version = "0.1.0"
+description = "Labo local du Kabyle LLM Benchmark (API FastAPI)"
+requires-python = ">=3.12"
+license = "Apache-2.0"
+dependencies = [
+  "fastapi>=0.115",
+  "uvicorn[standard]>=0.32",
+  "sqlmodel>=0.0.22",
+  "pydantic-settings>=2.6",
+  "python-multipart>=0.0.18",
+]
+
+[dependency-groups]
+dev = [
+  "pytest>=8.3",
+  "httpx>=0.28",
+  "ruff>=0.8",
+]
+
+[tool.uv]
+# Application, pas une bibliothèque : pas de paquet à construire
+package = false
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-q -p no:cacheprovider"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
