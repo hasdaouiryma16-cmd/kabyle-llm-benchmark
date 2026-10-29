@@ -47,7 +47,9 @@ export function Card({ children, className }: { children: ReactNode; className?:
   return (
     <div
       className={cx(
-        "rounded-xl border border-stone-200 bg-white p-5 shadow-sm dark:border-neutral-800 dark:bg-neutral-900",
+        "rounded-xl border border-stone-200 bg-white shadow-sm dark:border-neutral-800 dark:bg-neutral-900",
+        // Marge intérieure par défaut, sauf si l'appelant en fixe une (cx ne fusionne pas les classes)
+        !/(^|\s)p-\d/.test(className ?? "") && "p-5",
         className,
       )}
     >

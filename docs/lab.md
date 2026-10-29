@@ -10,6 +10,12 @@ docker compose down         # arrêt (les données restent)
 
 Les clés API se mettent dans `.env` (copie de `.env.example`), qui n'est jamais commité. Après une modification de `.env` : `docker compose up -d --force-recreate api`.
 
+## 0. Vérifier la préparation
+
+L'onglet **Préparation** (page d'accueil du labo) liste ce qui est prêt et ce qui reste à faire : nombre de tests et couverture des catégories, part de tests privés, enregistrement dans le dépôt, clés d'API présentes (jamais leur valeur), Ollama et modèles téléchargés, données d'amélioration et index RAG. Chaque point à faire indique la commande ou l'onglet à utiliser.
+
+Les données d'amélioration et l'index RAG enregistrent l'empreinte du jeu de test qu'ils excluent. Si des tests sont ajoutés ensuite, la page demande de relancer `pipelines.prepare` (et `pipelines.build_rag_index`) avant toute exécution few-shot ou RAG.
+
 ## 1. Écrire les tests
 
 - **Mode guidé** : 52 consignes en français, proposées une à une. Pour chacune, saisir ce qui est demandé (référence kabyle, phrase source kabyle, texte de compréhension…). <kbd>Ctrl</kbd>+<kbd>Entrée</kbd> enregistre. « Passer » met une consigne de côté.

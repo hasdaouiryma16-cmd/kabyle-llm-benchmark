@@ -8,6 +8,7 @@ Utilisé par les pipelines (filtrage), par le backend (refus de lancer une varia
 contaminée) et par la CI (échec du build).
 """
 
+import hashlib
 import re
 import unicodedata
 from collections import defaultdict
@@ -45,6 +46,13 @@ def protected_strings(records: Iterable[dict]) -> list[tuple[str, str]]:
         for ref in r.get("references") or []:
             out.append((r["id"], ref))
     return out
+
+
+def protected_fingerprint(records: Iterable[dict]) -> str:
+    """Empreinte de l'ensemble des chaînes protégées : si elle change, les données
+    d'amélioration doivent être régénérées (pipelines.prepare) avant tout usage."""
+    texts = sorted(normalize(text) for _, text in protected_strings(records))
+    return hashlib.sha256("\n".join(texts).encode("utf-8")).hexdigest()
 
 
 @dataclass
