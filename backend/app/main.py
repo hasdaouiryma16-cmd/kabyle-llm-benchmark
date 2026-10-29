@@ -16,6 +16,7 @@ from app.providers import build_providers
 from app.registry import load_registry
 from app.runner import RunManager
 from app.scoring import LanguageDetector
+from app.security import add_local_only_protection
 from app.setup import setup_status
 
 
@@ -47,6 +48,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+    add_local_only_protection(app, settings.allowed_hosts, settings.cors_origins)
     for module in (items, testset, guided, runs, grading, results):
         app.include_router(module.router)
 

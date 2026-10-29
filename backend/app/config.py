@@ -24,6 +24,9 @@ class Settings(BaseSettings):
     prompts_file: Path = REPO_ROOT / "data" / "prompts" / "guided_fr.yaml"
     models_config: Path = BACKEND_ROOT / "config" / "models.yaml"
     cors_origins: list[str] = ["http://localhost:5173", "http://127.0.0.1:5173"]
+    # Noms d'hôte acceptés (anti « DNS rebinding ») : « api » est le nom du service dans
+    # Docker Compose, utilisé par le relais de Vite ; « testserver » celui des tests.
+    allowed_hosts: list[str] = ["localhost", "127.0.0.1", "api", "testserver"]
 
     # Fournisseurs (un fournisseur sans clé est simplement indisponible)
     anthropic_api_key: SecretStr | None = None
