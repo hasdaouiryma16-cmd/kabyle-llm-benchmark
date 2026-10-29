@@ -1,12 +1,18 @@
 name: CI
 
+# À chaque push, sur toutes les branches, et sur chaque pull request.
+# Sur main, la réussite de ce workflow déclenche le déploiement du site (pages.yml).
 on:
   push:
-    branches: [main]
   pull_request:
+  workflow_dispatch:
 
 permissions:
   contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   secrets:
@@ -16,7 +22,8 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0 # tout l'historique : un secret supprimé reste dans les anciens commits
-      - uses: gitleaks/gitleaks-action@v2
+      # Actions tierces épinglées par empreinte de commit (Dependabot les met à jour)
+      - uses: gitleaks/gitleaks-action@ff98106e4c7b2bc287b24eaf42907196329070c7 # v2.3.9
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -24,6 +31,13 @@ jobs:
         run: |
           if git ls-files | grep -E '(^|/)\.env(\..+)?$' | grep -v '\.env\.example$'; then
             echo "::error::Un fichier .env est suivi par Git."
+            exit 1
+          fi
+
+      - name: Aucun test privé suivi par Git
+        run: |
+          if git ls-files | grep -E '^data/test/private/'; then
+            echo "::error::Un fichier de la partie privée du jeu de test est suivi par Git."
             exit 1
           fi
 
@@ -35,7 +49,7 @@ jobs:
         working-directory: backend
     steps:
       - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v6
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
         with:
           version: "0.8.0"
       - run: uv sync --frozen
@@ -50,7 +64,7 @@ jobs:
       PYTHONPATH: backend
     steps:
       - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v6
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
         with:
           version: "0.8.0"
       - run: uv sync --frozen --project backend
@@ -78,11 +92,57 @@ jobs:
       - run: npm test
       - run: npm run build
 
+  site:
+    name: Site public (build)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: site
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+      - run: npm ci
+      - run: npm run build
+
+  audit:
+    name: Audit des dépendances
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - uses: astral-sh/setup-uv@d0cc045d04ccac9d8b7881df0226f9e82c39688e # v6.8.0
+        with:
+          version: "0.8.0"
+      # Échoue sur toute faille connue de gravité élevée ou critique
+      - run: npm audit --audit-level=high
+        working-directory: lab-ui
+      - run: npm audit --audit-level=high
+        working-directory: site
+      - name: pip-audit (backend)
+        working-directory: backend
+        run: |
+          uv export --frozen --all-groups --no-hashes --no-emit-project > "$RUNNER_TEMP/requirements.txt"
+          uvx pip-audit --requirement "$RUNNER_TEMP/requirements.txt" --no-deps --disable-pip
+
+  dependency-review:
+    name: Revue des nouvelles dépendances
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/dependency-review-action@v4
+        with:
+          fail-on-severity: high
+
   docker:
     name: Build de l'image du labo
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - run: docker compose build
-
-  # Les jobs lab-ui, site et le contrôle de contamination seront ajoutés au fil des étapes.
