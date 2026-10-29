@@ -107,7 +107,9 @@ def filter_pairs(
     return out
 
 
-def sft_records(pairs: list[dict[str, str]], rng: random.Random) -> list[dict]:
+def sft_records(
+    pairs: list[dict[str, str]], rng: random.Random, guard: ContaminationIndex, stats: Counter
+) -> list[dict]:
     records = []
     for pair in pairs:
         for direction, src, tgt in (
@@ -115,6 +117,12 @@ def sft_records(pairs: list[dict[str, str]], rng: random.Random) -> list[dict]:
             ("kab_fr", pair["kab"], pair["fr"]),
         ):
             prompt = rng.choice(SFT_TEMPLATES[direction]).format(src=src)
+            # Les consignes de test reprennent ces gabarits : une phrase courte habillée du même
+            # gabarit peut devenir un quasi-doublon d'une consigne de test, on l'écarte aussi.
+            if guard.check(prompt):
+                stats["removed_contamination"] += 1
+                continue
+            stats["kept"] += 1
             records.append(
                 {
                     "messages": [
@@ -191,9 +199,10 @@ def main() -> None:
     shuffled = pairs[:]
     rng.shuffle(shuffled)
     n_valid = max(1, int(len(shuffled) * VALID_FRACTION))
+    sft_stats: Counter = Counter()
     sft_valid, sft_train = (
-        sft_records(shuffled[:n_valid], rng),
-        sft_records(shuffled[n_valid:], rng),
+        sft_records(shuffled[:n_valid], rng, guard, sft_stats),
+        sft_records(shuffled[n_valid:], rng, guard, sft_stats),
     )
 
     mono_stats: Counter = Counter()
@@ -215,6 +224,7 @@ def main() -> None:
         "protected_test_fingerprint": protected_test_fingerprint(),
         "pairs": dict(pair_stats),
         "pairs_by_source": dict(Counter(p["source"] for p in pairs)),
+        "sft": dict(sft_stats),
         "monolingual": dict(mono_stats),
         "outputs": {
             name: {"records": count, "sha256": sha256_file(PROCESSED_DIR / name)}
