@@ -1,41 +1,47 @@
 {
-  "generated_at": "2026-10-29T10:55:11+00:00",
-  "protected_test_items": 0,
-  "protected_test_fingerprint": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "generated_at": "2026-10-29T19:20:15+00:00",
+  "protected_test_items": 52,
+  "protected_test_fingerprint": "87c13d4388d5d7f5bb6d8ae8a581841e49cf9832cd3d48d2cf45aee14dfefaaa",
   "pairs": {
     "input": 93908,
+    "removed_contamination": 6,
     "removed_duplicate": 196,
     "removed_invalid": 67,
-    "kept": 93645
+    "kept": 93639
   },
   "pairs_by_source": {
-    "tatoeba": 93645
+    "tatoeba": 93639
+  },
+  "sft": {
+    "kept": 187192,
+    "removed_contamination": 86
   },
   "monolingual": {
     "input": 180682,
     "removed_duplicate": 2587,
-    "kept": 178095
+    "removed_contamination": 3,
+    "kept": 178092
   },
   "outputs": {
     "pairs.jsonl": {
-      "records": 93645,
-      "sha256": "77ed58e27e4ff4ebe49ab6cb4a26ed0a85a03dc17c946e631ff59224996ebce9"
+      "records": 93639,
+      "sha256": "2baf98e3b61504768454bc34006845f9823e17dfea00726a23e64945e93931db"
     },
     "fewshot_pool.jsonl": {
-      "records": 93645,
-      "sha256": "77ed58e27e4ff4ebe49ab6cb4a26ed0a85a03dc17c946e631ff59224996ebce9"
+      "records": 93639,
+      "sha256": "2baf98e3b61504768454bc34006845f9823e17dfea00726a23e64945e93931db"
     },
     "sft_train.jsonl": {
-      "records": 185418,
-      "sha256": "ad7ec4d92e938f273990a813a46665c0d27901ec5580294e04ad070d99f17065"
+      "records": 185320,
+      "sha256": "2ab79fa67d641c48d41156940502b7a0f593c57feb6f6ce8424487b0ea6ea814"
     },
     "sft_valid.jsonl": {
       "records": 1872,
-      "sha256": "cd52545269fe433e0175b6f787b3db4884ce34e0ba329225e14591e35264092e"
+      "sha256": "459ebcc2501f0100b3e1613b53ca058072adff207b6df1aa99388cef1114fb65"
     },
     "mono_kab.txt": {
-      "records": 178095,
-      "sha256": "9ab418c915a4195c2147f8c443fc11f8640dc153e532a8e656effd0656f47a32"
+      "records": 178092,
+      "sha256": "a013d7c5e3aebe554013a9c37318f1eef473d0e42931d082cec64b5cdad1a281"
     }
   }
 }

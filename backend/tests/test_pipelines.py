@@ -4,7 +4,7 @@ from collections import Counter
 from app.contamination import ContaminationIndex, protected_strings
 from pipelines.check_contamination import candidates
 from pipelines.common import write_jsonl
-from pipelines.prepare import clean, filter_pairs, sft_records
+from pipelines.prepare import SFT_TEMPLATES, clean, filter_pairs, sft_records
 
 TEST_SET = [{"id": "t1", "prompt": "Traduis : « Le soleil se lève sur la montagne enneigée. »",
              "source_text": "Le soleil se lève sur la montagne enneigée.",
@@ -41,10 +41,30 @@ def test_filter_pairs_removes_invalid_duplicates_and_test_sentences():
 
 
 def test_sft_records_cover_both_directions():
-    records = sft_records([{"fr": "Il pleut.", "kab": "kab-1", "source": "t"}], random.Random(0))
+    stats: Counter = Counter()
+    pairs = [{"fr": "Il pleut.", "kab": "kab-1", "source": "t"}]
+    records = sft_records(pairs, random.Random(0), guard(), stats)
     assert len(records) == 2
     assert records[0]["messages"][1]["content"] == "kab-1"
     assert records[1]["messages"][1]["content"] == "Il pleut."
+    assert stats == {"kept": 2}
+
+
+def test_sft_records_drop_prompts_matching_a_test_prompt():
+    # Consigne de test = gabarit d'entraînement + phrase : la consigne générée est écartée
+    test_set = [
+        {"id": f"t{i}", "prompt": template.format(src=src)}
+        for i, (template, src) in enumerate(
+            (t, src)
+            for direction, src in (("fr_kab", "Il pleut."), ("kab_fr", "kab-1"))
+            for t in SFT_TEMPLATES[direction]
+        )
+    ]
+    stats: Counter = Counter()
+    pairs = [{"fr": "Il pleut.", "kab": "kab-1", "source": "t"}]
+    index = ContaminationIndex(protected_strings(test_set))
+    assert sft_records(pairs, random.Random(0), index, stats) == []
+    assert stats == {"removed_contamination": 2}
 
 
 def test_check_contamination_scans_every_output(tmp_path):
