@@ -1,0 +1,33 @@
+name: CodeQL
+
+# Analyse statique de sécurité du code (Python, TypeScript, workflows GitHub Actions).
+# Les alertes apparaissent dans l'onglet Security du dépôt.
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: "0 6 * * 1" # chaque lundi : nouvelles règles de détection
+
+permissions:
+  contents: read
+
+jobs:
+  analyze:
+    name: Analyse (${{ matrix.language }})
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    strategy:
+      fail-fast: false
+      matrix:
+        language: [python, javascript-typescript, actions]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: github/codeql-action/init@9b3254085494b55a0f7c4c2b3d2d52cc712ce370 # v4.39.1
+        with:
+          languages: ${{ matrix.language }}
+          queries: security-extended
+      - uses: github/codeql-action/analyze@9b3254085494b55a0f7c4c2b3d2d52cc712ce370 # v4.39.1
+        with:
+          category: /language:${{ matrix.language }}
