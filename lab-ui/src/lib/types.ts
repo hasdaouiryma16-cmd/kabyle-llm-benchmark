@@ -221,3 +221,17 @@ export interface ResponseRow {
   comment: string;
   favorite: { kind: "success" | "error"; note: string } | null;
 }
+
+export interface SetupCheck {
+  id: string;
+  label: string;
+  state: "ok" | "todo" | "warn" | "optional";
+  detail: string;
+  hint: string;
+  command: string;
+}
+
+export interface SetupStatus {
+  groups: { id: string; title: string; checks: SetupCheck[] }[];
+  can_run_api_benchmark: boolean;
+}

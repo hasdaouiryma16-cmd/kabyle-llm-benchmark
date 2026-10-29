@@ -7,6 +7,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from sqlmodel import Session
 
 from app.api import grading, guided, items, results, runs, testset
 from app.config import Settings
@@ -15,6 +16,7 @@ from app.providers import build_providers
 from app.registry import load_registry
 from app.runner import RunManager
 from app.scoring import LanguageDetector
+from app.setup import setup_status
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
@@ -51,5 +53,10 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     @app.get("/api/health", tags=["system"])
     def health():
         return {"status": "ok", "language_detection": runner.detector.method}
+
+    @app.get("/api/setup", tags=["system"])
+    def setup():
+        with Session(engine) as session:
+            return setup_status(session, settings, runner.registry)
 
     return app

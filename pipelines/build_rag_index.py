@@ -16,7 +16,14 @@ import httpx
 import numpy as np
 
 from app.models import utcnow
-from pipelines.common import PROCESSED_DIR, SETTINGS, build_guard, read_jsonl, write_jsonl
+from pipelines.common import (
+    PROCESSED_DIR,
+    SETTINGS,
+    build_guard,
+    protected_test_fingerprint,
+    read_jsonl,
+    write_jsonl,
+)
 
 BATCH = 64
 
@@ -59,6 +66,7 @@ def main() -> None:
         "entries": len(pairs),
         "dim": int(matrix.shape[1]),
         "built_at": utcnow().isoformat(),
+        "protected_test_fingerprint": protected_test_fingerprint(),
     }
     (out / "meta.json").write_text(json.dumps(meta, indent=2) + "\n", encoding="utf-8")
     print(f"Index RAG : {len(pairs)} entrées, dimension {matrix.shape[1]}")

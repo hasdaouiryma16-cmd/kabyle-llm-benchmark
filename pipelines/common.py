@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from app.config import Settings
-from app.contamination import ContaminationIndex, protected_strings
+from app.contamination import ContaminationIndex, protected_fingerprint, protected_strings
 
 SETTINGS = Settings()
 TEST_DIR: Path = SETTINGS.testset_dir
@@ -43,6 +43,10 @@ def load_test_records(test_dir: Path = TEST_DIR) -> list[dict[str, Any]]:
 def build_guard(test_dir: Path = TEST_DIR) -> tuple[ContaminationIndex, int]:
     records = load_test_records(test_dir)
     return ContaminationIndex(protected_strings(records)), len(records)
+
+
+def protected_test_fingerprint(test_dir: Path = TEST_DIR) -> str:
+    return protected_fingerprint(load_test_records(test_dir))
 
 
 def sha256_file(path: Path) -> str:

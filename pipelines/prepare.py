@@ -23,7 +23,15 @@ from pathlib import Path
 from app.contamination import ContaminationIndex, normalize
 from app.models import utcnow
 from app.scoring import detect_script
-from pipelines.common import PROCESSED_DIR, RAW_DIR, build_guard, lines, sha256_file, write_jsonl
+from pipelines.common import (
+    PROCESSED_DIR,
+    RAW_DIR,
+    build_guard,
+    lines,
+    protected_test_fingerprint,
+    sha256_file,
+    write_jsonl,
+)
 
 MIN_CHARS, MAX_CHARS = 2, 300
 VALID_FRACTION = 0.01
@@ -204,6 +212,7 @@ def main() -> None:
     stats = {
         "generated_at": utcnow().isoformat(),
         "protected_test_items": n_test,
+        "protected_test_fingerprint": protected_test_fingerprint(),
         "pairs": dict(pair_stats),
         "pairs_by_source": dict(Counter(p["source"] for p in pairs)),
         "monolingual": dict(mono_stats),

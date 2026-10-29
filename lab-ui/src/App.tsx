@@ -6,9 +6,11 @@ import { GradePage } from "./pages/GradePage";
 import { GuidedPage } from "./pages/GuidedPage";
 import { ResultsPage } from "./pages/ResultsPage";
 import { RunsPage } from "./pages/RunsPage";
+import { SetupPage } from "./pages/SetupPage";
 import { TestsPage } from "./pages/TestsPage";
 
 const NAV = [
+  { to: "/setup", label: "Préparation" },
   { to: "/tests", label: "Tests" },
   { to: "/guided", label: "Mode guidé" },
   { to: "/runs", label: "Exécutions" },
@@ -74,7 +76,8 @@ export function App() {
       </header>
       <main className="mx-auto max-w-7xl px-4 py-8">
         <Routes>
-          <Route path="/" element={<Navigate to="/tests" replace />} />
+          <Route path="/" element={<Navigate to="/setup" replace />} />
+          <Route path="/setup" element={<SetupPage />} />
           <Route path="/tests" element={<TestsPage />} />
           <Route path="/guided" element={<GuidedPage />} />
           <Route path="/runs" element={<RunsPage />} />

@@ -36,28 +36,36 @@ models:
     params: { max_tokens: 4096, effort: medium }
     pricing: { input: 0.1, output: 0.5 }
 
-  # ── OpenAI (identifiants et prix à vérifier sur platform.openai.com) ──
-  - key: gpt-5
-    label: GPT-5
+  # ── OpenAI (identifiants et prix vérifiés le 2026-10-29 sur developers.openai.com) ──
+  - key: gpt-6-astra
+    label: GPT-6 Astra
     provider: openai
-    model: gpt-5
+    model: gpt-6-astra
     params: { max_completion_tokens: 4096 }
-    pricing: null
+    pricing: { input: 10.0, output: 50.0 }
 
-  - key: gpt-5-mini
-    label: GPT-5 mini
+  - key: gpt-6.1-sol
+    label: GPT-6.1 Sol
     provider: openai
-    model: gpt-5-mini
+    model: gpt-6.1-sol
     params: { max_completion_tokens: 4096 }
-    pricing: null
+    pricing: { input: 2.0, output: 10.0 }
 
-  # ── Mistral (alias « latest » maintenus par Mistral) ───────
+  - key: gpt-6-luna
+    label: GPT-6 Luna
+    provider: openai
+    model: gpt-6-luna
+    params: { max_completion_tokens: 4096 }
+    pricing: { input: 0.1, output: 0.5 }
+
+  # ── Mistral (alias « latest » maintenus par Mistral ; prix Large vérifié le 2026-10-29
+  #    sur mistral.ai/pricing, prix Small non affiché : laissé à null) ───────
   - key: mistral-large
     label: Mistral Large
     provider: mistral
     model: mistral-large-latest
     params: { max_tokens: 2048, temperature: 0 }
-    pricing: null
+    pricing: { input: 0.5, output: 1.5 }
 
   - key: mistral-small
     label: Mistral Small
