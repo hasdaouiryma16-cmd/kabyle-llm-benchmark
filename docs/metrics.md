@@ -40,4 +40,9 @@ Ces calculs sont aussi faits par catégorie, et pour chrF++.
 
 ## Corrélation note humaine / chrF++
 
-La note humaine et chrF++ sont tous deux exportés pour chaque réponse. Leur corrélation, à calculer quand le jeu sera complet, indique dans quelle mesure chrF++ peut servir d'indicateur rapide pour le kabyle.
+Le labo calcule la **corrélation de rang de Spearman** (ρ) entre la note humaine (0–3) et chrF++, sur toutes les réponses retenues qui ont les deux (ex aequo : rangs moyens). Elle est affichée dans l'onglet Résultats et publiée sur le site avec son effectif.
+
+- ρ proche de 1 : chrF++ classe les réponses comme la notation humaine ; il peut servir d'indicateur rapide pour le kabyle.
+- ρ proche de 0 : chrF++ ne reflète pas le jugement humain ; seule la note humaine fait foi.
+
+ρ n'est pas calculé sous 3 paires, ni si l'une des deux séries est constante. Spearman plutôt que Pearson : la note humaine est ordinale (0–3), pas une échelle continue.

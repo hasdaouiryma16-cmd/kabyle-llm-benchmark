@@ -93,6 +93,7 @@ section.block { padding: 80px 0; border-bottom: 1px solid var(--line); scroll-ma
 .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
 .card h3 { margin: 0 0 6px; font-size: 17px; }
 .card p { margin: 0; color: var(--ink-2); font-size: 15px; }
+.card .stat { margin: 8px 0 0; color: var(--ink); font-size: 34px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .fact { display: flex; flex-direction: column; gap: 2px; padding: 18px 0; border-bottom: 1px solid var(--line); }
 .fact:last-child { border-bottom: 0; }
 .fact strong { font-size: 34px; letter-spacing: -0.02em; }

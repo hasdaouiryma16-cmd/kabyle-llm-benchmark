@@ -4,9 +4,9 @@ from collections.abc import Iterator
 from pathlib import Path
 
 from fastapi import Request
-from sqlalchemy import event
+from sqlalchemy import event, inspect
 from sqlalchemy.engine import Engine
-from sqlmodel import Session, SQLModel, create_engine
+from sqlmodel import Session, create_engine
 
 SQLITE_PREFIX = "sqlite:///"
 
@@ -26,11 +26,27 @@ def _enable_foreign_keys(dbapi_connection, _record) -> None:
     cursor.close()
 
 
-def init_db(engine: Engine) -> None:
-    # Importé ici pour enregistrer les tables dans les métadonnées
-    from app import models, run_models  # noqa: F401
+ALEMBIC_INI = Path(__file__).resolve().parents[1] / "alembic.ini"
+BASELINE_REVISION = "0001"
 
-    SQLModel.metadata.create_all(engine)
+
+def init_db(engine: Engine) -> None:
+    """Met le schéma à jour via les migrations Alembic.
+
+    Une base créée avant les migrations (tables présentes, pas de version)
+    est marquée à la révision initiale, puis mise à jour normalement.
+    """
+    from alembic import command
+    from alembic.config import Config
+
+    config = Config(str(ALEMBIC_INI))
+    config.set_main_option("script_location", str(ALEMBIC_INI.parent / "migrations"))
+    with engine.begin() as connection:
+        config.attributes["connection"] = connection
+        tables = set(inspect(connection).get_table_names())
+        if "test_items" in tables and "alembic_version" not in tables:
+            command.stamp(config, BASELINE_REVISION)
+        command.upgrade(config, "head")
 
 
 def get_session(request: Request) -> Iterator[Session]:

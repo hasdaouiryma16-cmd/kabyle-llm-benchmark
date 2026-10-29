@@ -101,6 +101,44 @@ def bootstrap_ci(values: list[float], seed: int = 0) -> tuple[float, float] | No
     return means[int(0.025 * BOOTSTRAP_SAMPLES)], means[int(0.975 * BOOTSTRAP_SAMPLES) - 1]
 
 
+def _ranks(values: list[float]) -> list[float]:
+    """Rangs moyens (les ex aequo reçoivent la moyenne de leurs rangs)."""
+    order = sorted(range(len(values)), key=values.__getitem__)
+    ranks = [0.0] * len(values)
+    i = 0
+    while i < len(order):
+        j = i
+        while j + 1 < len(order) and values[order[j + 1]] == values[order[i]]:
+            j += 1
+        for k in range(i, j + 1):
+            ranks[order[k]] = (i + j) / 2 + 1
+        i = j + 1
+    return ranks
+
+
+def spearman(xs: list[float], ys: list[float]) -> float | None:
+    """Corrélation de rang de Spearman ; None si moins de 3 paires ou série constante."""
+    if len(xs) < 3:
+        return None
+    rx, ry = _ranks(xs), _ranks(ys)
+    mx, my = mean(rx), mean(ry)
+    cov = sum((a - mx) * (b - my) for a, b in zip(rx, ry, strict=True))
+    vx = sum((a - mx) ** 2 for a in rx)
+    vy = sum((b - my) ** 2 for b in ry)
+    if vx == 0 or vy == 0:
+        return None
+    return cov / (vx * vy) ** 0.5
+
+
+def metric_agreement(rows: list[Row]) -> dict[str, Any]:
+    """Accord entre la note humaine et chrF++ sur les réponses qui ont les deux."""
+    pairs = [
+        (r.grade.score, r.response.chrf) for r in rows if r.grade and r.response.chrf is not None
+    ]
+    rho = spearman([float(h) for h, _ in pairs], [c for _, c in pairs])
+    return {"n": len(pairs), "spearman_human_chrf": _r(rho, 3)}
+
+
 def _r(value: float | None, digits: int = 1) -> float | None:
     return None if value is None else round(value, digits)
 
@@ -225,6 +263,7 @@ def compute_results(
         "error_tags": ERROR_TAGS,
         "models": models,
         "gains": gains,
+        "metric_agreement": metric_agreement(rows),
     }
 
 

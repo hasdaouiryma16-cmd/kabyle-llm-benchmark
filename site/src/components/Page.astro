@@ -34,6 +34,7 @@ const categoryRows = (results?.categories ?? []).map((c) => ({
   category: label(c),
   ...Object.fromEntries(chartModels.map((m) => [m.key, ranked.find((r) => r.key === m.key)?.by_category[c.id]?.human_pct ?? null])),
 }));
+const agreement = results?.metric_agreement;
 const labelOf = (key: string) => results?.models.find((m) => m.key === key)?.label ?? key;
 const date = results ? new Date(results.generated_at).toLocaleDateString(lang === "fr" ? "fr-FR" : "en-US", { dateStyle: "long" }) : "";
 ---
@@ -146,6 +147,13 @@ const date = results ? new Date(results.generated_at).toLocaleDateString(lang ==
             <h3 style="margin-bottom:14px">{d.byCategoryTitle}</h3>
             <CategoryChart client:load rows={categoryRows} models={chartModels} unit=" %" />
           </div>
+          {agreement && agreement.n > 0 && agreement.spearman_human_chrf !== null && (
+            <div class="card" style="margin-top:20px">
+              <h3>{d.agreementTitle}</h3>
+              <p class="stat">ρ = {agreement.spearman_human_chrf.toFixed(2)}</p>
+              <p class="meta">{d.agreementBody(agreement.n)}</p>
+            </div>
+          )}
         </>
       )}
     </div>

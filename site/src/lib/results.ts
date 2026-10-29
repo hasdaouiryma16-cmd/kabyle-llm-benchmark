@@ -55,6 +55,7 @@ export interface Results {
     overall: Gain;
     by_category: Record<string, Gain>;
   }[];
+  metric_agreement?: { n: number; spearman_human_chrf: number | null };
   examples: {
     kind: "success" | "error";
     note: string;
