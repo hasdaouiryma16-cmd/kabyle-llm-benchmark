@@ -95,6 +95,7 @@ La partie privée du jeu de test (≈ 20 %) n'est pas publiée. Les scores qui l
 | [`docs/lab.md`](docs/lab.md) | Utiliser le labo au quotidien |
 | [`docs/add-a-model.md`](docs/add-a-model.md) | Ajouter un modèle ou un fournisseur |
 | [`docs/phase2.md`](docs/phase2.md) | Choix du petit modèle, données, few-shot, RAG, QLoRA, coûts |
+| [`docs/communication.md`](docs/communication.md) | Brouillons LinkedIn et portfolio (à compléter avec les vrais résultats) |
 | [`docs/testset-format.md`](docs/testset-format.md) | Format du jeu de tests |
 | [`data/test/DATASET_CARD.md`](data/test/DATASET_CARD.md) | Fiche du jeu de données |
 | [`data/train/SOURCES.md`](data/train/SOURCES.md) | Sources d'amélioration et licences vérifiées |
