@@ -41,6 +41,9 @@ export const t = {
     graded: "Réponses notées",
     langOk: "Bonne langue",
     byCategoryTitle: "Par catégorie",
+    agreementTitle: "chrF++ reflète-t-il le jugement humain ?",
+    agreementBody: (n: number) =>
+      `Corrélation de rang de Spearman entre la note humaine (0–3) et chrF++, sur ${n} réponses. Proche de 1 : la métrique automatique classe les réponses comme une personne de langue maternelle kabyle ; proche de 0 : elle ne le fait pas.`,
     gainsTitle: "Phase 2 : améliorer un petit modèle open source",
     gainsSub: "Trois approches, de la plus simple à la plus avancée, mesurées sur exactement le même benchmark que le modèle de base.",
     approaches: [
@@ -115,6 +118,9 @@ export const t = {
     graded: "Graded answers",
     langOk: "Right language",
     byCategoryTitle: "By category",
+    agreementTitle: "Does chrF++ match human judgment?",
+    agreementBody: (n: number) =>
+      `Spearman rank correlation between the human score (0–3) and chrF++, over ${n} responses. Close to 1: the automatic metric ranks responses like a native Kabyle speaker; close to 0: it does not.`,
     gainsTitle: "Phase 2: improving a small open-source model",
     gainsSub: "Three approaches, from simplest to most advanced, measured on exactly the same benchmark as the base model.",
     approaches: [

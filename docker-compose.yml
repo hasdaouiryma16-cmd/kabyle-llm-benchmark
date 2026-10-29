@@ -24,6 +24,7 @@ services:
       - ./backend/app:/app/app # code monté pour le rechargement à chaud
       - ./backend/tests:/app/tests
       - ./backend/config:/app/config # modèles (models.yaml)
+      - ./backend/migrations:/app/migrations # migrations du schéma
       - ./pipelines:/app/pipelines # pipelines de données (phase 2)
       - ./scripts:/app/scripts # visuels de partage
     ports:
@@ -45,5 +46,17 @@ services:
     depends_on:
       - api
 
+  # Modèles locaux dans Docker (optionnel) : docker compose --profile ollama up -d
+  # Alternative : Ollama installé sur Windows (joignable via host.docker.internal).
+  # Image « latest » assumée : les nouveaux modèles exigent une version récente d'Ollama.
+  ollama:
+    image: ollama/ollama:latest
+    profiles: ["ollama"]
+    volumes:
+      - ollama-models:/root/.ollama
+    ports:
+      - "127.0.0.1:11434:11434"
+
 volumes:
   lab-ui-node-modules:
+  ollama-models:

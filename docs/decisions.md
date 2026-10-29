@@ -29,3 +29,6 @@ Chaque décision importante est notée ici avec sa justification, pour pouvoir l
 | 23 | 2026-10-28 | Site Astro statique, îlots React (Recharts) | HTML rapide et indexable, balises Open Graph soignées, interactivité seulement où elle sert (graphiques). |
 | 24 | 2026-10-28 | Palette de graphiques validée (daltonisme), couleur liée au modèle et non au rang | Lisibilité pour tous ; un filtre ne repeint pas les séries restantes. |
 | 25 | 2026-10-28 | Alembic reporté : schéma créé par `create_all` | Pas encore de données réelles ; Alembic à introduire avant toute modification de schéma une fois des notations saisies. |
+| 26 | 2026-10-29 | Alembic introduit (révision 0001), appliqué au démarrage ; remplace la décision 25 | Introduit avant la saisie des premiers tests réels ; une base antérieure est marquée à 0001 puis mise à jour. Un test vérifie que migrations et modèles concordent. |
+| 27 | 2026-10-29 | Accord note humaine / chrF++ mesuré par Spearman | La note humaine est ordinale (0–3) ; une corrélation de rang ne suppose pas d'écart régulier entre les notes. |
+| 28 | 2026-10-29 | Sauvegarde locale par l'API de sauvegarde SQLite, rotation de 10 copies | Copie cohérente même pendant une exécution ; la copie hors machine reste à faire par l'utilisatrice ou l'utilisateur. |

@@ -100,6 +100,7 @@ def build_public_results(session: Session, settings: Settings) -> dict[str, Any]
             for m in results["models"]
         ],
         "gains": results["gains"],
+        "metric_agreement": results["metric_agreement"],
         "examples": examples,
     }
 

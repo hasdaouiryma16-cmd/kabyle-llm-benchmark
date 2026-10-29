@@ -52,12 +52,29 @@ git add data/results/public && git commit -m "résultats : …" && git push   # 
 
 ## Sauvegardes (important)
 
-`backend/var/lab.db` contient les réponses des modèles et les notes. Elles ne sont **pas** reconstructibles, et ce fichier n'est pas dans Git. `data/test/private/` non plus. Copier régulièrement ces deux éléments sur un support externe ou un stockage chiffré.
+`backend/var/lab.db` contient les réponses des modèles et les notes. Elles ne sont **pas** reconstructibles, et ce fichier n'est pas dans Git. `data/test/private/` non plus.
+
+```powershell
+docker compose run --rm api python -m scripts.backup
+```
+
+Cette commande copie la base (de façon sûre, même pendant une exécution) et le jeu privé dans `backend/var/backups/<date>/`, en gardant les 10 dernières sauvegardes. Ce dossier reste sur la même machine : copier aussi régulièrement `backend/var/backups/` sur un support externe ou un stockage chiffré.
+
+## Schéma de la base (migrations)
+
+Le schéma est géré par Alembic et mis à jour automatiquement au démarrage de l'API. Après une modification de `app/models.py` ou `app/run_models.py` :
+
+```powershell
+docker compose run --rm api alembic revision --autogenerate -m "description"
+```
+
+Le test `test_migrations_match_models` échoue tant que la migration correspondante manque.
 
 ## Modèles locaux (Ollama)
 
 1. Installer Ollama : <https://ollama.com>.
 2. Télécharger les modèles : `ollama pull qwen3.5:4b`, `ollama pull gemma4:e4b`, `ollama pull bge-m3`.
+   Espace disque : environ 4,6 Go pour Qwen3.5 4B et bge-m3 ensemble ; Gemma 4 E4B et Apertus 8B sont plus lourds (taille indiquée sur la page de chaque modèle Ollama). Prévoir au moins 10 Go libres et 8 Go de RAM disponibles.
 3. Le conteneur joint Ollama via `host.docker.internal:11434`. Si besoin, modifier `OLLAMA_DOCKER_URL` dans `.env`.
 
 ## Détection de langue GlotLID (optionnelle, non testée dans ce dépôt)

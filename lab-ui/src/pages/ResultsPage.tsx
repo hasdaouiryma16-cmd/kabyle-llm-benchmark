@@ -88,8 +88,9 @@ export function ResultsPage() {
           <Leaderboard models={data.models} colorOf={colorOf} />
           {ranked.length > 0 && <CategoryChart results={data} models={ranked} colorOf={colorOf} />}
           {data.gains.length > 0 && <Gains results={data} colorOf={colorOf} />}
+          {data.metric_agreement && data.metric_agreement.n > 0 && <MetricAgreementCard agreement={data.metric_agreement} />}
           {ranked.some((m) => Object.keys(m.error_tags).length) && <ErrorTags results={data} />}
-          <Explorer hash={data.test_set_hash} models={data.models} />
+          <Explorer hash={data.test_set_hash} models={data.models} tagLabels={data.error_tags} />
         </div>
       )}
     </div>
@@ -172,7 +173,7 @@ function CategoryChart({ results, models, colorOf }: { results: Results; models:
           />
           <Legend formatter={(key: string) => models.find((m) => m.key === key)?.label ?? key} wrapperStyle={{ fontSize: 12 }} />
           {shown.map((m) => (
-            <Bar key={m.key} dataKey={m.key} fill={colorOf(m.key)} radius={[4, 4, 0, 0]} maxBarSize={28} />
+            <Bar isAnimationActive={false} key={m.key} dataKey={m.key} fill={colorOf(m.key)} radius={[4, 4, 0, 0]} maxBarSize={28} />
           ))}
         </BarChart>
       </ResponsiveContainer>
@@ -214,12 +215,12 @@ function Gains({ results, colorOf }: { results: Results; colorOf: (k: string) =>
               <ResponsiveContainer width="100%" height={240}>
                 <BarChart data={rows} barGap={2}>
                   <CartesianGrid vertical={false} stroke="var(--chart-grid)" />
-                  <XAxis dataKey="category" {...axisProps} interval={0} fontSize={11} />
+                  <XAxis dataKey="category" {...axisProps} interval={0} angle={-25} textAnchor="end" height={62} fontSize={11} />
                   <YAxis domain={[0, 100]} unit=" %" {...axisProps} axisLine={false} width={52} />
                   <Tooltip contentStyle={{ background: "var(--chart-surface)", border: "1px solid var(--chart-grid)", color: "var(--chart-ink)", borderRadius: 8 }} />
                   <Legend wrapperStyle={{ fontSize: 12 }} />
-                  <Bar dataKey="avant" name={labelOf(g.base)} fill={colorOf(g.base)} radius={[4, 4, 0, 0]} maxBarSize={28} />
-                  <Bar dataKey="après" name={g.variant_label} fill={colorOf(g.variant)} radius={[4, 4, 0, 0]} maxBarSize={28} />
+                  <Bar isAnimationActive={false} dataKey="avant" name={labelOf(g.base)} fill={colorOf(g.base)} radius={[4, 4, 0, 0]} maxBarSize={28} />
+                  <Bar isAnimationActive={false} dataKey="après" name={g.variant_label} fill={colorOf(g.variant)} radius={[4, 4, 0, 0]} maxBarSize={28} />
                 </BarChart>
               </ResponsiveContainer>
             )}
@@ -227,6 +228,21 @@ function Gains({ results, colorOf }: { results: Results; colorOf: (k: string) =>
         );
       })}
     </div>
+  );
+}
+
+function MetricAgreementCard({ agreement }: { agreement: NonNullable<Results["metric_agreement"]> }) {
+  const rho = agreement.spearman_human_chrf;
+  return (
+    <Card>
+      <h2 className="text-sm font-semibold">Accord entre la note humaine et chrF++</h2>
+      <p className="mt-2 text-3xl font-semibold tabular-nums">{rho === null ? "—" : rho.toFixed(2)}</p>
+      <p className="mt-1 text-xs text-stone-500 dark:text-neutral-400">
+        Corrélation de rang de Spearman sur {agreement.n} réponse{agreement.n > 1 ? "s" : ""} ayant une note et un chrF++.
+        {rho === null && " Il faut au moins 3 réponses avec des notes variées."} Une valeur proche de 1 indique que chrF++ classe
+        les réponses comme vous ; proche de 0, qu'il ne reflète pas votre jugement.
+      </p>
+    </Card>
   );
 }
 
@@ -250,14 +266,14 @@ function ErrorTags({ results }: { results: Results }) {
           <XAxis type="number" allowDecimals={false} {...axisProps} />
           <YAxis type="category" dataKey="tag" width={230} {...axisProps} axisLine={false} />
           <Tooltip contentStyle={{ background: "var(--chart-surface)", border: "1px solid var(--chart-grid)", color: "var(--chart-ink)", borderRadius: 8 }} />
-          <Bar dataKey="n" name="Réponses" fill="#2a78d6" radius={[0, 4, 4, 0]} maxBarSize={20} />
+          <Bar isAnimationActive={false} dataKey="n" name="Réponses" fill="#2a78d6" radius={[0, 4, 4, 0]} maxBarSize={20} />
         </BarChart>
       </ResponsiveContainer>
     </ChartFrame>
   );
 }
 
-function Explorer({ hash, models }: { hash: string | null; models: ModelResult[] }) {
+function Explorer({ hash, models, tagLabels }: { hash: string | null; models: ModelResult[]; tagLabels: Record<string, string> }) {
   const [model, setModel] = useState("");
   const [favoritesOnly, setFavoritesOnly] = useState(false);
   const rows = useApi<ResponseRow[]>(
@@ -305,7 +321,7 @@ function Explorer({ hash, models }: { hash: string | null; models: ModelResult[]
                 {r.item.split === "private" && <Badge tone="violet">privé (jamais publié)</Badge>}
                 {r.error_tags.map((t) => (
                   <Badge key={t} tone="red">
-                    {t}
+                    {tagLabels[t] ?? t}
                   </Badge>
                 ))}
                 <div className="ml-auto flex gap-1">

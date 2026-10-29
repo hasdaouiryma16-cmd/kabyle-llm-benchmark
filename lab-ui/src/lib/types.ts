@@ -198,6 +198,12 @@ export interface Results {
     overall: Gain;
     by_category: Record<string, Gain>;
   }[];
+  metric_agreement?: MetricAgreement;
+}
+
+export interface MetricAgreement {
+  n: number;
+  spearman_human_chrf: number | null;
 }
 
 export interface ResponseRow {
