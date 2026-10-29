@@ -1,0 +1,27 @@
+# Mises à jour des dépendances : une PR groupée par écosystème et par mois,
+# plus les correctifs de sécurité dès leur publication.
+version: 2
+updates:
+  - package-ecosystem: uv
+    directory: /backend
+    schedule: { interval: monthly }
+    groups: { python: { patterns: ["*"] } }
+
+  - package-ecosystem: npm
+    directory: /lab-ui
+    schedule: { interval: monthly }
+    groups: { lab-ui: { patterns: ["*"] } }
+
+  - package-ecosystem: npm
+    directory: /site
+    schedule: { interval: monthly }
+    groups: { site: { patterns: ["*"] } }
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule: { interval: monthly }
+    groups: { actions: { patterns: ["*"] } }
+
+  - package-ecosystem: docker
+    directory: /backend
+    schedule: { interval: monthly }
