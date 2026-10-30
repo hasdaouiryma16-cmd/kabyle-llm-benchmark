@@ -66,3 +66,17 @@ def test_api_key_presence_never_leaks_value(tmp_path, settings):
         response = client.get("/api/setup")
     assert secret not in response.text
     assert response.json()["can_run_api_benchmark"] is True
+
+
+def test_empty_key_in_env_file_means_no_key(tmp_path, monkeypatch):
+    # .env copié depuis .env.example : « ANTHROPIC_API_KEY= » ne doit pas compter comme une clé
+    from app.config import Settings
+
+    env = tmp_path / ".env"
+    env.write_text("ANTHROPIC_API_KEY=\nOPENAI_API_KEY=  \nMISTRAL_API_KEY=abc\n", encoding="utf-8")
+    for name in ("ANTHROPIC_API_KEY", "OPENAI_API_KEY", "MISTRAL_API_KEY"):
+        monkeypatch.delenv(name, raising=False)
+    s = Settings(_env_file=env)
+    assert s.anthropic_api_key is None
+    assert s.openai_api_key is None
+    assert s.mistral_api_key is not None

@@ -2,7 +2,7 @@
 
 from pathlib import Path
 
-from pydantic import SecretStr
+from pydantic import SecretStr, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
@@ -34,6 +34,18 @@ class Settings(BaseSettings):
     mistral_api_key: SecretStr | None = None
     openrouter_api_key: SecretStr | None = None
     ollama_base_url: str = "http://localhost:11434"
+
+    @field_validator(
+        "anthropic_api_key",
+        "openai_api_key",
+        "mistral_api_key",
+        "openrouter_api_key",
+        mode="before",
+    )
+    @classmethod
+    def _empty_key_is_absent(cls, value):
+        # « CLE= » (vide, comme dans .env.example) signifie « pas de clé »
+        return None if isinstance(value, str) and not value.strip() else value
 
     # Détection de langue GlotLID (optionnelle, voir docs/lab.md)
     glotlid_model_path: Path = BACKEND_ROOT / "var" / "models" / "glotlid.bin"
