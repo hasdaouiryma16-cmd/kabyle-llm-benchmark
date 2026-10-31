@@ -140,7 +140,10 @@ function NewRun({ models, onClose, onStarted }: { models: ModelInfo[]; onClose: 
   const [categories, setCategories] = useState<Category[]>(CATEGORIES.map((c) => c.id));
   const [testMode, setTestMode] = useState(true);
   const [sample, setSample] = useState(2);
-  const [split, setSplit] = useState("");
+  const [chosenSplit, setSplit] = useState("");
+  // Une offre gratuite sélectionnée impose la partie publique (l'API refuse le reste)
+  const publicOnly = models.some((m) => m.public_only && selected.includes(m.key));
+  const split = publicOnly ? "public" : chosenSplit;
   const [estimate, setEstimate] = useState<Estimate | null>(null);
   const [error, setError] = useState<string | null>(null);
   const notify = useToast();
@@ -207,6 +210,7 @@ function NewRun({ models, onClose, onStarted }: { models: ModelInfo[]; onClose: 
                     />
                     {m.label}
                     {m.variant !== "base" && <Badge tone="violet">{VARIANT_LABEL[m.variant]}</Badge>}
+                    {m.public_only && <Badge tone="amber">gratuit · tests publics</Badge>}
                     {!m.available && <span className="text-xs text-stone-500">(indisponible)</span>}
                   </label>
                 ))}
@@ -215,6 +219,7 @@ function NewRun({ models, onClose, onStarted }: { models: ModelInfo[]; onClose: 
           </div>
           <p className="mt-2 text-xs text-stone-500">
             Un modèle est indisponible si sa clé API manque dans <code>.env</code> ou si Ollama ne répond pas.
+            Les offres gratuites peuvent réutiliser les requêtes : elles ne reçoivent que les tests publics.
           </p>
         </div>
 
@@ -239,7 +244,7 @@ function NewRun({ models, onClose, onStarted }: { models: ModelInfo[]; onClose: 
             <input type="number" min={1} className={inputClass} value={sample} disabled={!testMode} onChange={(e) => setSample(Number(e.target.value))} />
           </Field>
           <Field label="Partie du jeu">
-            <select className={inputClass} value={split} onChange={(e) => setSplit(e.target.value)}>
+            <select className={inputClass} value={split} disabled={publicOnly} onChange={(e) => setSplit(e.target.value)}>
               <option value="">Publique + privée</option>
               <option value="public">Publique</option>
               <option value="private">Privée</option>

@@ -29,6 +29,11 @@ models:
     variant: fewshot
     variant_params: { k: 2 }
     params: { reply: "ref-a" }
+  - key: mock-free
+    label: Modèle gratuit
+    provider: mock
+    model: free
+    public_only: true
 """
 
 
@@ -49,6 +54,7 @@ def settings(tmp_path):
         openai_api_key=None,
         mistral_api_key=None,
         openrouter_api_key=None,
+        gemini_api_key=None,
         ollama_base_url="http://127.0.0.1:9",
     )
 

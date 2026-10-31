@@ -60,12 +60,15 @@ models:
 
   # ── Mistral (alias « latest » maintenus par Mistral ; prix Large vérifié le 2026-10-29
   #    sur mistral.ai/pricing, prix Small non affiché : laissé à null) ───────
+  #    public_only : le plan gratuit « Experiment » peut réutiliser les requêtes. Avec un
+  #    plan payant qui ne le fait pas, passer public_only à false.
   - key: mistral-large
     label: Mistral Large
     provider: mistral
     model: mistral-large-latest
     params: { max_tokens: 2048, temperature: 0 }
     pricing: { input: 0.5, output: 1.5 }
+    public_only: true
 
   - key: mistral-small
     label: Mistral Small
@@ -73,14 +76,53 @@ models:
     model: mistral-small-latest
     params: { max_tokens: 2048, temperature: 0 }
     pricing: null
+    public_only: true
 
-  # ── OpenRouter : n'importe quel modèle du catalogue openrouter.ai ──
-  # - key: llama-3.3-70b
-  #   label: Llama 3.3 70B
-  #   provider: openrouter
-  #   model: meta-llama/llama-3.3-70b-instruct
-  #   params: { max_tokens: 2048, temperature: 0 }
-  #   pricing: null
+  # ── Google Gemini (clé gratuite sur aistudio.google.com) ─────────────
+  # Alias « latest » maintenus par Google. Le plan gratuit peut réutiliser les requêtes :
+  # tests publics seulement. Flash-Lite est le plus sûr d'être inclus dans le plan gratuit.
+  - key: gemini-flash
+    label: Gemini Flash
+    provider: gemini
+    model: gemini-flash-latest
+    params: { max_tokens: 2048, temperature: 0 }
+    pricing: { input: 0, output: 0 }
+    public_only: true
+
+  - key: gemini-flash-lite
+    label: Gemini Flash-Lite
+    provider: gemini
+    model: gemini-flash-lite-latest
+    params: { max_tokens: 2048, temperature: 0 }
+    pricing: { input: 0, output: 0 }
+    public_only: true
+
+  # ── OpenRouter : modèles gratuits (suffixe :free, liste vérifiée le 2026-10-31 sur
+  #    openrouter.ai/api/v1/models ; elle change souvent). Requêtes potentiellement
+  #    réutilisées par les hébergeurs : tests publics seulement. ──
+  - key: gemma4-31b-free
+    label: Gemma 4 31B (gratuit)
+    provider: openrouter
+    model: google/gemma-4-31b-it:free
+    params: { max_tokens: 2048, temperature: 0 }
+    pricing: { input: 0, output: 0 }
+    public_only: true
+
+  - key: nemotron3-ultra-free
+    label: Nemotron 3 Ultra 550B (gratuit)
+    provider: openrouter
+    model: nvidia/nemotron-3-ultra-550b-a55b:free
+    params: { max_tokens: 2048, temperature: 0 }
+    pricing: { input: 0, output: 0 }
+    public_only: true
+
+  - key: inkling-free
+    label: Inkling (gratuit)
+    provider: openrouter
+    model: thinkingmachines/inkling:free
+    params: { max_tokens: 2048, temperature: 0 }
+    pricing: { input: 0, output: 0 }
+    public_only: true
 
   # ── Petits modèles open source via Ollama (phase 2) ────────
   # Candidats (vérifiés le 2026-10-28, voir docs/phase2.md). Télécharger : ollama pull <model>

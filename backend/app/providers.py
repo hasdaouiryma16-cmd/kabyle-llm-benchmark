@@ -120,12 +120,14 @@ class _HttpProvider:
 
 
 class OpenAICompatibleProvider(_HttpProvider):
-    """OpenAI, Mistral et OpenRouter exposent la même API « chat/completions »."""
+    """OpenAI, Mistral, OpenRouter et Gemini exposent la même API « chat/completions »."""
 
     BASE_URLS = {
         ProviderName.openai: "https://api.openai.com/v1",
         ProviderName.mistral: "https://api.mistral.ai/v1",
         ProviderName.openrouter: "https://openrouter.ai/api/v1",
+        # Point d'accès compatible OpenAI de l'API Gemini (Google AI Studio)
+        ProviderName.gemini: "https://generativelanguage.googleapis.com/v1beta/openai",
     }
 
     def __init__(self, name: ProviderName, api_key: str | None, timeout: float):
@@ -221,6 +223,9 @@ def build_providers(settings: Settings) -> dict[ProviderName, Provider]:
         ),
         ProviderName.openrouter: OpenAICompatibleProvider(
             ProviderName.openrouter, _secret(settings.openrouter_api_key), timeout
+        ),
+        ProviderName.gemini: OpenAICompatibleProvider(
+            ProviderName.gemini, _secret(settings.gemini_api_key), timeout
         ),
         ProviderName.ollama: OllamaProvider(settings.ollama_base_url, timeout),
         ProviderName.mock: MockProvider(),
