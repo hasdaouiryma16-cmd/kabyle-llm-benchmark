@@ -34,6 +34,17 @@ def test_tests_and_repo_sync(client):
     assert _checks(client)["repo"]["state"] == "ok"
 
 
+def test_mixed_script_words_are_flagged(client):
+    from app.setup import mixed_script_words
+
+    # Suites de lettres factices : seul le mélange d'écritures compte ici
+    assert mixed_script_words("ⴰⵎⴰn ⴰⵏ") == ["ⴰⵎⴰn"]
+    assert mixed_script_words("ⴰⵎⴰⵏ abc") == []
+    client.post("/api/tests", json=make_item(references=["ⴰbⴰ"]))
+    check = _checks(client)["mixed-script"]
+    assert check["state"] == "warn" and "tr-fr-kab" in check["detail"]
+
+
 def test_prepared_data_must_follow_test_set(client, settings):
     from app.contamination import protected_fingerprint
 

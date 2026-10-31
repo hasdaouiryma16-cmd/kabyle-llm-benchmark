@@ -5,6 +5,7 @@ n'expose jamais la valeur d'une clé d'API, seulement sa présence.
 """
 
 import json
+import unicodedata
 from enum import StrEnum
 from pathlib import Path
 from typing import Any
@@ -79,6 +80,45 @@ def ollama_models(base_url: str) -> set[str] | None:
     return names
 
 
+def _is_tifinagh(char: str) -> bool:
+    return "ⴰ" <= char <= "⵿"
+
+
+def mixed_script_words(text: str) -> list[str]:
+    """Mots qui mêlent lettres tifinagh et lettres latines (ex. un « n » latin tapé au
+    clavier au milieu d'un mot tifinagh) : presque toujours une faute de frappe."""
+    return [
+        word
+        for word in text.split()
+        if any(_is_tifinagh(c) for c in word)
+        and any(unicodedata.name(c, "").startswith("LATIN") for c in word)
+    ]
+
+
+def _mixed_script_check(session: Session) -> dict[str, str]:
+    flagged = sorted(
+        r["id"]
+        for r in all_records(session)
+        if any(
+            mixed_script_words(text)
+            for text in [r.get("prompt"), r.get("source_text"), r.get("context")]
+            + list(r.get("references") or [])
+            if text
+        )
+    )
+    return _check(
+        "mixed-script",
+        "Écritures non mélangées",
+        State.warn if flagged else State.ok,
+        f"Lettres latines dans un mot tifinagh : {', '.join(flagged)}."
+        if flagged
+        else "Aucun mot ne mêle tifinagh et lettres latines.",
+        "Onglet Tests : retaper ces lettres avec la barre de caractères tifinagh."
+        if flagged
+        else "",
+    )
+
+
 def _test_set_checks(session: Session, settings: Settings) -> list[dict[str, str]]:
     status = repo_status(session, settings)
     ready = status["ready"]
@@ -125,6 +165,7 @@ def _test_set_checks(session: Session, settings: Settings) -> list[dict[str, str
                 "" if low <= share <= high else "Changer la visibilité de quelques tests.",
             )
         )
+        checks.append(_mixed_script_check(session))
     checks.append(
         _check(
             "repo",
