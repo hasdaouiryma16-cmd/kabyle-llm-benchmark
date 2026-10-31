@@ -90,6 +90,7 @@ La partie privée du jeu de test (≈ 20 %) n'est pas publiée. Les scores qui l
 
 | Document | Contenu |
 |---|---|
+| [`docs/architecture-technique.pdf`](docs/architecture-technique.pdf) | Architecture complète expliquée pas à pas, notions d'IA comprises (source : `.html`) |
 | [`docs/methodology.md`](docs/methodology.md) | Protocole, catégories, notation, analyse des erreurs |
 | [`docs/metrics.md`](docs/metrics.md) | chrF++, BLEU, détection de langue, intervalles de confiance, gains appariés |
 | [`docs/lab.md`](docs/lab.md) | Utiliser le labo au quotidien |

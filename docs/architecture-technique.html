@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Kabyle LLM Benchmark · Architecture technique</title>
+<style>
+  :root {
+    --ink: #1f2328; --ink-2: #4b5563; --muted: #6b7280;
+    --line: #d9dde3; --soft: #f4f6f8; --accent: #0f766e; --accent-soft: #e6f4f2;
+    --violet: #6d28d9; --violet-soft: #f1ecfd; --amber: #92400e; --amber-soft: #fdf3e2;
+    --red: #b42318; --red-soft: #fdecea; --blue: #1d4ed8; --blue-soft: #e8effd;
+  }
+  @page { size: A4; margin: 18mm 17mm 20mm 17mm;
+    @bottom-right { content: counter(page); font: 9pt "Segoe UI", sans-serif; color: #6b7280; }
+    @bottom-left { content: "Kabyle LLM Benchmark · Architecture technique"; font: 9pt "Segoe UI", sans-serif; color: #9ca3af; } }
+  @page :first { @bottom-right { content: none; } @bottom-left { content: none; } }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { margin: 0; background: #fff; color: var(--ink); font: 10.5pt/1.55 "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+  h1, h2, h3, h4 { line-height: 1.25; color: var(--ink); }
+  h2 { font-size: 19pt; margin: 0 0 10pt; padding-bottom: 6pt; border-bottom: 2px solid var(--accent); break-before: page; }
+  h2 .num { color: var(--accent); margin-right: 6pt; }
+  h3 { font-size: 13pt; margin: 16pt 0 6pt; break-after: avoid; }
+  h4 { font-size: 11pt; margin: 12pt 0 4pt; break-after: avoid; }
+  p { margin: 0 0 7pt; }
+  ul, ol { margin: 0 0 8pt; padding-left: 16pt; }
+  li { margin-bottom: 2.5pt; }
+  code { font-family: Consolas, "Cascadia Mono", monospace; font-size: 9pt; background: var(--soft); padding: 0 3pt; border-radius: 3px; }
+  pre { font-family: Consolas, "Cascadia Mono", monospace; font-size: 8.8pt; line-height: 1.45; background: var(--soft); border: 1px solid var(--line); border-radius: 6px; padding: 8pt 10pt; white-space: pre-wrap; break-inside: avoid; margin: 0 0 9pt; }
+  table { width: 100%; border-collapse: collapse; margin: 4pt 0 10pt; font-size: 9.4pt; break-inside: auto; }
+  th, td { text-align: left; vertical-align: top; padding: 4.5pt 6pt; border-bottom: 1px solid var(--line); }
+  th { background: var(--soft); font-weight: 600; color: var(--ink-2); }
+  tr { break-inside: avoid; }
+  .box { border-radius: 8px; padding: 9pt 11pt; margin: 8pt 0 10pt; break-inside: avoid; }
+  .box > :last-child { margin-bottom: 0; }
+  .box .t { font-weight: 700; display: block; margin-bottom: 3pt; }
+  .idea { background: var(--accent-soft); border-left: 4px solid var(--accent); }
+  .analogy { background: var(--violet-soft); border-left: 4px solid var(--violet); }
+  .warn { background: var(--amber-soft); border-left: 4px solid #d97706; }
+  .rule { background: var(--red-soft); border-left: 4px solid var(--red); }
+  .why { background: var(--blue-soft); border-left: 4px solid var(--blue); }
+  .muted { color: var(--muted); }
+  .small { font-size: 9pt; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8pt; }
+  .card { border: 1px solid var(--line); border-radius: 8px; padding: 8pt 10pt; break-inside: avoid; }
+  .card h4 { margin-top: 0; }
+  figure { margin: 6pt 0 12pt; break-inside: avoid; }
+  figcaption { font-size: 9pt; color: var(--muted); text-align: center; margin-top: 4pt; }
+  svg text { font-family: "Segoe UI", Arial, sans-serif; }
+  .tag { display: inline-block; font-size: 8.5pt; font-weight: 600; padding: 0 5pt; border-radius: 10px; }
+  .done { background: #dcfce7; color: #166534; }
+  .todo { background: var(--amber-soft); color: var(--amber); }
+  .block { background: var(--red-soft); color: var(--red); }
+
+  /* Couverture */
+  .cover { height: 255mm; display: flex; flex-direction: column; justify-content: space-between; }
+  .cover .top { margin-top: 30mm; }
+  .cover .kicker { color: var(--accent); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: 10pt; }
+  .cover h1 { font-size: 34pt; margin: 8pt 0 6pt; }
+  .cover .sub { font-size: 15pt; color: var(--ink-2); max-width: 140mm; }
+  .cover .meta { border-top: 1px solid var(--line); padding-top: 10pt; color: var(--ink-2); font-size: 10pt; }
+  .toc { columns: 1; }
+  .toc ol { padding-left: 18pt; }
+  .toc li { margin-bottom: 4pt; }
+  .toc .d { color: var(--muted); font-size: 9.5pt; }
+  .gloss dt { font-weight: 700; margin-top: 6pt; break-after: avoid; }
+  .gloss dd { margin: 0 0 2pt 0; }
+</style>
+</head>
+<body>
+
+<!-- ═════════════ COUVERTURE ═════════════ -->
+<section class="cover">
+  <div class="top">
+    <div class="kicker">Document technique · architecture</div>
+    <h1>Kabyle LLM Benchmark</h1>
+    <div class="sub">Comment le projet est conçu, comment chaque brique fonctionne, et pourquoi elle a été faite ainsi. Écrit pour être lu sans connaissances préalables en IA.</div>
+  </div>
+  <div class="meta">
+    Dépôt : github.com/hasdaouiryma16-cmd/kabyle-llm-benchmark<br>
+    État décrit : 31 octobre 2026, dernier commit <code>b66bec4</code><br>
+    Autrice du projet et du jeu de test : hasdaouiryma16-cmd
+  </div>
+</section>
+
+<!-- ═════════════ SOMMAIRE ═════════════ -->
+<h2 style="break-before: page">Sommaire</h2>
+<div class="toc">
+<ol>
+  <li><strong>Le projet en une page</strong> <span class="d">: le problème, l'objectif, les trois phases</span></li>
+  <li><strong>Les notions d'IA à connaître</strong> <span class="d">: LLM, token, prompt, API, few-shot, RAG, fine-tuning…</span></li>
+  <li><strong>Vue d'ensemble de l'architecture</strong> <span class="d">: le schéma complet et ses zones</span></li>
+  <li><strong>Docker : comment le labo tourne sur ton PC</strong></li>
+  <li><strong>Le backend (API FastAPI)</strong> <span class="d">: modules, base de données, endpoints</span></li>
+  <li><strong>L'interface du labo (lab-ui)</strong> <span class="d">: les six onglets</span></li>
+  <li><strong>Les modèles et les fournisseurs</strong> <span class="d">: models.yaml, API payantes, gratuites, locales</span></li>
+  <li><strong>Le jeu de test</strong> <span class="d">: format, public/privé, empreinte, canari</span></li>
+  <li><strong>Le parcours d'un test, de l'écriture au score</strong></li>
+  <li><strong>La notation et les métriques</strong> <span class="d">: note humaine, chrF++, intervalles de confiance</span></li>
+  <li><strong>Phase 2 : améliorer un petit modèle</strong> <span class="d">: données, few-shot, RAG, QLoRA</span></li>
+  <li><strong>La contamination et comment on l'empêche</strong></li>
+  <li><strong>La sécurité</strong></li>
+  <li><strong>CI/CD : les vérifications automatiques sur GitHub</strong></li>
+  <li><strong>Le site public</strong></li>
+  <li><strong>Organisation du dépôt</strong> <span class="d">: à quoi sert chaque dossier</span></li>
+  <li><strong>Où en est le projet, et la suite</strong></li>
+  <li><strong>Glossaire et commandes utiles</strong></li>
+</ol>
+</div>
+<div class="box idea"><span class="t">Comment lire ce document</span>
+Les chapitres 1 à 3 donnent la vue d'ensemble : lis-les en premier. Les chapitres suivants détaillent chaque brique et peuvent se lire dans n'importe quel ordre. Les encadrés colorés ont toujours le même rôle :
+<ul style="margin-top:4pt">
+  <li><strong style="color:var(--accent)">vert</strong> : l'idée clé à retenir ;</li>
+  <li><strong style="color:var(--violet)">violet</strong> : une analogie de la vie courante ;</li>
+  <li><strong style="color:var(--blue)">bleu</strong> : pourquoi ce choix technique a été fait ;</li>
+  <li><strong style="color:#b45309">orange</strong> : un point d'attention ;</li>
+  <li><strong style="color:var(--red)">rouge</strong> : une règle non négociable du projet.</li>
+</ul>
+</div>
+
+<!-- ═════════════ 1 ═════════════ -->
+<h2><span class="num">1</span>Le projet en une page</h2>
+
+<h3>Le problème</h3>
+<p>Le kabyle (taqbaylit) est parlé par plusieurs millions de personnes, mais il existe très peu de textes kabyles numériques. Or les grands modèles d'IA (ChatGPT, Claude, Gemini…) apprennent à partir de textes trouvés sur Internet. Résultat : ils maîtrisent mal le kabyle. Ils le confondent avec l'arabe ou d'autres langues berbères, répondent en français, ou inventent des mots.</p>
+<p>Personne ne sait mesurer précisément <em>à quel point</em> ils le maîtrisent mal, car il n'existe pas de test de référence fiable écrit par une locutrice native. C'est ce que construit ce projet.</p>
+
+<h3>L'objectif, en trois phases</h3>
+<table>
+  <tr><th style="width:22%">Phase</th><th>Ce qu'on fait</th><th style="width:28%">Résultat attendu</th></tr>
+  <tr><td><strong>1. Mesurer</strong></td><td>Tu écris des tests (questions + bonnes réponses en kabyle). Le labo pose ces questions à plusieurs modèles d'IA. Tu notes leurs réponses à l'aveugle.</td><td>Un classement : quel modèle parle le mieux kabyle, dans quelles catégories.</td></tr>
+  <tr><td><strong>2. Améliorer</strong></td><td>On prend un petit modèle gratuit (Qwen3.5 4B) et on essaie trois techniques pour l'améliorer : few-shot, RAG, fine-tuning.</td><td>Trois versions améliorées du même modèle.</td></tr>
+  <tr><td><strong>3. Prouver</strong></td><td>On repasse exactement le même test au modèle de départ et à ses versions améliorées, et on compare.</td><td>Un gain chiffré et honnête, publié sur le site.</td></tr>
+</table>
+
+<h3>Les quatre règles du projet</h3>
+<div class="box rule"><span class="t">Règles non négociables</span>
+<ol style="margin-top:3pt">
+  <li><strong>Tout le kabyle de référence vient de toi.</strong> Aucun texte kabyle du jeu de test n'est écrit, complété ou corrigé par une IA.</li>
+  <li><strong>Aucun chiffre inventé.</strong> Chaque score vient de vraies réponses de modèles et de tes vraies notes. Tant qu'il n'y en a pas, le site affiche « résultats à venir ».</li>
+  <li><strong>Zéro contamination.</strong> Les tests ne servent jamais à entraîner ou aider un modèle (chapitre 12).</li>
+  <li><strong>Aucun secret sur GitHub.</strong> Les clés d'API restent dans le fichier <code>.env</code>, sur ton PC (chapitre 13).</li>
+</ol>
+</div>
+
+<h3>Les deux grandes parties du logiciel</h3>
+<div class="grid2">
+  <div class="card"><h4>Le labo (privé, sur ton PC)</h4>
+  <p>Une application web qui tourne uniquement sur ta machine. Tu y écris les tests, lances les modèles, notes les réponses et vois les résultats. Il n'est jamais mis en ligne, car il utilise tes clés d'API et contient tes tests privés.</p></div>
+  <div class="card"><h4>Le site public (sur Internet)</h4>
+  <p>Un site vitrine en français et en anglais, hébergé gratuitement sur GitHub Pages. Il affiche seulement les résultats que tu choisis d'exporter. C'est la partie « portfolio ».</p></div>
+</div>
+
+<!-- ═════════════ 2 ═════════════ -->
+<h2><span class="num">2</span>Les notions d'IA à connaître</h2>
+<p>Ce chapitre explique les mots qui reviennent partout dans le projet. Pas besoin de tout retenir d'un coup : reviens-y quand un mot bloque.</p>
+
+<h3>LLM (grand modèle de langage)</h3>
+<p>Un LLM est un programme qui a lu une quantité gigantesque de textes et qui a appris une seule chose : <strong>deviner le mot suivant</strong>. En répétant cette devinette mot après mot, il écrit des phrases, traduit, répond à des questions. ChatGPT (OpenAI), Claude (Anthropic), Gemini (Google), Mistral, Qwen, Gemma sont des LLM.</p>
+<div class="box analogy"><span class="t">Analogie</span>
+Imagine quelqu'un qui aurait lu des millions de livres sans jamais parler. Il sait très bien comment les phrases « continuent » d'habitude. S'il a lu beaucoup de français, il écrit un bon français. S'il n'a presque jamais vu de kabyle, il improvise, et c'est là que viennent les mots inventés.</div>
+<p><strong>Les paramètres.</strong> La « mémoire » d'un modèle est faite de nombres appelés paramètres. On parle de « 4B » pour 4 milliards (billions en anglais). Plus il y en a, plus le modèle est capable, mais plus il demande de mémoire et de puissance. Les modèles commerciaux en ont des centaines de milliards. Qwen3.5 4B en a environ 4,7 milliards : c'est un « petit » modèle qui tient sur un PC.</p>
+
+<h3>Token</h3>
+<p>Un modèle ne lit pas des lettres ni des mots, mais des <strong>tokens</strong> : des morceaux de mots. « maison » peut être un seul token, un mot rare peut en faire quatre. Les fournisseurs facturent au token (prix par million de tokens). Le kabyle, peu présent à l'entraînement, est découpé en beaucoup de petits tokens : il coûte plus cher et le modèle le « voit » moins bien. C'est pour cela que le labo estime les coûts de façon prudente (2,5 caractères par token).</p>
+
+<h3>Prompt, message système, température</h3>
+<ul>
+  <li><strong>Prompt</strong> : le texte qu'on envoie au modèle, par exemple la consigne d'un test.</li>
+  <li><strong>Message système</strong> : une instruction cachée placée avant la conversation (« tu es un assistant qui… »). Le benchmark n'en met pas, pour que tous les modèles reçoivent exactement la même chose. Seule la variante RAG en utilise un (chapitre 11).</li>
+  <li><strong>Température</strong> : le degré de hasard dans le choix des mots. À 0, le modèle choisit toujours le mot le plus probable : ses réponses sont stables et reproductibles. Le projet met la température à 0 partout où c'est possible.</li>
+</ul>
+
+<h3>API et fournisseur</h3>
+<p>Une <strong>API</strong> est une porte d'entrée pour qu'un programme parle à un autre programme. Les entreprises qui hébergent les modèles (les <strong>fournisseurs</strong> : Anthropic, OpenAI, Google, Mistral, OpenRouter) offrent une API : le labo envoie une question par Internet, le fournisseur renvoie la réponse. Pour s'identifier, il faut une <strong>clé d'API</strong>, une sorte de mot de passe personnel. Elle doit rester secrète, car quelqu'un qui la vole peut dépenser ton argent.</p>
+
+<h3>Modèle local, Ollama, inférence, GPU</h3>
+<p>Certains modèles sont <strong>open source</strong> : on peut les télécharger et les faire tourner soi-même, gratuitement. <strong>Ollama</strong> est le logiciel qui fait tourner ces modèles sur ton PC et leur donne une API, comme un fournisseur, mais local. Faire répondre un modèle s'appelle l'<strong>inférence</strong>.</p>
+<p>Les calculs d'un modèle sont des multiplications de grands tableaux de nombres. Une carte graphique (<strong>GPU</strong>, surtout NVIDIA) les fait des dizaines de fois plus vite qu'un processeur (<strong>CPU</strong>). Ton PC n'a pas de GPU NVIDIA et a 8 Go de RAM : un modèle local y tourne, mais lentement, et la mémoire est juste. C'est pourquoi les étapes lourdes sont prévues sur Google Colab, qui prête un GPU gratuitement.</p>
+<p><strong>Quantification</strong> : pour qu'un modèle prenne moins de mémoire, on arrondit ses paramètres (par exemple sur 4 bits au lieu de 16). Il perd un peu en qualité mais devient 3 à 4 fois plus léger. Le format de fichier <strong>GGUF</strong> stocke ces modèles quantifiés pour Ollama.</p>
+
+<h3>Benchmark</h3>
+<p>Un <strong>benchmark</strong> est un examen standardisé pour les modèles : les mêmes questions, posées de la même façon, notées avec les mêmes règles. Il permet de comparer des modèles entre eux, ou un modèle avant et après amélioration. Ce projet est un benchmark du kabyle.</p>
+
+<h3>Les trois façons d'améliorer un modèle</h3>
+<table>
+  <tr><th style="width:17%">Technique</th><th>Principe</th><th style="width:30%">Analogie</th></tr>
+  <tr><td><strong>Few-shot</strong></td><td>On met quelques exemples de traductions déjà faites dans la question, juste avant la vraie demande. Le modèle ne change pas, il s'inspire des exemples.</td><td>Montrer trois exercices corrigés à un élève juste avant l'examen.</td></tr>
+  <tr><td><strong>RAG</strong> (génération augmentée par recherche)</td><td>On cherche automatiquement, dans une grande bibliothèque de phrases, celles qui ressemblent le plus à la question, et on les fournit au modèle comme aide-mémoire.</td><td>Un examen à livre ouvert : l'élève a droit à un dictionnaire bien rangé.</td></tr>
+  <tr><td><strong>Fine-tuning</strong> (QLoRA)</td><td>On continue l'entraînement du modèle sur des milliers de phrases kabyles. Cette fois, le modèle lui-même change.</td><td>Envoyer l'élève suivre des cours de kabyle pendant plusieurs semaines.</td></tr>
+</table>
+
+<h3>Embedding (plongement)</h3>
+<p>Un <strong>embedding</strong> transforme une phrase en une liste de nombres (ici 1 024 nombres) qui résume son <em>sens</em>. Deux phrases de sens proche ont des listes de nombres proches, même si elles n'ont aucun mot en commun. C'est ce qui permet au RAG de retrouver « les phrases qui ressemblent à la question ». Le projet utilise le modèle d'embedding <strong>bge-m3</strong>, multilingue, servi par Ollama.</p>
+<div class="box analogy"><span class="t">Analogie</span>
+C'est comme donner à chaque phrase une adresse GPS dans une « carte des sens ». « J'ai faim » et « je voudrais manger » habitent dans le même quartier. Chercher les phrases proches revient à chercher les voisins sur la carte.</div>
+
+<h3>LoRA et QLoRA</h3>
+<p>Réentraîner les 4,7 milliards de paramètres d'un modèle demanderait une machine énorme. <strong>LoRA</strong> ne modifie pas le modèle d'origine : il ajoute à côté une petite « rustine » de quelques millions de paramètres, et n'entraîne que cette rustine. <strong>QLoRA</strong> fait la même chose sur le modèle quantifié en 4 bits, ce qui fait tenir l'entraînement sur un GPU gratuit de Colab.</p>
+
+<h3>Contamination</h3>
+<p>Si un modèle a vu les questions d'un examen pendant son entraînement, sa bonne note ne prouve rien : il récite. C'est la <strong>contamination</strong>. Dans ce projet, c'est le risque n°1 de la phase 2 : il ne faut surtout pas que tes tests se retrouvent dans les exemples du few-shot, la bibliothèque du RAG ou les données de fine-tuning. Le chapitre 12 explique comment c'est empêché.</p>
+
+<!-- ═════════════ 3 ═════════════ -->
+<h2><span class="num">3</span>Vue d'ensemble de l'architecture</h2>
+<p>Le schéma ci-dessous montre toutes les briques et comment les informations circulent. Les chapitres suivants les détaillent une par une.</p>
+
+<figure>
+<svg viewBox="0 0 720 560" width="100%" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#4b5563"/></marker>
+  </defs>
+  <!-- Zone PC -->
+  <rect x="8" y="8" width="704" height="330" rx="12" fill="#f4f6f8" stroke="#9ca3af" stroke-dasharray="5 4"/>
+  <text x="22" y="30" font-size="13" font-weight="700" fill="#1f2328">Ton PC · tout est local (127.0.0.1)</text>
+  <!-- Docker -->
+  <rect x="22" y="42" width="460" height="196" rx="10" fill="#ffffff" stroke="#0f766e"/>
+  <text x="36" y="62" font-size="11.5" font-weight="700" fill="#0f766e">Docker (docker compose) : 3 conteneurs</text>
+  <rect x="38" y="74" width="130" height="66" rx="8" fill="#e6f4f2" stroke="#0f766e"/>
+  <text x="103" y="98" font-size="12" font-weight="700" text-anchor="middle">lab-ui</text>
+  <text x="103" y="114" font-size="9.5" text-anchor="middle" fill="#4b5563">interface web</text>
+  <text x="103" y="128" font-size="9.5" text-anchor="middle" fill="#4b5563">React · port 5173</text>
+  <rect x="200" y="74" width="130" height="66" rx="8" fill="#e6f4f2" stroke="#0f766e"/>
+  <text x="265" y="98" font-size="12" font-weight="700" text-anchor="middle">api</text>
+  <text x="265" y="114" font-size="9.5" text-anchor="middle" fill="#4b5563">le cerveau du labo</text>
+  <text x="265" y="128" font-size="9.5" text-anchor="middle" fill="#4b5563">FastAPI · port 8800</text>
+  <rect x="362" y="74" width="106" height="66" rx="8" fill="#e6f4f2" stroke="#0f766e"/>
+  <text x="415" y="98" font-size="12" font-weight="700" text-anchor="middle">ollama</text>
+  <text x="415" y="114" font-size="9.5" text-anchor="middle" fill="#4b5563">modèles locaux</text>
+  <text x="415" y="128" font-size="9.5" text-anchor="middle" fill="#4b5563">port 11434</text>
+  <line x1="168" y1="107" x2="198" y2="107" stroke="#4b5563" stroke-width="1.5" marker-end="url(#ar)" marker-start="url(#ar)"/>
+  <line x1="330" y1="107" x2="360" y2="107" stroke="#4b5563" stroke-width="1.5" marker-end="url(#ar)"/>
+  <rect x="200" y="166" width="130" height="58" rx="8" fill="#fff" stroke="#6b7280"/>
+  <text x="265" y="190" font-size="11.5" font-weight="700" text-anchor="middle">SQLite</text>
+  <text x="265" y="206" font-size="9.5" text-anchor="middle" fill="#4b5563">backend/var/lab.db</text>
+  <text x="265" y="218" font-size="9" text-anchor="middle" fill="#4b5563">tests, réponses, notes</text>
+  <line x1="265" y1="140" x2="265" y2="164" stroke="#4b5563" stroke-width="1.5" marker-end="url(#ar)" marker-start="url(#ar)"/>
+  <!-- Navigateur -->
+  <rect x="38" y="166" width="130" height="58" rx="8" fill="#fff" stroke="#6b7280"/>
+  <text x="103" y="190" font-size="11.5" font-weight="700" text-anchor="middle">Ton navigateur</text>
+  <text x="103" y="206" font-size="9.5" text-anchor="middle" fill="#4b5563">localhost:5173</text>
+  <line x1="103" y1="164" x2="103" y2="142" stroke="#4b5563" stroke-width="1.5" marker-end="url(#ar)"/>
+  <!-- Données -->
+  <rect x="498" y="42" width="200" height="196" rx="10" fill="#fff" stroke="#6d28d9"/>
+  <text x="512" y="62" font-size="11.5" font-weight="700" fill="#6d28d9">Dossier data/ (fichiers)</text>
+  <rect x="512" y="72" width="172" height="44" rx="6" fill="#f1ecfd" stroke="#6d28d9"/>
+  <text x="598" y="90" font-size="10.5" font-weight="700" text-anchor="middle">data/test/</text>
+  <text x="598" y="105" font-size="9" text-anchor="middle" fill="#4b5563">jeu de test (source de vérité)</text>
+  <rect x="512" y="124" width="172" height="44" rx="6" fill="#f1ecfd" stroke="#6d28d9"/>
+  <text x="598" y="142" font-size="10.5" font-weight="700" text-anchor="middle">data/train/</text>
+  <text x="598" y="157" font-size="9" text-anchor="middle" fill="#4b5563">données d'amélioration</text>
+  <rect x="512" y="176" width="172" height="44" rx="6" fill="#f1ecfd" stroke="#6d28d9"/>
+  <text x="598" y="194" font-size="10.5" font-weight="700" text-anchor="middle">data/results/public/</text>
+  <text x="598" y="209" font-size="9" text-anchor="middle" fill="#4b5563">résultats exportés</text>
+  <!-- Volumes : le conteneur api lit et écrit le dossier data/ -->
+  <line x1="484" y1="140" x2="496" y2="140" stroke="#6d28d9" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#ar)" marker-start="url(#ar)"/>
+  <text x="598" y="232" font-size="9" fill="#6d28d9" text-anchor="middle">lu et écrit par l'api (volumes)</text>
+  <!-- .env -->
+  <rect x="22" y="254" width="220" height="70" rx="10" fill="#fff" stroke="#6b7280"/>
+  <text x="132" y="276" font-size="11.5" font-weight="700" text-anchor="middle">Fichier .env (secret)</text>
+  <text x="132" y="293" font-size="9.5" text-anchor="middle" fill="#4b5563">clés d'API, jamais envoyé sur GitHub</text>
+  <text x="132" y="307" font-size="9.5" text-anchor="middle" fill="#4b5563">lu uniquement par le conteneur api</text>
+  <line x1="184" y1="254" x2="184" y2="241" stroke="#4b5563" stroke-width="1.5" marker-end="url(#ar)"/>
+  <!-- Pipelines -->
+  <rect x="262" y="254" width="220" height="70" rx="10" fill="#fff" stroke="#6b7280"/>
+  <text x="372" y="276" font-size="11.5" font-weight="700" text-anchor="middle">pipelines/</text>
+  <text x="372" y="293" font-size="9.5" text-anchor="middle" fill="#4b5563">téléchargent et nettoient les corpus,</text>
+  <text x="372" y="307" font-size="9.5" text-anchor="middle" fill="#4b5563">retirent tout ce qui ressemble aux tests</text>
+  <line x1="482" y1="282" x2="540" y2="171" stroke="#4b5563" stroke-width="1.5" marker-end="url(#ar)"/>
+  <!-- Internet -->
+  <rect x="8" y="356" width="346" height="196" rx="12" fill="#fff" stroke="#9ca3af" stroke-dasharray="5 4"/>
+  <text x="22" y="378" font-size="13" font-weight="700" fill="#1f2328">Internet · fournisseurs</text>
+  <rect x="24" y="392" width="150" height="46" rx="8" fill="#e8effd" stroke="#1d4ed8"/>
+  <text x="99" y="412" font-size="10.5" font-weight="700" text-anchor="middle">Payants</text>
+  <text x="99" y="428" font-size="9" text-anchor="middle" fill="#4b5563">Anthropic, OpenAI</text>
+  <rect x="188" y="392" width="150" height="46" rx="8" fill="#e8effd" stroke="#1d4ed8"/>
+  <text x="263" y="412" font-size="10.5" font-weight="700" text-anchor="middle">Gratuits</text>
+  <text x="263" y="428" font-size="9" text-anchor="middle" fill="#4b5563">Gemini, Mistral, OpenRouter</text>
+  <rect x="24" y="452" width="314" height="48" rx="8" fill="#fdf3e2" stroke="#d97706"/>
+  <text x="181" y="472" font-size="10.5" font-weight="700" text-anchor="middle">Google Colab (GPU gratuit)</text>
+  <text x="181" y="488" font-size="9" text-anchor="middle" fill="#4b5563">fine-tuning QLoRA via notebooks/ → fichier GGUF → Ollama</text>
+  <text x="181" y="530" font-size="9.5" text-anchor="middle" fill="#6b7280">Les offres gratuites ne reçoivent que les tests publics.</text>
+  <line x1="252" y1="241" x2="252" y2="390" stroke="#1d4ed8" stroke-width="2" marker-end="url(#ar)"/>
+  <text x="258" y="350" font-size="9" fill="#1d4ed8">appels HTTPS</text>
+  <!-- GitHub -->
+  <rect x="370" y="356" width="342" height="196" rx="12" fill="#fff" stroke="#9ca3af" stroke-dasharray="5 4"/>
+  <text x="384" y="378" font-size="13" font-weight="700" fill="#1f2328">GitHub · public</text>
+  <rect x="386" y="392" width="150" height="62" rx="8" fill="#f4f6f8" stroke="#6b7280"/>
+  <text x="461" y="412" font-size="10.5" font-weight="700" text-anchor="middle">Dépôt Git</text>
+  <text x="461" y="428" font-size="9" text-anchor="middle" fill="#4b5563">code, tests publics,</text>
+  <text x="461" y="441" font-size="9" text-anchor="middle" fill="#4b5563">résultats exportés</text>
+  <rect x="548" y="392" width="150" height="62" rx="8" fill="#f4f6f8" stroke="#6b7280"/>
+  <text x="623" y="412" font-size="10.5" font-weight="700" text-anchor="middle">GitHub Actions</text>
+  <text x="623" y="428" font-size="9" text-anchor="middle" fill="#4b5563">CI : tests, sécurité,</text>
+  <text x="623" y="441" font-size="9" text-anchor="middle" fill="#4b5563">contamination</text>
+  <rect x="467" y="472" width="150" height="56" rx="8" fill="#e6f4f2" stroke="#0f766e"/>
+  <text x="542" y="494" font-size="10.5" font-weight="700" text-anchor="middle">Site public</text>
+  <text x="542" y="510" font-size="9" text-anchor="middle" fill="#4b5563">GitHub Pages · FR / EN</text>
+  <line x1="536" y1="423" x2="546" y2="423" stroke="#4b5563" stroke-width="1.5" marker-end="url(#ar)"/>
+  <line x1="623" y1="454" x2="580" y2="470" stroke="#4b5563" stroke-width="1.5" marker-end="url(#ar)"/>
+  <line x1="598" y1="238" x2="470" y2="390" stroke="#4b5563" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#ar)"/>
+  <text x="560" y="300" font-size="9" fill="#4b5563">git push</text>
+</svg>
+<figcaption>Figure 1 · Architecture générale. Flèches pleines : appels entre programmes. Pointillés : lecture ou écriture de fichiers.</figcaption>
+</figure>
+
+<h3>Les trois zones à retenir</h3>
+<table>
+  <tr><th style="width:22%">Zone</th><th>Contenu</th><th style="width:30%">Qui peut y accéder</th></tr>
+  <tr><td><strong>Ton PC</strong></td><td>Le labo (3 conteneurs Docker), la base SQLite, les tests privés, le fichier <code>.env</code> avec les clés.</td><td>Toi seule. Le labo n'écoute que sur 127.0.0.1, l'adresse « ma propre machine ».</td></tr>
+  <tr><td><strong>Les fournisseurs</strong></td><td>Les modèles commerciaux et gratuits, interrogés par Internet. Colab pour le fine-tuning.</td><td>Ils ne voient que les questions qu'on leur envoie.</td></tr>
+  <tr><td><strong>GitHub</strong></td><td>Le code, les tests publics, les résultats exportés, le site.</td><td>Tout le monde (dépôt public).</td></tr>
+</table>
+<div class="box idea"><span class="t">L'idée clé</span>
+Le labo est un outil de travail privé ; le site est une vitrine publique. Entre les deux, une seule porte contrôlée : l'export des résultats, qui ne laisse passer qu'une liste précise de champs (chapitre 13).</div>
+
+<!-- ═════════════ 4 ═════════════ -->
+<h2><span class="num">4</span>Docker : comment le labo tourne sur ton PC</h2>
+
+<h3>Pourquoi Docker</h3>
+<p>Le labo a besoin de Python (pour l'API) et de Node.js (pour l'interface). Ton PC n'a ni l'un ni l'autre, et Windows y bloque certains programmes non signés (Smart App Control). <strong>Docker</strong> résout ces deux problèmes : chaque partie tourne dans un <strong>conteneur</strong>, une petite machine Linux isolée qui contient déjà tout ce qu'il faut.</p>
+<div class="box analogy"><span class="t">Analogie</span>
+Un conteneur, c'est comme une boîte-repas préparée : tout le nécessaire est dedans, et elle se réchauffe de la même façon dans n'importe quelle cuisine. Le fichier <code>docker-compose.yml</code> est le menu qui dit quelles boîtes ouvrir et comment les relier.</div>
+
+<h3>Les trois services de <code>docker-compose.yml</code></h3>
+<table>
+  <tr><th style="width:14%">Service</th><th>Rôle</th><th style="width:21%">Adresse</th><th style="width:22%">Démarrage</th></tr>
+  <tr><td><code>api</code></td><td>Le backend Python : il stocke les tests, appelle les modèles, calcule les scores. Image construite depuis <code>backend/Dockerfile</code>.</td><td>127.0.0.1:8800<br><span class="small muted">doc interactive : /docs</span></td><td>toujours</td></tr>
+  <tr><td><code>lab-ui</code></td><td>L'interface web. Image <code>node:22-alpine</code> ; installe les dépendances puis lance Vite en mode développement.</td><td>localhost:5173</td><td>toujours</td></tr>
+  <tr><td><code>ollama</code></td><td>Fait tourner les modèles locaux (Qwen, bge-m3…). Les modèles téléchargés sont gardés dans le volume <code>ollama-models</code>.</td><td>127.0.0.1:11434</td><td>seulement avec <code>--profile ollama</code></td></tr>
+</table>
+
+<h3>Les volumes : le lien entre le conteneur et tes fichiers</h3>
+<p>Un conteneur est jetable : si on le supprime, ce qu'il contient disparaît. Pour garder les données, on « monte » des dossiers de ton PC dans le conteneur :</p>
+<ul>
+  <li><code>backend/var</code> → la base SQLite <code>lab.db</code> (tes réponses et tes notes) ;</li>
+  <li><code>data/</code> → le jeu de test, les données d'amélioration, les résultats ;</li>
+  <li><code>backend/app</code>, <code>pipelines/</code>, <code>scripts/</code>… → le code, monté « à chaud » : une modification du code est prise en compte immédiatement (option <code>--reload</code>).</li>
+</ul>
+<p>Deux volumes sont gérés par Docker lui-même : <code>lab-ui-node-modules</code> (dépendances JavaScript, plus rapide sous Windows) et <code>ollama-models</code> (les modèles téléchargés, plusieurs Go).</p>
+
+<div class="box why"><span class="t">Pourquoi les ports commencent par 127.0.0.1</span>
+<code>127.0.0.1:8800:8000</code> veut dire : « le port 8000 du conteneur est accessible sur le port 8800, mais seulement depuis cette machine ». Sans <code>127.0.0.1</code>, n'importe quel appareil de ton Wi-Fi pourrait utiliser ton labo, et donc tes clés d'API.</div>
+
+<h3>Les commandes de base</h3>
+<pre>docker compose up -d                       # démarre api + lab-ui
+docker compose --profile ollama up -d      # démarre aussi Ollama
+docker compose down                        # arrête tout (les données restent)
+docker compose logs -f api                 # affiche le journal de l'API
+docker compose restart api                 # après une modification de .env</pre>
+
+<!-- ═════════════ 5 ═════════════ -->
+<h2><span class="num">5</span>Le backend (API FastAPI)</h2>
+<p>Le backend est écrit en <strong>Python</strong> avec <strong>FastAPI</strong>, un cadre pour créer des API web. L'interface ne fait aucun calcul : elle demande tout à l'API par des requêtes HTTP, et l'API répond en JSON (un format texte structuré).</p>
+
+<h3>Les modules de <code>backend/app/</code></h3>
+<table>
+  <tr><th style="width:21%">Fichier</th><th>Rôle</th></tr>
+  <tr><td><code>main.py</code></td><td>Point de départ : crée l'application, applique les migrations de la base, branche les routes et les protections.</td></tr>
+  <tr><td><code>config.py</code></td><td>Lit la configuration (fichier <code>.env</code> et variables d'environnement) : chemins, clés, plafond de coût. Une clé vide compte comme absente.</td></tr>
+  <tr><td><code>models.py</code></td><td>Définit un test (<code>BenchItem</code>) : catégorie, consigne, références, public/privé, statut.</td></tr>
+  <tr><td><code>run_models.py</code></td><td>Définit une exécution (<code>Run</code>), ses tests figés (<code>RunItem</code>), chaque réponse (<code>ModelResponse</code>), chaque note (<code>Grade</code>) et les exemples marquants (<code>Favorite</code>).</td></tr>
+  <tr><td><code>testset.py</code></td><td>Import/export du jeu de test, écriture du JSONL dans le dépôt, calcul de l'empreinte SHA-256 et du manifeste.</td></tr>
+  <tr><td><code>registry.py</code></td><td>Charge la liste des modèles depuis <code>config/models.yaml</code> et la vérifie.</td></tr>
+  <tr><td><code>providers.py</code></td><td>Parle aux fournisseurs : une classe pour Anthropic (SDK officiel), une seule pour tous ceux qui partagent le format OpenAI (OpenAI, Mistral, OpenRouter, Gemini), une pour Ollama, et une factice pour les tests automatiques.</td></tr>
+  <tr><td><code>variants.py</code></td><td>Construit le message envoyé au modèle selon la variante : simple, few-shot ou RAG.</td></tr>
+  <tr><td><code>runner.py</code></td><td>Le moteur d'exécution : sélectionne les tests, appelle les modèles en parallèle, relance en cas d'erreur, applique le plafond de coût.</td></tr>
+  <tr><td><code>scoring.py</code></td><td>Scores automatiques : chrF++, BLEU, écriture et langue de la réponse.</td></tr>
+  <tr><td><code>contamination.py</code></td><td>Détecte si un texte ressemble à un test (chapitre 12).</td></tr>
+  <tr><td><code>results.py</code></td><td>Agrège les notes : moyennes, intervalles de confiance, gains avant/après, étiquettes d'erreur.</td></tr>
+  <tr><td><code>export_public.py</code></td><td>Écrit <code>results.json</code> pour le site, avec une liste blanche de champs.</td></tr>
+  <tr><td><code>setup.py</code></td><td>Construit la liste de préparation (onglet Préparation).</td></tr>
+  <tr><td><code>security.py</code></td><td>Protections de l'API locale (chapitre 13).</td></tr>
+  <tr><td><code>api/*.py</code></td><td>Les routes HTTP, regroupées par thème : tests, mode guidé, jeu de test, exécutions, notation, résultats.</td></tr>
+</table>
+
+<h3>La base de données SQLite</h3>
+<p>SQLite est une base de données contenue dans un seul fichier (<code>backend/var/lab.db</code>), sans serveur à installer. Elle contient cinq tables principales :</p>
+<figure>
+<svg viewBox="0 0 720 170" width="100%" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4b5563"/></marker></defs>
+  <g font-size="10">
+  <rect x="6" y="20" width="120" height="120" rx="7" fill="#f1ecfd" stroke="#6d28d9"/>
+  <text x="66" y="38" font-weight="700" text-anchor="middle" font-size="11">BenchItem</text>
+  <text x="14" y="58" fill="#4b5563">un test</text><text x="14" y="74" fill="#4b5563">consigne, références</text><text x="14" y="90" fill="#4b5563">catégorie, split</text><text x="14" y="106" fill="#4b5563">statut draft/ready</text>
+  <rect x="150" y="20" width="120" height="120" rx="7" fill="#e6f4f2" stroke="#0f766e"/>
+  <text x="210" y="38" font-weight="700" text-anchor="middle" font-size="11">Run</text>
+  <text x="158" y="58" fill="#4b5563">une exécution</text><text x="158" y="74" fill="#4b5563">modèles choisis</text><text x="158" y="90" fill="#4b5563">empreinte du jeu</text><text x="158" y="106" fill="#4b5563">coût, statut</text>
+  <rect x="294" y="20" width="120" height="120" rx="7" fill="#e6f4f2" stroke="#0f766e"/>
+  <text x="354" y="38" font-weight="700" text-anchor="middle" font-size="11">RunItem</text>
+  <text x="302" y="58" fill="#4b5563">copie figée du test</text><text x="302" y="74" fill="#4b5563">au moment du run</text>
+  <rect x="438" y="20" width="130" height="120" rx="7" fill="#e6f4f2" stroke="#0f766e"/>
+  <text x="503" y="38" font-weight="700" text-anchor="middle" font-size="11">ModelResponse</text>
+  <text x="446" y="58" fill="#4b5563">une réponse</text><text x="446" y="74" fill="#4b5563">texte, tokens, coût</text><text x="446" y="90" fill="#4b5563">chrF++, BLEU</text><text x="446" y="106" fill="#4b5563">langue détectée</text><text x="446" y="122" fill="#4b5563">statut, erreurs</text>
+  <rect x="592" y="20" width="120" height="120" rx="7" fill="#fdf3e2" stroke="#d97706"/>
+  <text x="652" y="38" font-weight="700" text-anchor="middle" font-size="11">Grade</text>
+  <text x="600" y="58" fill="#4b5563">ta note 0 à 3</text><text x="600" y="74" fill="#4b5563">étiquettes d'erreur</text><text x="600" y="90" fill="#4b5563">commentaire</text>
+  </g>
+  <line x1="126" y1="80" x2="148" y2="80" stroke="#4b5563" marker-end="url(#ar2)"/>
+  <line x1="270" y1="80" x2="292" y2="80" stroke="#4b5563" marker-end="url(#ar2)"/>
+  <line x1="414" y1="80" x2="436" y2="80" stroke="#4b5563" marker-end="url(#ar2)"/>
+  <line x1="568" y1="80" x2="590" y2="80" stroke="#4b5563" marker-end="url(#ar2)"/>
+  <text x="360" y="162" font-size="9.5" text-anchor="middle" fill="#6b7280">Un run contient N tests figés ; chaque test × chaque modèle donne une réponse ; chaque réponse peut recevoir une note.</text>
+</svg>
+<figcaption>Figure 2 · Les tables de la base et leurs liens.</figcaption>
+</figure>
+<p>Le schéma de la base évolue avec <strong>Alembic</strong> (des « migrations » numérotées), appliqué automatiquement au démarrage. Un test automatique vérifie que les migrations correspondent toujours au code.</p>
+<div class="box warn"><span class="t">Attention : <code>lab.db</code> n'est pas dans Git</span>
+Les réponses des modèles et tes notes ne peuvent pas être recréées (relancer un modèle coûte de l'argent et donne parfois une réponse différente). Sauvegarde régulièrement avec <code>docker compose run --rm api python -m scripts.backup</code>, puis copie <code>backend/var/backups/</code> sur une clé USB ou un stockage externe.</div>
+
+<h3>Le moteur d'exécution (runner)</h3>
+<p>Quand tu lances une exécution avec 3 modèles et 52 tests, le runner :</p>
+<ol>
+  <li><strong>crée d'avance</strong> 3 × 52 = 156 lignes « en attente » dans la base, une par couple (test, modèle) ;</li>
+  <li>envoie les questions <strong>en parallèle</strong>, au maximum 2 à la fois par fournisseur (<code>MAX_CONCURRENCY_PER_PROVIDER</code>) ;</li>
+  <li>en cas d'erreur temporaire (trop de requêtes, serveur en panne, réseau), <strong>attend puis réessaie</strong>, avec 4 tentatives au maximum (<code>MAX_ATTEMPTS</code>) et une attente qui double à chaque fois ;</li>
+  <li><strong>s'arrête</strong> si le coût estimé dépasse le plafond (<code>MAX_RUN_COST_USD</code>, 5 $ par défaut) ;</li>
+  <li>calcule les scores automatiques dès que chaque réponse arrive.</li>
+</ol>
+<div class="box why"><span class="t">Pourquoi des lignes créées d'avance</span>
+Si le PC s'éteint au milieu d'une exécution, on sait exactement ce qui manque : il suffit de « reprendre », et seules les lignes encore en attente ou en erreur sont rejouées. On ne paie jamais deux fois la même réponse. C'est ce qu'on appelle l'<strong>idempotence</strong>.</div>
+<p>L'interface suit la progression <strong>en direct</strong> grâce aux <em>Server-Sent Events</em> : l'API envoie une mise à jour par seconde sans que l'interface ait besoin de redemander.</p>
+
+<!-- ═════════════ 6 ═════════════ -->
+<h2><span class="num">6</span>L'interface du labo (lab-ui)</h2>
+<p>L'interface est écrite en <strong>React</strong> avec <strong>TypeScript</strong> (du JavaScript avec vérification des types), assemblée par <strong>Vite</strong> et stylée avec <strong>Tailwind CSS</strong>. Elle a six onglets, un par étape du travail :</p>
+<table>
+  <tr><th style="width:17%">Onglet</th><th>À quoi il sert</th><th style="width:25%">Fichier</th></tr>
+  <tr><td><strong>Préparation</strong></td><td>La page d'accueil : ce qui est prêt et ce qui manque (tests, clés présentes ou non, Ollama, données, index RAG), avec la commande à lancer pour chaque point. La valeur des clés n'est jamais affichée.</td><td><code>pages/SetupPage.tsx</code></td></tr>
+  <tr><td><strong>Mode guidé</strong></td><td>Propose les consignes en français une par une (fichier <code>data/prompts/guided_fr.yaml</code>) ; tu saisis la réponse kabyle. Ctrl+Entrée enregistre.</td><td><code>pages/GuidedPage.tsx</code></td></tr>
+  <tr><td><strong>Tests</strong></td><td>Liste, filtres, modification, import/export (JSONL, JSON, CSV), et « Enregistrer dans le dépôt ».</td><td><code>pages/TestsPage.tsx</code></td></tr>
+  <tr><td><strong>Exécutions</strong></td><td>Choisir les modèles, les catégories, public/privé, le mode test ; voir l'estimation du coût ; lancer et suivre en direct ; reprendre.</td><td><code>pages/RunsPage.tsx</code></td></tr>
+  <tr><td><strong>Notation</strong></td><td>Les réponses arrivent mélangées et anonymes. Touches 0 à 3 pour noter, lettres pour les étiquettes d'erreur, « Révéler » pour voir le modèle après coup.</td><td><code>pages/GradePage.tsx</code></td></tr>
+  <tr><td><strong>Résultats</strong></td><td>Classement, graphiques par catégorie, gains avant/après, erreurs fréquentes, exploration des réponses, export vers le site.</td><td><code>pages/ResultsPage.tsx</code></td></tr>
+</table>
+<p>La <strong>barre de caractères</strong> (<code>components/CharBar.tsx</code>) insère d'un clic les lettres kabyles absentes du clavier (ɛ, ɣ, ḥ, ṭ, ẓ, č, ǧ…) et les lettres tifinagh. La liste se modifie dans <code>lib/charsets.ts</code>.</p>
+<div class="box why"><span class="t">Comment l'interface parle à l'API</span>
+L'interface appelle <code>/api/...</code> sur sa propre adresse (localhost:5173). Vite transmet ces appels au conteneur <code>api</code> : c'est un « proxy ». Le navigateur ne parle donc qu'à une seule adresse, ce qui simplifie la sécurité.</div>
+
+<!-- ═════════════ 7 ═════════════ -->
+<h2><span class="num">7</span>Les modèles et les fournisseurs</h2>
+
+<h3>Le fichier <code>backend/config/models.yaml</code></h3>
+<p>Tous les modèles du labo sont déclarés dans ce fichier. Ajouter un modèle, c'est ajouter quelques lignes ; aucun code à écrire tant que le fournisseur est connu. Exemple :</p>
+<pre>- key: gemini-flash-lite              # identifiant interne, unique
+  label: Gemini Flash-Lite            # nom affiché
+  provider: gemini                    # quel fournisseur appeler
+  model: gemini-flash-lite-latest     # nom exact chez le fournisseur
+  params: { max_tokens: 2048, temperature: 0 }   # réglages envoyés tels quels
+  pricing: { input: 0, output: 0 }    # prix en $ par million de tokens (null si inconnu)
+  public_only: true                   # offre gratuite : tests publics seulement</pre>
+<p>Une <strong>variante</strong> (few-shot, RAG, fine-tunée) est un modèle comme un autre, avec deux champs en plus : <code>base</code> (son modèle de départ) et <code>variant</code>. C'est ce lien qui permet de calculer automatiquement le gain.</p>
+
+<h3>Les modèles configurés aujourd'hui</h3>
+<table>
+  <tr><th style="width:17%">Fournisseur</th><th>Modèles</th><th style="width:16%">Coût</th><th style="width:22%">Clé (.env)</th></tr>
+  <tr><td>Anthropic</td><td>Claude Opus 5.5, Sonnet 5.5, Haiku 5.5</td><td>payant</td><td><code>ANTHROPIC_API_KEY</code></td></tr>
+  <tr><td>OpenAI</td><td>GPT-6 Astra, GPT-6.1 Sol, GPT-6 Luna</td><td>payant</td><td><code>OPENAI_API_KEY</code></td></tr>
+  <tr><td>Mistral</td><td>Mistral Large, Mistral Small</td><td>plan gratuit « Experiment »</td><td><code>MISTRAL_API_KEY</code></td></tr>
+  <tr><td>Google Gemini</td><td>Gemini Flash, Gemini Flash-Lite</td><td>plan gratuit</td><td><code>GEMINI_API_KEY</code></td></tr>
+  <tr><td>OpenRouter</td><td>Gemma 4 31B, Nemotron 3 Ultra 550B, Inkling (versions <code>:free</code>)</td><td>gratuit, quotas</td><td><code>OPENROUTER_API_KEY</code></td></tr>
+  <tr><td>Ollama (local)</td><td>Qwen3.5 4B, Gemma 4 E4B, Apertus 8B + les 3 variantes de Qwen</td><td>gratuit (ton PC)</td><td>aucune</td></tr>
+</table>
+<p class="small muted">Un modèle dont la clé manque apparaît grisé : il est simplement ignoré, rien ne plante.</p>
+
+<h3>Une seule classe pour quatre fournisseurs</h3>
+<p>OpenAI, Mistral, OpenRouter et Gemini acceptent tous le même format de requête (« chat/completions ») ; seule l'adresse change. Le fichier <code>providers.py</code> a donc une seule classe <code>OpenAICompatibleProvider</code> pour les quatre. Anthropic a son propre format et utilise son SDK officiel. Ollama a aussi le sien.</p>
+<div class="box why"><span class="t">Pourquoi les relances sont gérées par le runner et pas par les SDK</span>
+Chaque SDK a sa propre politique de relance. En les désactivant et en relançant nous-mêmes, tous les fournisseurs sont traités exactement de la même façon : c'est plus juste pour un benchmark.</div>
+
+<h3>Le verrou <code>public_only</code> (offres gratuites)</h3>
+<p>Les offres gratuites peuvent se réserver le droit d'utiliser les questions reçues pour entraîner leurs futurs modèles. Pour les tests publics, ce n'est pas grave : ils sont déjà sur GitHub. Pour les tests privés, ce serait une fuite. Donc :</p>
+<ul>
+  <li>dans <code>runner.py</code>, l'API <strong>refuse</strong> toute exécution qui enverrait des tests privés à un modèle marqué <code>public_only</code> ;</li>
+  <li>dans l'interface, sélectionner un tel modèle <strong>bloque</strong> le choix sur « Publique » et affiche le badge « gratuit · tests publics » ;</li>
+  <li>un test automatique vérifie qu'aucune consigne privée n'est envoyée.</li>
+</ul>
+
+<h3>Pas de repli automatique</h3>
+<p>Si un modèle refuse de répondre, le refus est enregistré tel quel. Le labo ne demande jamais à un autre modèle de répondre à sa place : dans un benchmark, une réponse doit toujours venir du modèle évalué.</p>
+
+<!-- ═════════════ 8 ═════════════ -->
+<h2><span class="num">8</span>Le jeu de test</h2>
+
+<h3>Ce qu'il contient aujourd'hui</h3>
+<table>
+  <tr><th>Catégorie</th><th>Ce qui est mesuré</th><th style="width:12%">Tests</th></tr>
+  <tr><td>Traduction français → kabyle</td><td>Le modèle sait-il écrire en kabyle ?</td><td>32</td></tr>
+  <tr><td>Traduction kabyle → français</td><td>Comprend-il le kabyle écrit ?</td><td>5</td></tr>
+  <tr><td>Compréhension</td><td>Un court texte kabyle, puis une question</td><td>4</td></tr>
+  <tr><td>Culture</td><td>Proverbes, expressions, coutumes</td><td>4</td></tr>
+  <tr><td>Écriture</td><td>Alphabet latin kabyle et tifinagh</td><td>3</td></tr>
+  <tr><td>Conversation</td><td>Répond-il vraiment en kabyle ?</td><td>4</td></tr>
+  <tr><th>Total</th><th>41 publics (sur GitHub) + 11 privés (21 %, sur ton PC uniquement)</th><th>52</th></tr>
+</table>
+
+<h3>Un test, concrètement</h3>
+<p>Chaque test est une ligne de texte au format <strong>JSON</strong>. Le fichier <code>data/test/kab-bench.v1.jsonl</code> en contient un par ligne (format JSONL). Les champs principaux :</p>
+<pre>{ "id": "tr-fr-kab-0001",                 identifiant unique
+  "category": "translation_fr_kab",       catégorie
+  "prompt": "Traduis en kabyle : « … »",  consigne envoyée telle quelle au modèle
+  "source_text": "…",                     texte à traduire
+  "references": ["…", "…"],               tes bonnes réponses (une ou plusieurs)
+  "grading": "auto+human",                notation automatique et humaine
+  "expected_lang": "kab",                 langue attendue de la réponse
+  "split": "public",                      public ou private
+  "status": "ready" }                     seuls les tests « ready » sont évalués</pre>
+<p>Un test ne peut passer en <code>ready</code> que s'il est complet : une référence s'il est noté automatiquement, un texte source pour une traduction, un texte de contexte pour une compréhension.</p>
+
+<h3>Public et privé</h3>
+<p>Environ 20 % des tests sont gardés <strong>privés</strong>, dans <code>data/test/private/</code>, un dossier que Git ignore. Pourquoi ? Les tests publics finiront sur Internet, et un jour peut-être dans l'entraînement d'un futur modèle. Les tests privés, eux, restent inédits : ils permettent toujours de vérifier qu'un modèle ne fait pas que réciter.</p>
+
+<h3>La source de vérité : les fichiers, pas la base</h3>
+<p>Tu saisis les tests dans le labo (donc dans SQLite), puis « Enregistrer dans le dépôt » les écrit dans les fichiers JSONL. Ce sont ces fichiers, versionnés dans Git, qui font foi. La base peut être supprimée et rechargée à tout moment depuis eux.</p>
+
+<h3>L'empreinte et la chaîne canari</h3>
+<p>Le fichier <code>data/test/MANIFEST.json</code> contient :</p>
+<ul>
+  <li>la <strong>version</strong> du jeu (actuellement 1.0.0) ;</li>
+  <li>une <strong>empreinte SHA-256</strong> : un code de 64 caractères calculé à partir du contenu des tests. Si une seule référence change, l'empreinte change. Chaque exécution enregistre cette empreinte : deux scores ne sont comparés que s'ils ont la même, c'est-à-dire s'ils portent exactement sur le même examen ;</li>
+  <li>une <strong>chaîne canari</strong> : un code unique sans signification. Si un jour un modèle est capable de le réciter, c'est la preuve qu'il a été entraîné sur ce jeu de test.</li>
+</ul>
+<div class="box analogy"><span class="t">Analogie</span>
+L'empreinte est comme le numéro de version d'un sujet d'examen : on ne compare pas les notes de deux classes qui n'ont pas eu le même sujet. Le canari est comme une fausse entrée qu'un cartographe ajoute à sa carte pour repérer qui la copie.</div>
+<p>Le texte est aussi <strong>normalisé en Unicode NFC</strong> : une lettre comme « ḥ » peut s'écrire de deux façons invisibles à l'œil ; la normalisation les rend identiques, pour que la comparaison avec la réponse du modèle soit juste.</p>
+
+<!-- ═════════════ 9 ═════════════ -->
+<h2><span class="num">9</span>Le parcours d'un test, de l'écriture au score</h2>
+<p>Voici ce qui se passe, étape par étape, quand un test traverse tout le système.</p>
+<figure>
+<svg viewBox="0 0 720 300" width="100%" xmlns="http://www.w3.org/2000/svg">
+  <defs><marker id="ar3" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#4b5563"/></marker></defs>
+  <g font-size="10">
+  <rect x="6" y="14" width="160" height="62" rx="8" fill="#f1ecfd" stroke="#6d28d9"/><text x="86" y="36" text-anchor="middle" font-weight="700" font-size="11">1. Écriture</text><text x="86" y="52" text-anchor="middle" fill="#4b5563">mode guidé ou onglet Tests</text><text x="86" y="66" text-anchor="middle" fill="#4b5563">→ base SQLite</text>
+  <rect x="186" y="14" width="160" height="62" rx="8" fill="#f1ecfd" stroke="#6d28d9"/><text x="266" y="36" text-anchor="middle" font-weight="700" font-size="11">2. Enregistrement</text><text x="266" y="52" text-anchor="middle" fill="#4b5563">JSONL + manifeste</text><text x="266" y="66" text-anchor="middle" fill="#4b5563">→ git commit / push</text>
+  <rect x="366" y="14" width="160" height="62" rx="8" fill="#e6f4f2" stroke="#0f766e"/><text x="446" y="36" text-anchor="middle" font-weight="700" font-size="11">3. Exécution</text><text x="446" y="52" text-anchor="middle" fill="#4b5563">copie figée du test</text><text x="446" y="66" text-anchor="middle" fill="#4b5563">+ empreinte du jeu</text>
+  <rect x="546" y="14" width="166" height="62" rx="8" fill="#e6f4f2" stroke="#0f766e"/><text x="629" y="36" text-anchor="middle" font-weight="700" font-size="11">4. Construction</text><text x="629" y="52" text-anchor="middle" fill="#4b5563">du message (variants.py)</text><text x="629" y="66" text-anchor="middle" fill="#4b5563">simple, few-shot ou RAG</text>
+  <rect x="546" y="118" width="166" height="62" rx="8" fill="#e8effd" stroke="#1d4ed8"/><text x="629" y="140" text-anchor="middle" font-weight="700" font-size="11">5. Appel du modèle</text><text x="629" y="156" text-anchor="middle" fill="#4b5563">providers.py → fournisseur</text><text x="629" y="170" text-anchor="middle" fill="#4b5563">relances, plafond de coût</text>
+  <rect x="366" y="118" width="160" height="62" rx="8" fill="#e6f4f2" stroke="#0f766e"/><text x="446" y="140" text-anchor="middle" font-weight="700" font-size="11">6. Score automatique</text><text x="446" y="156" text-anchor="middle" fill="#4b5563">chrF++, BLEU,</text><text x="446" y="170" text-anchor="middle" fill="#4b5563">écriture, langue</text>
+  <rect x="186" y="118" width="160" height="62" rx="8" fill="#fdf3e2" stroke="#d97706"/><text x="266" y="140" text-anchor="middle" font-weight="700" font-size="11">7. Ta notation</text><text x="266" y="156" text-anchor="middle" fill="#4b5563">à l'aveugle, 0 à 3</text><text x="266" y="170" text-anchor="middle" fill="#4b5563">+ étiquettes d'erreur</text>
+  <rect x="6" y="118" width="160" height="62" rx="8" fill="#e6f4f2" stroke="#0f766e"/><text x="86" y="140" text-anchor="middle" font-weight="700" font-size="11">8. Résultats</text><text x="86" y="156" text-anchor="middle" fill="#4b5563">moyennes, intervalles,</text><text x="86" y="170" text-anchor="middle" fill="#4b5563">gains avant/après</text>
+  <rect x="6" y="222" width="160" height="62" rx="8" fill="#e6f4f2" stroke="#0f766e"/><text x="86" y="244" text-anchor="middle" font-weight="700" font-size="11">9. Export</text><text x="86" y="260" text-anchor="middle" fill="#4b5563">results.json</text><text x="86" y="274" text-anchor="middle" fill="#4b5563">(liste blanche)</text>
+  <rect x="186" y="222" width="160" height="62" rx="8" fill="#f4f6f8" stroke="#6b7280"/><text x="266" y="244" text-anchor="middle" font-weight="700" font-size="11">10. Publication</text><text x="266" y="260" text-anchor="middle" fill="#4b5563">git push → CI verte</text><text x="266" y="274" text-anchor="middle" fill="#4b5563">→ site mis à jour</text>
+  </g>
+  <g stroke="#4b5563" stroke-width="1.5">
+  <line x1="166" y1="45" x2="184" y2="45" marker-end="url(#ar3)"/>
+  <line x1="346" y1="45" x2="364" y2="45" marker-end="url(#ar3)"/>
+  <line x1="526" y1="45" x2="544" y2="45" marker-end="url(#ar3)"/>
+  <line x1="629" y1="76" x2="629" y2="116" marker-end="url(#ar3)"/>
+  <line x1="546" y1="149" x2="528" y2="149" marker-end="url(#ar3)"/>
+  <line x1="366" y1="149" x2="348" y2="149" marker-end="url(#ar3)"/>
+  <line x1="186" y1="149" x2="168" y2="149" marker-end="url(#ar3)"/>
+  <line x1="86" y1="180" x2="86" y2="220" marker-end="url(#ar3)"/>
+  <line x1="166" y1="253" x2="184" y2="253" marker-end="url(#ar3)"/>
+  </g>
+</svg>
+<figcaption>Figure 3 · Le parcours complet d'un test.</figcaption>
+</figure>
+
+<h3>Les étapes en détail</h3>
+<ol>
+  <li><strong>Écriture.</strong> Tu saisis la consigne et ta référence kabyle. Le test est d'abord en <code>draft</code>, puis <code>ready</code> quand il est complet.</li>
+  <li><strong>Enregistrement.</strong> « Enregistrer dans le dépôt » écrit le JSONL public, le JSONL privé (ignoré par Git) et le manifeste. Tu commits et pushes la partie publique.</li>
+  <li><strong>Exécution.</strong> Le run garde une <strong>copie figée</strong> de chaque test. Si tu corriges un test plus tard, les anciennes réponses restent interprétées avec la version qu'elles ont reçue.</li>
+  <li><strong>Construction du message.</strong> Pour un modèle simple, c'est la consigne telle quelle (précédée du texte de compréhension s'il y en a un). Pour une variante, <code>variants.py</code> ajoute des exemples (few-shot) ou un aide-mémoire (RAG).</li>
+  <li><strong>Appel du modèle.</strong> Le runner envoie la requête, relance si besoin, et enregistre la réponse brute, les tokens, le coût, la durée et les paramètres réels.</li>
+  <li><strong>Score automatique.</strong> chrF++ et BLEU comparent la réponse à tes références ; on détecte aussi l'écriture (latin, tifinagh, arabe) et la langue.</li>
+  <li><strong>Notation humaine.</strong> Tu vois la consigne, tes références et la réponse, sans savoir quel modèle l'a écrite. Tu notes de 0 à 3 et ajoutes des étiquettes d'erreur.</li>
+  <li><strong>Résultats.</strong> <code>results.py</code> calcule les moyennes par modèle et par catégorie, les intervalles de confiance et les gains des variantes.</li>
+  <li><strong>Export.</strong> Seuls certains champs sont écrits dans <code>data/results/public/results.json</code>. Les tests privés ne comptent que dans les moyennes ; leur texte n'est jamais exporté.</li>
+  <li><strong>Publication.</strong> Après un <code>git push</code>, si toutes les vérifications passent, le site se reconstruit automatiquement.</li>
+</ol>
+
+<!-- ═════════════ 10 ═════════════ -->
+<h2><span class="num">10</span>La notation et les métriques</h2>
+
+<h3>La note humaine : la mesure qui fait foi</h3>
+<table>
+  <tr><th style="width:10%">Note</th><th>Signification</th></tr>
+  <tr><td>0</td><td>Faux, hors sujet, incompréhensible ou dans une autre langue</td></tr>
+  <tr><td>1</td><td>Partiellement correct, erreurs importantes</td></tr>
+  <tr><td>2</td><td>Correct sur le fond, erreurs mineures (orthographe, tournure)</td></tr>
+  <tr><td>3</td><td>Correct et naturel</td></tr>
+</table>
+<p>La note est aussi exprimée en pourcentage : note ÷ 3 × 100. Une moyenne de 1,5 vaut donc 50 %.</p>
+<div class="box why"><span class="t">Pourquoi « à l'aveugle »</span>
+Si tu savais qu'une réponse vient de Claude ou de GPT, tu pourrais inconsciemment être plus indulgente ou plus sévère. L'interface ne reçoit donc ni le nom du modèle, ni les scores automatiques, et les réponses de tous les modèles sont mélangées au hasard. C'est le principe des essais cliniques en « double aveugle ».</div>
+<p>Les <strong>étiquettes d'erreur</strong> décrivent <em>pourquoi</em> une réponse est mauvaise : mauvaise langue, confusion avec l'arabe, autre langue berbère, mots inventés, orthographe, grammaire, contresens, trop littéral, incomplet, mauvaise écriture, refus. Elles permettent de dire non seulement « ce modèle a 40 % », mais aussi « il échoue surtout parce qu'il invente des mots ».</p>
+
+<h3>chrF++ : la mesure automatique principale</h3>
+<p>chrF++ compare la réponse du modèle à ta référence en regardant les <strong>morceaux de caractères</strong> qu'elles ont en commun (des séquences de 1 à 6 lettres), plus les paires de mots. Le score va de 0 (rien en commun) à 100 (identique).</p>
+<div class="box analogy"><span class="t">Exemple (en français, pour l'illustration)</span>
+Référence : « les enfants jouent dehors ». Réponse : « les enfant jouent dehors ».<br>
+Une mesure par mots entiers (comme BLEU) voit un mot faux sur quatre. chrF++ voit que presque tous les morceaux de lettres sont là, et donne un score élevé : l'erreur ne porte que sur un « s ».</div>
+<p>C'est exactement ce qu'il faut pour le kabyle : la langue colle beaucoup de petits éléments aux mots (préfixes, suffixes) et son orthographe varie. Une petite erreur sur un affixe ne doit pas annuler tout le mot. chrF++ est d'ailleurs la mesure de référence pour les langues peu dotées. S'il y a plusieurs références, on garde la meilleure correspondance.</p>
+<p><strong>BLEU</strong> est calculé aussi, pour pouvoir comparer avec d'autres travaux, mais il n'est jamais utilisé pour classer les modèles : il est peu fiable sur des phrases courtes.</p>
+<p><strong>Pourquoi pas COMET</strong>, une mesure plus moderne ? Elle repose sur un modèle (XLM-R) qui connaît mal le kabyle : ses scores seraient trompeurs.</p>
+
+<h3>Langue et écriture de la réponse</h3>
+<ul>
+  <li><strong>L'écriture</strong> est détectée de façon certaine en comptant les lettres latines, tifinagh ou arabes.</li>
+  <li><strong>La langue</strong> est détectée par GlotLID (un outil qui reconnaît plus de 1 600 langues, dont le kabyle) s'il est installé. Sinon, une règle prudente repère seulement les échecs évidents (écriture arabe, mots français courants). Elle ne déclare jamais qu'une réponse est en kabyle. GlotLID n'est pas installé pour l'instant.</li>
+</ul>
+
+<h3>Intervalle de confiance : « à quel point je peux me fier à ce chiffre »</h3>
+<p>Avec 52 tests, une moyenne de 60 % pourrait être 55 % ou 65 % avec d'autres tests du même genre. L'<strong>intervalle de confiance à 95 %</strong> donne cette fourchette. Le projet le calcule par <strong>bootstrap</strong> :</p>
+<ol>
+  <li>on tire au hasard 52 tests parmi les 52, <em>avec remise</em> (certains reviennent deux fois, d'autres pas du tout) ;</li>
+  <li>on recalcule la moyenne ;</li>
+  <li>on recommence 1 000 fois ;</li>
+  <li>on garde la fourchette qui contient 95 % de ces 1 000 moyennes.</li>
+</ol>
+<div class="box idea"><span class="t">À retenir</span>
+Si les fourchettes de deux modèles se chevauchent largement, on ne peut pas dire honnêtement que l'un est meilleur que l'autre. Le site l'affiche pour éviter les conclusions hâtives.</div>
+
+<h3>Le gain d'une variante (comparaison appariée)</h3>
+<p>Pour mesurer si le few-shot améliore Qwen, on ne compare que les tests notés <strong>pour les deux</strong> (Qwen de base et Qwen few-shot). Ainsi, on compare la même question avant et après. On calcule :</p>
+<ul>
+  <li>le gain en points : % après − % avant (par exemple 45 % → 60 % = +15 points) ;</li>
+  <li>le gain relatif : 15 ÷ 45 = +33 % ;</li>
+  <li>un intervalle de confiance bootstrap sur ces différences.</li>
+</ul>
+
+<h3>Corrélation de Spearman : chrF++ est-il fiable pour le kabyle ?</h3>
+<p>Le labo mesure si chrF++ classe les réponses dans le même ordre que toi (coefficient ρ, de −1 à 1). Proche de 1 : chrF++ est un bon indicateur rapide pour le kabyle. Proche de 0 : il ne reflète pas ton jugement. C'est en soi un résultat intéressant à publier.</p>
+
+<!-- ═════════════ 11 ═════════════ -->
+<h2><span class="num">11</span>Phase 2 : améliorer un petit modèle</h2>
+
+<h3>Le modèle choisi</h3>
+<p>Trois petits modèles open source sont candidats ; on les mesure tous, puis on améliore le plus prometteur. <strong>Qwen3.5 4B</strong> est configuré par défaut.</p>
+<table>
+  <tr><th>Modèle</th><th>Taille</th><th>Pourquoi il est candidat</th></tr>
+  <tr><td><strong>Qwen3.5 4B</strong></td><td>4,7 Md</td><td>Licence Apache 2.0, annonce 201 langues, rapide sur un GPU gratuit, bien pris en charge par l'outil de fine-tuning Unsloth</td></tr>
+  <tr><td>Gemma 4 E4B</td><td>≈ 4 Md effectifs</td><td>Google, pré-entraîné sur plus de 140 langues</td></tr>
+  <tr><td>Apertus 8B</td><td>8 Md</td><td>Annonce 1 811 langues ; a probablement vu du kabyle, mais deux fois plus lourd</td></tr>
+</table>
+
+<h3>Les données d'amélioration</h3>
+<p>Les pipelines (<code>pipelines/</code>) préparent les données à partir de corpus publics dont la licence a été vérifiée :</p>
+<table>
+  <tr><th>Source</th><th>Contenu</th><th>Licence</th></tr>
+  <tr><td>Tatoeba</td><td>93 908 paires de phrases français–kabyle traduites par des bénévoles</td><td>CC BY 2.0 FR</td></tr>
+  <tr><td>Common Voice</td><td>≈ 180 000 phrases kabyles (sans traduction)</td><td>CC0</td></tr>
+</table>
+<p>Résultat du dernier passage (fichier <code>data/train/processed/STATS.json</code>, 29 octobre 2026) :</p>
+<table>
+  <tr><th>Étape</th><th>Nombre</th></tr>
+  <tr><td>Paires en entrée</td><td>93 908</td></tr>
+  <tr><td>Retirées : doublons / invalides / <strong>proches d'un test</strong></td><td>196 / 67 / <strong>6</strong></td></tr>
+  <tr><td>Paires conservées</td><td>93 639</td></tr>
+  <tr><td>Exemples d'entraînement générés (les deux sens de traduction)</td><td>187 192, dont 86 retirés car trop proches d'une consigne de test</td></tr>
+  <tr><td>Phrases monolingues conservées</td><td>178 092</td></tr>
+</table>
+<pre>docker compose run --rm api python -m pipelines.download             # télécharge
+docker compose run --rm api python -m pipelines.prepare              # nettoie et décontamine
+docker compose run --rm api python -m pipelines.check_contamination  # doit afficher « OK »</pre>
+
+<h3>Technique 1 : few-shot</h3>
+<p>Avant ta question, on ajoute <strong>5 exemples</strong> de traduction tirés de Tatoeba, présentés comme une conversation déjà faite (question, réponse, question, réponse…). Les exemples choisis sont ceux qui partagent le plus de morceaux de lettres avec la phrase à traduire. Le modèle n'est pas modifié. Variante : <code>qwen3.5-4b-fewshot</code>.</p>
+
+<h3>Technique 2 : RAG</h3>
+<ol>
+  <li><strong>Une fois</strong> : <code>pipelines/build_rag_index.py</code> calcule l'embedding (bge-m3) de chaque paire et enregistre le tout dans <code>data/train/processed/rag_index/</code> (un tableau de nombres <code>embeddings.npy</code> et le texte <code>entries.jsonl</code>).</li>
+  <li><strong>À chaque question</strong> : on calcule l'embedding de la question, on trouve les <strong>8 paires</strong> les plus proches par un simple calcul (produit scalaire, avec numpy), et on les place dans un message système « Voici des paires de phrases kabyle–français… ». Variante : <code>qwen3.5-4b-rag</code>.</li>
+</ol>
+<div class="box why"><span class="t">Pourquoi pas une « base de données vectorielle »</span>
+Pour moins de 100 000 phrases, une multiplication de tableaux prend quelques millisecondes. Une base vectorielle ajouterait un serveur à gérer sans rien apporter. Le fonctionnement reste aussi entièrement transparent.</div>
+<div class="box warn"><span class="t">État actuel</span>
+L'index RAG n'est pas encore construit : la construction sur 20 000 paires a été arrêtée faute de mémoire sur ton PC. Il faudra la relancer avec moins de paires, ou sur Colab.</div>
+
+<h3>Technique 3 : fine-tuning QLoRA</h3>
+<p>Le notebook <code>notebooks/01_qlora_finetune.ipynb</code> s'ouvre dans Google Colab (GPU gratuit). Il entraîne une rustine LoRA (r = 16) sur Qwen3.5 4B quantifié en 4 bits, avec les exemples décontaminés <code>sft_train.jsonl</code>. Puis il exporte le modèle au format GGUF, que tu importes dans Ollama sous le nom <code>kab-qwen3.5-4b</code>. Variante : <code>qwen3.5-4b-lora</code>.</p>
+<p>Estimation (non mesurée) : 1 à 1,5 h pour 60 000 exemples sur le GPU gratuit de Colab ou Kaggle.</p>
+
+<h3>Mesurer le gain (phase 3)</h3>
+<p>Une seule exécution avec Qwen de base et ses trois variantes, sur tous les tests. Tu notes les réponses mélangées à l'aveugle, et l'onglet Résultats calcule les gains appariés par catégorie.</p>
+
+<!-- ═════════════ 12 ═════════════ -->
+<h2><span class="num">12</span>La contamination et comment on l'empêche</h2>
+<div class="box rule"><span class="t">Règle</span>
+Aucune phrase de tes tests (publics ou privés) ne doit se retrouver, même presque à l'identique, dans les données du few-shot, du RAG ou du fine-tuning.</div>
+
+<h3>Comment on reconnaît une phrase « trop proche »</h3>
+<p>Le fichier <code>backend/app/contamination.py</code> fait deux contrôles :</p>
+<ol>
+  <li><strong>Doublon exact</strong>, après normalisation : on met tout en minuscules, on retire la ponctuation et les espaces en trop, on applique NFC. « Bonjour, Ali ! » et « bonjour ali » deviennent identiques.</li>
+  <li><strong>Quasi-doublon</strong> : on découpe chaque phrase en morceaux de 5 caractères qui se chevauchent (« bonjo », « onjou », « njour »…), puis on calcule la <strong>similarité de Jaccard</strong> = morceaux communs ÷ morceaux au total. Si elle atteint <strong>0,8</strong> (80 % en commun), la phrase est considérée comme contaminée. Ce contrôle ne s'applique qu'aux textes d'au moins 15 caractères ; en dessous, seul le doublon exact a du sens.</li>
+</ol>
+<p>Sont protégés : la consigne, le texte source, le texte de contexte et toutes les références de chaque test.</p>
+
+<h3>Les trois niveaux de protection</h3>
+<table>
+  <tr><th style="width:18%">Niveau</th><th>Ce qui se passe</th></tr>
+  <tr><td><strong>1. Pipeline</strong></td><td><code>prepare.py</code> retire des données toute phrase ou consigne générée trop proche d'un test, et enregistre l'<strong>empreinte</strong> du jeu de test qu'il a utilisé.</td></tr>
+  <tr><td><strong>2. Labo</strong></td><td>Avant de lancer une variante few-shot ou RAG, le labo revérifie toutes ses données. Au moindre recoupement, la variante <strong>refuse de démarrer</strong>. L'onglet Préparation signale aussi si les données ont été préparées avec une ancienne version du jeu de test.</td></tr>
+  <tr><td><strong>3. CI (GitHub)</strong></td><td>À chaque push, GitHub rejoue la préparation et le contrôle : si un recoupement apparaît, la CI échoue.</td></tr>
+</table>
+<div class="box idea"><span class="t">Exemple réel</span>
+C'est le niveau 3 qui a détecté que 86 consignes d'entraînement générées ressemblaient trop à des consignes de test (mêmes gabarits, phrases courtes). La correction a ajouté un filtre dans <code>prepare.py</code> (décision n° 31 du journal).</div>
+<div class="box warn"><span class="t">À faire après chaque ajout de tests</span>
+Relancer <code>pipelines.prepare</code> (et <code>pipelines.build_rag_index</code>), sinon le labo bloque les variantes few-shot et RAG.</div>
+
+<!-- ═════════════ 13 ═════════════ -->
+<h2><span class="num">13</span>La sécurité</h2>
+
+<h3>Les clés d'API</h3>
+<ul>
+  <li>Elles vivent uniquement dans <code>.env</code>, à la racine du projet. Le fichier <code>.gitignore</code> empêche Git de l'envoyer.</li>
+  <li><code>.env.example</code> (lui, sur GitHub) montre les noms des variables, toujours vides.</li>
+  <li>L'API ne renvoie jamais la valeur d'une clé ; elle dit seulement « présente » ou « absente ». Un test automatique le vérifie.</li>
+</ul>
+
+<h3>Défense en profondeur contre les fuites de secrets</h3>
+<table>
+  <tr><th style="width:24%">Barrière</th><th>Rôle</th></tr>
+  <tr><td><code>.gitignore</code></td><td>Git ignore <code>.env</code>, la base, les tests privés, les données téléchargées.</td></tr>
+  <tr><td>Hook pre-commit</td><td>Avant chaque commit sur ton PC : <strong>gitleaks</strong> cherche des secrets dans les fichiers modifiés et bloque tout <code>.env</code>.</td></tr>
+  <tr><td>CI (job « secrets »)</td><td>gitleaks analyse tout l'historique ; la CI échoue si un <code>.env</code> ou un test privé est suivi par Git.</td></tr>
+</table>
+<p>Si une barrière rate quelque chose, la suivante le rattrape.</p>
+
+<h3>Protéger le labo local</h3>
+<p>Même un outil local peut être attaqué <em>à travers ton navigateur</em>. Une page web malveillante ouverte dans un autre onglet pourrait essayer d'envoyer une requête à <code>localhost:8800</code> pour lancer une exécution payante. Deux protections dans <code>security.py</code> :</p>
+<ul>
+  <li><strong>Refus des écritures venant d'un autre site</strong> : toute requête qui modifie quelque chose (POST, PUT, DELETE) est refusée si elle ne vient pas de l'interface du labo (en-têtes <code>Origin</code> et <code>Sec-Fetch-Site</code>). Cela bloque les attaques <em>CSRF</em>.</li>
+  <li><strong>Liste d'hôtes autorisés</strong> : l'API n'accepte que les noms <code>localhost</code>, <code>127.0.0.1</code> et <code>api</code>. Cela bloque une attaque appelée <em>DNS rebinding</em>, où un faux nom de domaine pointe vers ta machine.</li>
+</ul>
+
+<h3>Ce qui peut sortir de ton PC, et ce qui ne le peut pas</h3>
+<table>
+  <tr><th>Donnée</th><th>Où elle peut aller</th></tr>
+  <tr><td>Tests publics</td><td>GitHub, site, tous les fournisseurs (y compris gratuits)</td></tr>
+  <tr><td>Tests privés</td><td>Seulement Ollama (local) et les fournisseurs payants. Jamais GitHub, jamais le site, jamais une offre gratuite (verrou <code>public_only</code>)</td></tr>
+  <tr><td>Clés d'API</td><td>Nulle part, sauf vers leur propre fournisseur</td></tr>
+  <tr><td>Résultats</td><td>Le site, uniquement via l'export à liste blanche</td></tr>
+</table>
+
+<h3>Les dépendances</h3>
+<p>Le projet utilise des bibliothèques écrites par d'autres. Une faille découverte dans l'une d'elles est une faille du projet. Trois outils surveillent cela : <strong>Dependabot</strong> (GitHub propose automatiquement les mises à jour), <strong>npm audit</strong> et <strong>pip-audit</strong> (la CI échoue sur toute faille grave), et <strong>CodeQL</strong> (analyse le code à la recherche d'erreurs de sécurité). Lors de l'audit du 29 octobre, les 21 alertes Dependabot ont été corrigées ; il reste 0 alerte.</p>
+<p>Le fichier <code>SECURITY.md</code> explique comment signaler une faille en privé.</p>
+
+<!-- ═════════════ 14 ═════════════ -->
+<h2><span class="num">14</span>CI/CD : les vérifications automatiques sur GitHub</h2>
+<p><strong>CI</strong> (intégration continue) : à chaque <code>git push</code>, GitHub lance automatiquement une série de vérifications sur une machine à lui. <strong>CD</strong> (déploiement continu) : si tout est vert sur la branche <code>main</code>, le site est mis à jour automatiquement. Ces « workflows » sont décrits dans <code>.github/workflows/</code>.</p>
+
+<h3><code>ci.yml</code> : à chaque push, sur toutes les branches</h3>
+<table>
+  <tr><th style="width:22%">Job</th><th>Ce qu'il vérifie</th></tr>
+  <tr><td>secrets</td><td>Aucun secret dans l'historique (gitleaks), aucun <code>.env</code> ni test privé suivi par Git</td></tr>
+  <tr><td>backend</td><td>Style du code Python (ruff) et les tests automatiques (pytest, environ 75 tests)</td></tr>
+  <tr><td>contamination</td><td>Rejoue la préparation des données et le contrôle de contamination</td></tr>
+  <tr><td>lab-ui</td><td>Lint, vérification des types, tests et compilation de l'interface</td></tr>
+  <tr><td>site</td><td>Compilation du site public</td></tr>
+  <tr><td>audit</td><td>Failles connues dans les dépendances (npm audit, pip-audit)</td></tr>
+  <tr><td>dependency-review</td><td>Sur les pull requests : nouvelles dépendances vulnérables</td></tr>
+  <tr><td>docker</td><td>L'image de l'API se construit correctement</td></tr>
+</table>
+
+<h3><code>codeql.yml</code> et <code>pages.yml</code></h3>
+<ul>
+  <li><strong>CodeQL</strong> analyse le code Python, TypeScript et les workflows, à chaque push et chaque semaine.</li>
+  <li><strong>Pages</strong> se déclenche seulement quand la CI de <code>main</code> a réussi, et déploie exactement le commit qui a été vérifié. Un état cassé ne peut donc jamais être publié.</li>
+</ul>
+<div class="box why"><span class="t">Pourquoi c'est important pour un portfolio</span>
+Le badge « CI passing » sur le README montre à un recruteur que le projet est testé automatiquement, sécurisé et déployé proprement : ce sont des pratiques DevOps professionnelles.</div>
+
+<!-- ═════════════ 15 ═════════════ -->
+<h2><span class="num">15</span>Le site public</h2>
+<p>Le site (<code>site/</code>) est construit avec <strong>Astro</strong>, qui génère des pages HTML statiques : pas de serveur, pas de base de données, donc rien à pirater et un affichage très rapide. Les graphiques interactifs sont des petits composants React (<code>Charts.tsx</code>, bibliothèque Recharts) ; c'est ce qu'Astro appelle des « îlots ».</p>
+<ul>
+  <li><strong>Bilingue</strong> : <code>pages/index.astro</code> (français) et <code>pages/en/index.astro</code> (anglais), textes dans <code>lib/i18n.ts</code>.</li>
+  <li><strong>Données</strong> : avant la compilation, <code>scripts/sync-data.mjs</code> copie <code>data/results/public/results.json</code> dans le site. Sans résultats, le site affiche « résultats à venir » : aucun chiffre n'est inventé.</li>
+  <li><strong>Couleurs</strong> : palette testée pour le daltonisme ; chaque modèle garde sa couleur, quel que soit son rang.</li>
+  <li><strong>Partage</strong> : <code>scripts/visuals/generate.py</code> produit les images PNG pour LinkedIn et l'aperçu des liens (Open Graph).</li>
+</ul>
+<p>Adresse : <code>hasdaouiryma16-cmd.github.io/kabyle-llm-benchmark</code></p>
+
+<!-- ═════════════ 16 ═════════════ -->
+<h2><span class="num">16</span>Organisation du dépôt</h2>
+<pre>kabyle-llm-benchmark/
+├── backend/                  l'API Python
+│   ├── app/                  le code (chapitre 5)
+│   │   └── api/              les routes HTTP par thème
+│   ├── config/models.yaml    la liste des modèles (chapitre 7)
+│   ├── migrations/           évolutions du schéma de la base (Alembic)
+│   ├── tests/                tests automatiques (pytest)
+│   ├── var/                  base lab.db et sauvegardes · PAS dans Git
+│   ├── Dockerfile            recette de l'image Docker de l'API
+│   └── pyproject.toml        dépendances Python (gérées avec uv)
+├── lab-ui/                   l'interface du labo (React, chapitre 6)
+├── site/                     le site public (Astro, chapitre 15)
+├── data/
+│   ├── test/                 le jeu de test public + MANIFEST.json
+│   │   └── private/          tests privés · PAS dans Git
+│   ├── prompts/              les consignes du mode guidé
+│   ├── train/                données d'amélioration (seul STATS.json est dans Git)
+│   └── results/public/       résultats exportés pour le site
+├── pipelines/                téléchargement, préparation, contrôle, index RAG
+├── notebooks/                fine-tuning QLoRA sur Colab
+├── scripts/                  sauvegarde, images de partage
+├── docs/                     documentation (méthodologie, métriques, décisions…)
+├── .github/workflows/        CI, CodeQL, déploiement du site
+├── docker-compose.yml        les 3 services du labo
+├── .env.example              modèle du fichier de clés (sans valeurs)
+└── README.md / README.en.md  présentation du projet</pre>
+
+<h3>La documentation existante, à lire ensuite</h3>
+<table>
+  <tr><th style="width:32%">Document</th><th>Contenu</th></tr>
+  <tr><td><code>docs/methodology.md</code></td><td>Le protocole scientifique complet</td></tr>
+  <tr><td><code>docs/metrics.md</code></td><td>Le détail des métriques</td></tr>
+  <tr><td><code>docs/lab.md</code></td><td>Le mode d'emploi quotidien du labo</td></tr>
+  <tr><td><code>docs/phase2.md</code></td><td>Le plan d'amélioration du petit modèle</td></tr>
+  <tr><td><code>docs/decisions.md</code></td><td>Les 35 décisions techniques et leurs raisons</td></tr>
+  <tr><td><code>docs/add-a-model.md</code></td><td>Ajouter un modèle ou un fournisseur</td></tr>
+  <tr><td><code>data/train/SOURCES.md</code></td><td>Les corpus, leurs licences, ceux qui sont exclus et pourquoi</td></tr>
+</table>
+
+<h3>Les technologies, en résumé</h3>
+<table>
+  <tr><th style="width:20%">Domaine</th><th>Outils</th></tr>
+  <tr><td>Backend</td><td>Python, FastAPI, SQLModel, SQLite, Alembic, httpx, SDK Anthropic, sacrebleu, numpy, uv, ruff, pytest</td></tr>
+  <tr><td>Interface</td><td>React, TypeScript, Vite, Tailwind CSS, Vitest, ESLint</td></tr>
+  <tr><td>Site</td><td>Astro, React, Recharts</td></tr>
+  <tr><td>IA locale</td><td>Ollama, Qwen3.5 4B, bge-m3 ; Unsloth (QLoRA) sur Colab</td></tr>
+  <tr><td>Infra et DevOps</td><td>Docker, Docker Compose, GitHub Actions, GitHub Pages, gitleaks, CodeQL, Dependabot</td></tr>
+</table>
+
+<!-- ═════════════ 17 ═════════════ -->
+<h2><span class="num">17</span>Où en est le projet, et la suite</h2>
+
+<h3>État au 31 octobre 2026</h3>
+<table>
+  <tr><th>Élément</th><th style="width:18%">État</th></tr>
+  <tr><td>Labo (API, interface, base, Docker)</td><td><span class="tag done">terminé</span></td></tr>
+  <tr><td>Jeu de test v1.0.0 : 52 tests, publié (41 publics)</td><td><span class="tag done">terminé</span></td></tr>
+  <tr><td>Données d'amélioration préparées et décontaminées</td><td><span class="tag done">terminé</span></td></tr>
+  <tr><td>Sécurité : audit, protections, 0 alerte</td><td><span class="tag done">terminé</span></td></tr>
+  <tr><td>CI/CD et site public (en attente de résultats)</td><td><span class="tag done">terminé</span></td></tr>
+  <tr><td>API gratuites (Gemini, Mistral, OpenRouter) avec verrou tests publics</td><td><span class="tag done">terminé</span></td></tr>
+  <tr><td>Ollama dans Docker, Qwen3.5 4B et bge-m3 téléchargés</td><td><span class="tag done">terminé</span></td></tr>
+  <tr><td>Clés d'API dans <code>.env</code></td><td><span class="tag todo">à faire (toi)</span></td></tr>
+  <tr><td>Index RAG</td><td><span class="tag block">bloqué : mémoire</span></td></tr>
+  <tr><td>Premier benchmark, notation, résultats</td><td><span class="tag todo">à faire</span></td></tr>
+  <tr><td>Fine-tuning QLoRA sur Colab</td><td><span class="tag todo">à faire</span></td></tr>
+  <tr><td>Publication des résultats et visuels LinkedIn</td><td><span class="tag todo">à faire</span></td></tr>
+</table>
+
+<h3>Les prochaines étapes, dans l'ordre</h3>
+<ol>
+  <li><strong>Créer une clé gratuite Gemini</strong> (aistudio.google.com) et la coller dans <code>.env</code>, puis <code>docker compose restart api</code>.</li>
+  <li><strong>Premier petit run</strong> en mode test (2 questions par catégorie, partie publique) pour vérifier que tout fonctionne.</li>
+  <li><strong>Run complet</strong> sur les tests publics avec les modèles gratuits ; ajouter les modèles payants plus tard si tu le souhaites.</li>
+  <li><strong>Noter à l'aveugle</strong> toutes les réponses.</li>
+  <li><strong>Construire l'index RAG</strong> (moins de paires, ou sur Colab), puis mesurer Qwen de base, few-shot et RAG.</li>
+  <li><strong>Fine-tuning QLoRA</strong> sur Colab, puis mesurer la variante fine-tunée.</li>
+  <li><strong>Exporter</strong> les résultats, générer les visuels, publier.</li>
+</ol>
+
+<h3>Les limites assumées</h3>
+<ul>
+  <li><strong>Une seule annotatrice</strong> : les notes reflètent ta variété de kabyle et tes choix d'orthographe. Plusieurs références par test atténuent ce biais.</li>
+  <li><strong>Un jeu de taille modeste</strong> : les intervalles de confiance seront larges ; les petits écarts ne seront pas significatifs.</li>
+  <li><strong>chrF++ ne mesure qu'une ressemblance de surface</strong> : la note humaine fait foi.</li>
+  <li><strong>Des résultats datés</strong> : ils valent pour les versions de modèles et la date indiquées.</li>
+  <li><strong>Ton PC</strong> (8 Go de RAM, sans GPU NVIDIA) limite les modèles locaux : les étapes lourdes passent par Colab.</li>
+</ul>
+
+<!-- ═════════════ 18 ═════════════ -->
+<h2><span class="num">18</span>Glossaire et commandes utiles</h2>
+<dl class="gloss">
+  <dt>API</dt><dd>Porte d'entrée par laquelle un programme en appelle un autre (ici : le labo appelle les fournisseurs ; l'interface appelle le backend).</dd>
+  <dt>Benchmark</dt><dd>Examen standardisé pour comparer des modèles.</dd>
+  <dt>Bootstrap</dt><dd>Méthode qui estime la fiabilité d'une moyenne en la recalculant sur 1 000 tirages au hasard.</dd>
+  <dt>chrF++</dt><dd>Score de 0 à 100 qui mesure la ressemblance entre deux textes à partir de morceaux de caractères.</dd>
+  <dt>CI/CD</dt><dd>Vérifications automatiques à chaque push, et déploiement automatique si tout est vert.</dd>
+  <dt>Conteneur</dt><dd>Petite machine isolée qui contient un programme et tout ce dont il a besoin (Docker).</dd>
+  <dt>Contamination</dt><dd>Quand un modèle a vu les questions du test pendant son entraînement ou dans son aide.</dd>
+  <dt>Embedding</dt><dd>Liste de nombres qui représente le sens d'une phrase.</dd>
+  <dt>Empreinte (SHA-256)</dt><dd>Code calculé à partir d'un contenu ; il change dès que le contenu change.</dd>
+  <dt>Few-shot</dt><dd>Donner quelques exemples résolus au modèle juste avant la question.</dd>
+  <dt>Fine-tuning</dt><dd>Continuer l'entraînement d'un modèle sur des données spécifiques.</dd>
+  <dt>GGUF</dt><dd>Format de fichier d'un modèle quantifié, utilisé par Ollama.</dd>
+  <dt>GPU</dt><dd>Carte graphique ; fait les calculs des modèles beaucoup plus vite qu'un processeur.</dd>
+  <dt>Inférence</dt><dd>Le fait de faire répondre un modèle déjà entraîné.</dd>
+  <dt>JSON / JSONL</dt><dd>Format texte structuré ; JSONL = un objet JSON par ligne.</dd>
+  <dt>LLM</dt><dd>Grand modèle de langage : programme qui génère du texte en devinant le mot suivant.</dd>
+  <dt>LoRA / QLoRA</dt><dd>Fine-tuning léger qui entraîne une petite « rustine » au lieu du modèle entier ; QLoRA le fait sur un modèle compressé en 4 bits.</dd>
+  <dt>Ollama</dt><dd>Logiciel qui fait tourner des modèles open source sur sa propre machine.</dd>
+  <dt>Paramètres</dt><dd>Les nombres appris par un modèle ; « 4B » = 4 milliards.</dd>
+  <dt>Prompt</dt><dd>Le texte envoyé au modèle.</dd>
+  <dt>Quantification</dt><dd>Compression d'un modèle en arrondissant ses paramètres.</dd>
+  <dt>RAG</dt><dd>Chercher des textes utiles dans une bibliothèque et les donner au modèle avec la question.</dd>
+  <dt>Température</dt><dd>Niveau de hasard dans les réponses ; 0 = réponses stables.</dd>
+  <dt>Token</dt><dd>Morceau de mot ; unité de lecture et de facturation des modèles.</dd>
+</dl>
+
+<h3>Commandes utiles</h3>
+<pre># Lancer et arrêter le labo
+docker compose up -d                          # API + interface
+docker compose --profile ollama up -d         # + modèles locaux
+docker compose down                           # arrêter (les données restent)
+docker compose restart api                    # après une modification de .env
+
+# Données de la phase 2
+docker compose run --rm api python -m pipelines.prepare
+docker compose run --rm api python -m pipelines.check_contamination
+docker compose run --rm api python -m pipelines.build_rag_index --limit 5000
+
+# Sauvegarde (à faire régulièrement)
+docker compose run --rm api python -m scripts.backup
+
+# Tests automatiques
+docker compose run --rm api pytest
+docker compose run --rm lab-ui npm test
+
+# Adresses
+Interface du labo     http://localhost:5173
+API et sa doc         http://127.0.0.1:8800/docs</pre>
+
+</body>
+</html>
