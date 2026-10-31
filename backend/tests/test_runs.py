@@ -37,6 +37,21 @@ def test_estimate_counts_calls_and_known_costs(client):
     assert costs["mock-a"] > 0 and costs["mock-b"] is None  # prix inconnu : jamais inventé
 
 
+def test_free_tier_model_never_receives_private_tests(client):
+    _seed(client, n=2)
+    _seed(client, n=1, split="private", prompt="Consigne privée")
+    for split in (None, "private"):
+        payload = {"name": "x", "model_keys": ["mock-a", "mock-free"], "split": split}
+        assert client.post("/api/runs/estimate", json=payload).status_code == 400
+        response = client.post("/api/runs", json=payload)
+        assert response.status_code == 400 and "mock-free" in response.text
+    assert client.get("/api/runs").json() == []  # rien n'a été créé
+    run_id = _run(client, ["mock-free"], split="public")
+    assert wait_run(client, run_id)["total"] == 2
+    sent = json.dumps(_mock(client).calls, ensure_ascii=False)
+    assert "Consigne privée" not in sent
+
+
 def test_run_completes_and_scores_automatically(client):
     _seed(client, n=2)
     run_id = _run(client, ["mock-a", "mock-b"])

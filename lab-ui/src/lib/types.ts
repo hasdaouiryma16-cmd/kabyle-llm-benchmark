@@ -85,6 +85,8 @@ export interface ModelInfo {
   pricing: { input: number; output: number } | null;
   base: string | null;
   variant: "base" | "fewshot" | "rag" | "finetuned";
+  /** Offre gratuite : seuls les tests publics peuvent lui être envoyés */
+  public_only: boolean;
   available: boolean;
 }
 

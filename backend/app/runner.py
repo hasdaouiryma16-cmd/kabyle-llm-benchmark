@@ -125,14 +125,22 @@ class RunManager:
             out[key] = cache[model.provider]
         return out
 
-    def _check_models(self, keys: list[str]) -> list[ModelConfig]:
-        unknown = [k for k in keys if k not in self.registry]
+    def _check_models(self, request: RunRequest) -> list[ModelConfig]:
+        unknown = [k for k in request.model_keys if k not in self.registry]
         if unknown:
             raise ValueError(f"modèles inconnus : {', '.join(unknown)}")
-        return [self.registry[k] for k in keys]
+        models = [self.registry[k] for k in request.model_keys]
+        # Les tests privés ne partent jamais vers une offre qui peut s'en servir pour entraîner
+        restricted = [m.key for m in models if m.public_only]
+        if restricted and request.split != Split.public:
+            raise ValueError(
+                f"{', '.join(restricted)} : offre gratuite, tests publics seulement "
+                "(choisir « public » dans la sélection des tests)"
+            )
+        return models
 
     def estimate(self, session: Session, request: RunRequest) -> dict[str, Any]:
-        models = self._check_models(request.model_keys)
+        models = self._check_models(request)
         items = select_items(session, request)
         input_chars = sum(len(i.prompt) + len(i.context or "") for i in items)
         input_tokens = input_chars / CHARS_PER_TOKEN
@@ -151,7 +159,7 @@ class RunManager:
         }
 
     def create_run(self, session: Session, request: RunRequest) -> Run:
-        models = self._check_models(request.model_keys)
+        models = self._check_models(request)
         items = select_items(session, request)
         if not items:
             raise ValueError("aucun test « ready » ne correspond à la sélection")

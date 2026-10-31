@@ -33,6 +33,7 @@ class Settings(BaseSettings):
     openai_api_key: SecretStr | None = None
     mistral_api_key: SecretStr | None = None
     openrouter_api_key: SecretStr | None = None
+    gemini_api_key: SecretStr | None = None
     ollama_base_url: str = "http://localhost:11434"
 
     @field_validator(
@@ -40,6 +41,7 @@ class Settings(BaseSettings):
         "openai_api_key",
         "mistral_api_key",
         "openrouter_api_key",
+        "gemini_api_key",
         mode="before",
     )
     @classmethod

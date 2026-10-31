@@ -13,6 +13,7 @@ class ProviderName(StrEnum):
     openai = "openai"
     mistral = "mistral"
     openrouter = "openrouter"
+    gemini = "gemini"
     ollama = "ollama"
     mock = "mock"  # utilisé par les tests automatisés uniquement
 
@@ -39,6 +40,9 @@ class ModelConfig(BaseModel):
     base: str | None = None
     variant: Variant = Variant.base
     variant_params: dict[str, Any] = Field(default_factory=dict)
+    # Offres gratuites dont les conditions autorisent l'usage des requêtes pour entraîner
+    # des modèles : seuls les tests publics (déjà sur GitHub) peuvent leur être envoyés.
+    public_only: bool = False
 
     @model_validator(mode="after")
     def _variant_needs_base(self):

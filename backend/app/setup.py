@@ -28,6 +28,7 @@ API_KEYS = {
     ProviderName.openai: ("OpenAI (GPT)", "OPENAI_API_KEY"),
     ProviderName.mistral: ("Mistral", "MISTRAL_API_KEY"),
     ProviderName.openrouter: ("OpenRouter", "OPENROUTER_API_KEY"),
+    ProviderName.gemini: ("Google Gemini", "GEMINI_API_KEY"),
 }
 
 
