@@ -47,7 +47,7 @@ flowchart LR
   subgraph LAB["Labo local · docker compose up · 127.0.0.1 uniquement"]
     UI["lab-ui<br/>React + TS + Vite"] <-->|"REST + SSE"| API["api<br/>FastAPI"]
     API --> DB[("SQLite<br/>tests, runs, notes")]
-    API --> P{{"Fournisseurs<br/>Anthropic · OpenAI · Mistral<br/>OpenRouter · Ollama"}}
+    API --> P{{"Fournisseurs<br/>Anthropic · OpenAI · Mistral<br/>OpenRouter · Gemini · Ollama"}}
     API --> V["Variantes<br/>few-shot · RAG · fine-tuné"]
   end
   T[("data/test/*.jsonl<br/>source de vérité")] <-->|"import / export"| API
