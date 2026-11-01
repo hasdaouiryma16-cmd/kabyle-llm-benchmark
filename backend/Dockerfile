@@ -1,4 +1,4 @@
-FROM python:3.12-slim
+FROM python:3.15-slim
 
 # uv : gestionnaire de dépendances rapide, avec fichier de verrouillage (uv.lock)
 COPY --from=ghcr.io/astral-sh/uv:0.8.0 /uv /uvx /bin/
