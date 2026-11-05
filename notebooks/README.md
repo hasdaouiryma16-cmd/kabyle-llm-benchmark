@@ -3,8 +3,22 @@
 | Notebook | Rôle |
 |---|---|
 | [`01_qlora_finetune.ipynb`](01_qlora_finetune.ipynb) | Fine-tuning QLoRA (Unsloth) sur les paires décontaminées, puis export GGUF |
+| [`02_rag_index.ipynb`](02_rag_index.ipynb) | Embeddings bge-m3 de l'index RAG, quand le PC manque de mémoire |
 
-Ouvrir dans Colab : <https://colab.research.google.com/github/hasdaouiryma16-cmd/kabyle-llm-benchmark/blob/main/notebooks/01_qlora_finetune.ipynb>
+Ouvrir dans Colab :
+- QLoRA : <https://colab.research.google.com/github/hasdaouiryma16-cmd/kabyle-llm-benchmark/blob/main/notebooks/01_qlora_finetune.ipynb>
+- Index RAG : <https://colab.research.google.com/github/hasdaouiryma16-cmd/kabyle-llm-benchmark/blob/main/notebooks/02_rag_index.ipynb>
+
+## Index RAG sur Colab
+
+```bash
+# 1. Sur le PC : exporter les phrases décontaminées (aucun test ne part sur Colab)
+docker compose run --rm api python -m pipelines.build_rag_index --limit 20000 --export-colab
+# 2. Colab : téléverser data/train/processed/rag_colab/rag_texts.jsonl, récupérer embeddings.npy
+#    et le placer dans data/train/processed/rag_colab/
+# 3. Sur le PC : assembler l'index (vérifie que le jeu de test n'a pas changé entre-temps)
+docker compose run --rm api python -m pipelines.build_rag_index --import-colab data/train/processed/rag_colab/embeddings.npy
+```
 
 ## 1. Préparer les données (sur le PC, après avoir saisi le jeu de test)
 
