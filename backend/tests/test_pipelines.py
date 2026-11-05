@@ -72,3 +72,38 @@ def test_check_contamination_scans_every_output(tmp_path):
     write_jsonl(tmp_path / "sft_train.jsonl", [{"messages": [{"role": "user", "content": "c"}]}])
     (tmp_path / "mono_kab.txt").write_text("d\n", encoding="utf-8")
     assert sorted(text for _, text in candidates(tmp_path)) == ["a", "b", "c", "d"]
+
+
+def test_rag_index_colab_round_trip(tmp_path, monkeypatch):
+    import json
+
+    import numpy as np
+    import pytest
+
+    from pipelines import build_rag_index as bri
+
+    monkeypatch.setattr(bri, "PROCESSED_DIR", tmp_path)
+    monkeypatch.setattr(bri, "COLAB_DIR", tmp_path / "rag_colab")
+    monkeypatch.setattr(bri, "protected_test_fingerprint", lambda: "empreinte-1")
+    pairs = [{"fr": "Il pleut.", "kab": "kab-1", "source": "t"},
+             {"fr": "Bonjour.", "kab": "kab-2", "source": "t"}]  # fmt: skip
+    bri.export_colab(pairs, "bge-m3")
+    texts = (tmp_path / "rag_colab" / bri.COLAB_TEXTS).read_text("utf-8")
+    assert "source" not in texts  # seul le texte à vectoriser part sur Colab
+
+    npy = tmp_path / "embeddings.npy"
+    np.save(npy, np.ones((1, 4), dtype=np.float32))
+    with pytest.raises(SystemExit):  # pas le bon nombre de vecteurs
+        bri.import_colab(npy)
+
+    np.save(npy, np.array([[3.0, 4.0], [1.0, 0.0]], dtype=np.float32))
+    monkeypatch.setattr(bri, "protected_test_fingerprint", lambda: "empreinte-2")
+    with pytest.raises(SystemExit):  # jeu de test modifié depuis l'export
+        bri.import_colab(npy)
+
+    monkeypatch.setattr(bri, "protected_test_fingerprint", lambda: "empreinte-1")
+    bri.import_colab(npy)
+    meta = json.loads((tmp_path / "rag_index" / "meta.json").read_text("utf-8"))
+    assert meta["entries"] == 2 and meta["protected_test_fingerprint"] == "empreinte-1"
+    matrix = np.load(tmp_path / "rag_index" / "embeddings.npy")
+    assert np.allclose(np.linalg.norm(matrix, axis=1), 1.0)
