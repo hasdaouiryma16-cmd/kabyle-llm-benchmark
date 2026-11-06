@@ -4,6 +4,20 @@
 |---|---|
 | [`01_qlora_finetune.ipynb`](01_qlora_finetune.ipynb) | Fine-tuning QLoRA (Unsloth) sur les paires décontaminées, puis export GGUF |
 | [`02_rag_index.ipynb`](02_rag_index.ipynb) | Embeddings bge-m3 de l'index RAG, quand le PC manque de mémoire |
+| [`03_ollama_colab.ipynb`](03_ollama_colab.ipynb) | Serveur Ollama sur le GPU de Colab (Qwen, bge-m3, modèle fine-tuné), joint par le labo via un tunnel ; **tests publics seulement** |
+
+## Faire tourner les modèles Ollama sur Colab
+
+Quand le PC n'a pas la mémoire pour Qwen (≈ 3,5 Go libres nécessaires) :
+
+1. Ouvrir `03_ollama_colab.ipynb` dans Colab (GPU T4), *Tout exécuter* et copier l'adresse `https://….trycloudflare.com` affichée.
+2. Dans `.env` : `OLLAMA_DOCKER_URL=<adresse>`, puis `docker compose up -d api`.
+3. Le labo marque alors tous les modèles Ollama « tests publics seulement » : un run qui inclut des tests privés est refusé.
+4. À la fin, remettre `OLLAMA_DOCKER_URL=http://ollama:11434` (ou supprimer la ligne) et `docker compose up -d api`.
+
+Pour le modèle fine-tuné, la dernière cellule de `01_qlora_finetune.ipynb` copie le `.gguf` dans Google Drive ; renseigner son chemin dans `GGUF_ON_DRIVE` du notebook 03.
+
+Lien Colab : <https://colab.research.google.com/github/hasdaouiryma16-cmd/kabyle-llm-benchmark/blob/main/notebooks/03_ollama_colab.ipynb>
 
 Ouvrir dans Colab :
 - QLoRA : <https://colab.research.google.com/github/hasdaouiryma16-cmd/kabyle-llm-benchmark/blob/main/notebooks/01_qlora_finetune.ipynb>
