@@ -18,6 +18,8 @@ docker compose run --rm api python -m pipelines.build_rag_index --limit 20000 --
 #    et le placer dans data/train/processed/rag_colab/
 # 3. Sur le PC : assembler l'index (vérifie que le jeu de test n'a pas changé entre-temps)
 docker compose run --rm api python -m pipelines.build_rag_index --import-colab data/train/processed/rag_colab/embeddings.npy
+# 4. Vérifier que les vecteurs de Colab concordent avec le bge-m3 local (cosinus ≥ 0,98)
+docker compose run --rm api python -m pipelines.verify_rag_index
 ```
 
 ## 1. Préparer les données (sur le PC, après avoir saisi le jeu de test)
