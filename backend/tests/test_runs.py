@@ -157,3 +157,25 @@ def test_fewshot_variant_adds_examples_as_dialogue_turns(client, settings):
     messages = mock.calls[-1]
     assert [m["role"] for m in messages] == ["user", "assistant", "user", "assistant", "user"]
     assert {messages[1]["content"], messages[3]["content"]} == {"ex-kab-1", "ex-kab-2"}
+
+
+def test_remote_ollama_models_become_public_only():
+    from app.registry import ModelConfig, ProviderName, lock_remote_ollama
+
+    def registry():
+        return {
+            "q": ModelConfig(key="q", label="Q", provider=ProviderName.ollama, model="q"),
+            "g": ModelConfig(key="g", label="G", provider=ProviderName.gemini, model="g"),
+        }
+
+    for local in (
+        "http://localhost:11434",
+        "http://ollama:11434",
+        "http://host.docker.internal:11434",
+    ):
+        reg = registry()
+        lock_remote_ollama(reg, local)
+        assert not reg["q"].public_only
+    reg = registry()
+    lock_remote_ollama(reg, "https://exemple.trycloudflare.com")
+    assert reg["q"].public_only and not reg["g"].public_only

@@ -13,7 +13,7 @@ from app.api import grading, guided, items, results, runs, testset
 from app.config import Settings
 from app.db import init_db, make_engine
 from app.providers import build_providers
-from app.registry import load_registry
+from app.registry import load_registry, lock_remote_ollama
 from app.runner import RunManager
 from app.scoring import LanguageDetector
 from app.security import add_local_only_protection
@@ -24,10 +24,12 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     settings = settings or Settings()
     engine = make_engine(settings.database_url)
     init_db(engine)
+    registry = load_registry(settings.models_config)
+    lock_remote_ollama(registry, settings.ollama_base_url)
     runner = RunManager(
         engine,
         settings,
-        load_registry(settings.models_config),
+        registry,
         build_providers(settings),
         LanguageDetector(settings.glotlid_model_path),
     )

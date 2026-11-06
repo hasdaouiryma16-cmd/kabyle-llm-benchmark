@@ -3,6 +3,7 @@
 from enum import StrEnum
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
 import yaml
 from pydantic import BaseModel, Field, model_validator
@@ -54,6 +55,24 @@ class ModelConfig(BaseModel):
         if self.pricing is None or input_tokens is None or output_tokens is None:
             return None
         return (input_tokens * self.pricing.input + output_tokens * self.pricing.output) / 1e6
+
+
+# Ollama sur le PC (Windows ou conteneur Docker) : tout le jeu de test peut y aller
+LOCAL_OLLAMA_HOSTS = {"localhost", "127.0.0.1", "::1", "host.docker.internal", "ollama"}
+
+
+def is_local_url(url: str) -> bool:
+    return (urlparse(url).hostname or "") in LOCAL_OLLAMA_HOSTS
+
+
+def lock_remote_ollama(registry: dict[str, ModelConfig], ollama_base_url: str) -> None:
+    """Ollama hors du PC (ex. GPU Colab via un tunnel) : ses modèles ne reçoivent que les
+    tests publics, comme les offres gratuites. Les tests privés ne quittent jamais le PC."""
+    if is_local_url(ollama_base_url):
+        return
+    for key, model in registry.items():
+        if model.provider == ProviderName.ollama:
+            registry[key] = model.model_copy(update={"public_only": True})
 
 
 def load_registry(path: Path) -> dict[str, ModelConfig]:
