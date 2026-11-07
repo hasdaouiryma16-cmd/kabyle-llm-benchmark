@@ -97,6 +97,20 @@ models:
     pricing: { input: 0, output: 0 }
     public_only: true
 
+  # Bonus : un grand modèle avec les mêmes exemples few-shot que Qwen (paires Tatoeba
+  # décontaminées, sélection par n-grammes, sans appel à Ollama). Mesure ce que gagne un
+  # grand modèle avec la même aide que le petit.
+  - key: gemini-flash-lite-fewshot
+    label: Gemini Flash-Lite + few-shot
+    provider: gemini
+    model: gemini-flash-lite-latest
+    base: gemini-flash-lite
+    variant: fewshot
+    variant_params: { k: 5, selection: similar }
+    params: { max_tokens: 2048, temperature: 0 }
+    pricing: { input: 0, output: 0 }
+    public_only: true
+
   # ── OpenRouter : modèles gratuits (suffixe :free, liste vérifiée le 2026-10-31 sur
   #    openrouter.ai/api/v1/models ; elle change souvent). Requêtes potentiellement
   #    réutilisées par les hébergeurs : tests publics seulement. ──
