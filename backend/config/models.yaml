@@ -240,3 +240,42 @@ models:
     variant: finetuned
     params: { temperature: 0, num_predict: 1024, think: false }
     pricing: { input: 0, output: 0 }
+
+  # Second petit modèle amélioré : Ministral 3 8B (Mistral AI, Apache 2.0, ajouté le
+  # 2026-11-07). Ollama ministral-3:8b = Q4_K_M, empreinte 1922accd5827. Mêmes aides et
+  # même procédure de fine-tuning que Qwen (notebooks/01, MODEL_CHOICE = "ministral3-8b").
+  - key: ministral3-8b
+    label: Ministral 3 8B
+    provider: ollama
+    model: ministral-3:8b
+    params: { temperature: 0, num_predict: 1024 }
+    pricing: { input: 0, output: 0 }
+
+  - key: ministral3-8b-fewshot
+    label: Ministral 3 8B + few-shot
+    provider: ollama
+    model: ministral-3:8b
+    base: ministral3-8b
+    variant: fewshot
+    variant_params: { k: 5, selection: similar }
+    params: { temperature: 0, num_predict: 1024 }
+    pricing: { input: 0, output: 0 }
+
+  - key: ministral3-8b-rag
+    label: Ministral 3 8B + RAG
+    provider: ollama
+    model: ministral-3:8b
+    base: ministral3-8b
+    variant: rag
+    variant_params: { k: 8 }
+    params: { temperature: 0, num_predict: 1024 }
+    pricing: { input: 0, output: 0 }
+
+  - key: ministral3-8b-lora
+    label: Ministral 3 8B fine-tuné (QLoRA)
+    provider: ollama
+    model: kab-ministral3-8b # créé par le notebook 03 à partir du .gguf du notebook 01
+    base: ministral3-8b
+    variant: finetuned
+    params: { temperature: 0, num_predict: 1024 }
+    pricing: { input: 0, output: 0 }
