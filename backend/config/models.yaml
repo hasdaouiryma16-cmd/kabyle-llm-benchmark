@@ -111,6 +111,19 @@ models:
     pricing: { input: 0, output: 0 }
     public_only: true
 
+  # Bonus : le même grand modèle avec le même RAG que Qwen (index bge-m3, 8 passages).
+  # Les vecteurs des questions sont calculés par Ollama (bge-m3), la réponse par Gemini.
+  - key: gemini-flash-lite-rag
+    label: Gemini Flash-Lite + RAG
+    provider: gemini
+    model: gemini-flash-lite-latest
+    base: gemini-flash-lite
+    variant: rag
+    variant_params: { k: 8 }
+    params: { max_tokens: 2048, temperature: 0 }
+    pricing: { input: 0, output: 0 }
+    public_only: true
+
   # ── OpenRouter : modèles gratuits (suffixe :free, liste vérifiée le 2026-10-31 sur
   #    openrouter.ai/api/v1/models ; elle change souvent). Requêtes potentiellement
   #    réutilisées par les hébergeurs : tests publics seulement. ──
