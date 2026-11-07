@@ -35,6 +35,11 @@ Jeu de test destiné à évaluer la maîtrise du kabyle (taqbaylit, ISO 639-3 `k
 - **Taille modeste** : adaptée à une évaluation comparative, pas à des conclusions statistiques fines.
 - **Thèmes du quotidien surreprésentés** par construction du mode guidé.
 
+## Versions
+
+- **1.0.2** : correction par l'autrice d'une faute de frappe (une lettre manquante) dans l'énoncé de deux tests publics, `conv-0001` et `conv-0004`. Les réponses de référence et les tests privés ne changent pas. Tous les runs Qwen et Gemini antérieurs ont été faits sur la version 1.0.1 ; la consigne de notation pour ces deux tests était de ne pas pénaliser les modèles pour la faute de l'énoncé.
+- **1.0.1** : version utilisée pour les runs de la phase 1 et de la phase 2.
+
 ## Citation
 
 Voir [`CITATION.cff`](../../CITATION.cff).
