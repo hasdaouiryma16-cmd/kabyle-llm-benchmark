@@ -68,6 +68,16 @@ def test_ollama_stream_cut_before_done_is_retryable(monkeypatch):
     assert err.value.retryable
 
 
+def test_reasoning_blocks_are_dropped_from_answer():
+    content = [
+        {"type": "thinking", "thinking": [{"type": "text", "text": "réflexion"}], "closed": True},
+        {"type": "text", "text": "Réponse"},
+    ]
+    assert providers._answer_text(content) == "Réponse"
+    assert providers._answer_text("Réponse simple") == "Réponse simple"
+    assert providers._answer_text(None) == ""
+
+
 def test_ollama_server_error_is_retryable(monkeypatch):
     _patch_transport(monkeypatch, lambda request: httpx.Response(524, text="timeout"))
     with pytest.raises(ProviderError) as err:

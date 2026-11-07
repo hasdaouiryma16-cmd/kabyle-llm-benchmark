@@ -70,6 +70,41 @@ models:
     pricing: { input: 0.5, output: 1.5 }
     public_only: true
 
+  # Mistral Large 4 : accessible avec la formule gratuite (vérifié le 2026-11-07, contrairement
+  # à mistral-large-latest). Modèle à raisonnement : effort « low » (valeur la plus basse
+  # acceptée, « none » est refusé) ; température 0 impose top_p 1 ; seule la réponse finale
+  # est gardée (blocs « thinking » écartés).
+  - key: mistral-large-4
+    label: Mistral Large 4
+    provider: mistral
+    model: mistral-large-4
+    params: { max_tokens: 4096, temperature: 0, top_p: 1, reasoning_effort: low }
+    pricing: null
+    public_only: true
+
+  # Mêmes aides que pour Qwen et Gemini Flash-Lite (mêmes exemples, même index RAG).
+  - key: mistral-large-4-fewshot
+    label: Mistral Large 4 + few-shot
+    provider: mistral
+    model: mistral-large-4
+    base: mistral-large-4
+    variant: fewshot
+    variant_params: { k: 5, selection: similar }
+    params: { max_tokens: 4096, temperature: 0, top_p: 1, reasoning_effort: low }
+    pricing: null
+    public_only: true
+
+  - key: mistral-large-4-rag
+    label: Mistral Large 4 + RAG
+    provider: mistral
+    model: mistral-large-4
+    base: mistral-large-4
+    variant: rag
+    variant_params: { k: 8 }
+    params: { max_tokens: 4096, temperature: 0, top_p: 1, reasoning_effort: low }
+    pricing: null
+    public_only: true
+
   - key: mistral-small
     label: Mistral Small
     provider: mistral

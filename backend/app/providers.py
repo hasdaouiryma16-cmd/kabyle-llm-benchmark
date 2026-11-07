@@ -120,6 +120,18 @@ class _HttpProvider:
         return response.json(), int((time.perf_counter() - started) * 1000)
 
 
+def _answer_text(content: Any) -> str:
+    """Texte de la réponse finale. Les modèles à raisonnement (ex. Mistral Large 4) renvoient
+    une liste de blocs : on garde les blocs « text » et on écarte les blocs « thinking »."""
+    if isinstance(content, list):
+        return "".join(
+            block.get("text", "")
+            for block in content
+            if isinstance(block, dict) and block.get("type") == "text"
+        )
+    return content or ""
+
+
 class OpenAICompatibleProvider(_HttpProvider):
     """OpenAI, Mistral, OpenRouter et Gemini exposent la même API « chat/completions »."""
 
@@ -147,7 +159,7 @@ class OpenAICompatibleProvider(_HttpProvider):
         choice = data["choices"][0]
         usage = data.get("usage") or {}
         return ChatResult(
-            text=choice["message"].get("content") or "",
+            text=_answer_text(choice["message"].get("content")),
             stop_reason=choice.get("finish_reason"),
             input_tokens=usage.get("prompt_tokens"),
             output_tokens=usage.get("completion_tokens"),
