@@ -5,6 +5,7 @@ dans `build_provider`. Les nouvelles tentatives sont gérées par le runner (pas
 pour appliquer la même politique à tous les fournisseurs.
 """
 
+import json
 import time
 from dataclasses import dataclass
 from typing import Any, Protocol
@@ -168,18 +169,47 @@ class OllamaProvider(_HttpProvider):
     async def chat(self, model, system, messages):
         all_messages = ([{"role": "system", "content": system}] if system else []) + messages
         options = dict(model.params)
-        body: dict[str, Any] = {"model": model.model, "messages": all_messages, "stream": False}
+        # Réponse en flux : sur un serveur lent (CPU distant via tunnel), une réponse non
+        # diffusée reste muette plusieurs minutes et le délai de lecture (ou le tunnel) coupe
+        # la connexion. En flux, chaque morceau relance le délai. Le texte final est identique.
+        body: dict[str, Any] = {"model": model.model, "messages": all_messages, "stream": True}
         # « think » est un paramètre de premier niveau d'Ollama (modèles à raisonnement)
         if "think" in options:
             body["think"] = options.pop("think")
         body["options"] = options
-        data, latency = await self._post(f"{self._base}/api/chat", {}, body)
+        started = time.perf_counter()
+        parts: list[str] = []
+        last: dict[str, Any] = {}
+        try:
+            async with (
+                httpx.AsyncClient(timeout=self._timeout) as client,
+                client.stream("POST", f"{self._base}/api/chat", json=body) as response,
+            ):
+                if response.status_code == 429 or response.status_code >= 500:
+                    text = (await response.aread()).decode(errors="replace")
+                    raise ProviderError(f"{response.status_code} {text[:300]}", True)
+                if response.status_code >= 400:
+                    text = (await response.aread()).decode(errors="replace")
+                    raise ProviderError(f"{response.status_code} {text[:300]}", False)
+                async for line in response.aiter_lines():
+                    if not line.strip():
+                        continue
+                    chunk = json.loads(line)
+                    if chunk.get("error"):
+                        raise ProviderError(f"ollama : {chunk['error']}", True)
+                    parts.append((chunk.get("message") or {}).get("content", ""))
+                    if chunk.get("done"):
+                        last = chunk
+        except httpx.HTTPError as exc:
+            raise ProviderError(f"connexion : {exc}", True) from exc
+        if not last:
+            raise ProviderError("flux interrompu avant la fin de la réponse", True)
         return ChatResult(
-            text=data["message"]["content"],
-            stop_reason=data.get("done_reason"),
-            input_tokens=data.get("prompt_eval_count"),
-            output_tokens=data.get("eval_count"),
-            latency_ms=latency,
+            text="".join(parts),
+            stop_reason=last.get("done_reason"),
+            input_tokens=last.get("prompt_eval_count"),
+            output_tokens=last.get("eval_count"),
+            latency_ms=int((time.perf_counter() - started) * 1000),
         )
 
 
