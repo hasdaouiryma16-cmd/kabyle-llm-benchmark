@@ -10,7 +10,7 @@
 
 Quand le PC n'a pas la mémoire pour Qwen (≈ 3,5 Go libres nécessaires) :
 
-1. Ouvrir `03_ollama_colab.ipynb` dans Colab (GPU T4), *Tout exécuter* et copier l'adresse `https://….trycloudflare.com` affichée.
+1. Ouvrir `03_ollama_colab.ipynb` dans Colab (GPU T4, *Tout exécuter*) ou dans Kaggle (GPU T4 x2, Internet On, *Save & Run All*), et copier l'adresse `https://….trycloudflare.com` affichée. Sur Kaggle, le `.gguf` fine-tuné est trouvé tout seul si la sortie du notebook 01 est ajoutée en *Input*.
 2. Dans `.env` : `OLLAMA_DOCKER_URL=<adresse>`, puis `docker compose up -d api`.
 3. Le labo marque alors tous les modèles Ollama « tests publics seulement » : un run qui inclut des tests privés est refusé.
 4. À la fin, remettre `OLLAMA_DOCKER_URL=http://ollama:11434` (ou supprimer la ligne) et `docker compose up -d api`.
