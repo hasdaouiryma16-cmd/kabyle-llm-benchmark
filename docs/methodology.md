@@ -12,7 +12,6 @@
 
 - **Même message pour tous.** La consigne du test est envoyée telle quelle, précédée du texte de compréhension s'il y en a un, sans consigne système. Les consignes de traduction précisent « réponds uniquement par la traduction », pour ne pas pénaliser un modèle bavard sur les métriques automatiques.
 - **Paramètres.** La température est à 0 partout où l'API l'accepte. Les exceptions sont documentées dans `backend/config/models.yaml` :
-  - les modèles Claude actuels n'acceptent plus `temperature`, et leur niveau d'effort est fixé explicitement ;
   - le raisonnement de Qwen3.5 est désactivé pour obtenir une réponse directe.
 
   Les paramètres réels sont enregistrés avec chaque réponse.

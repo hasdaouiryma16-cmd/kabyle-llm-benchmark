@@ -47,7 +47,7 @@ flowchart LR
   subgraph LAB["Local lab · docker compose up · 127.0.0.1 only"]
     UI["lab-ui<br/>React + TS + Vite"] <-->|"REST + SSE"| API["api<br/>FastAPI"]
     API --> DB[("SQLite<br/>tests, runs, grades")]
-    API --> P{{"Supported providers<br/>Tested: Gemini · Mistral · Ollama<br/>Also wired in: Anthropic · OpenAI · OpenRouter"}}
+    API --> P{{"Supported providers<br/>Tested: Gemini · Mistral · Ollama<br/>Also wired in: OpenAI · OpenRouter"}}
     API --> V["Variants<br/>few-shot · RAG · fine-tuned"]
   end
   T[("data/test/*.jsonl<br/>source of truth")] <-->|"import / export"| API
@@ -94,7 +94,6 @@ Add an entry to `backend/config/models.yaml`. For a new provider, write a class 
 - **A modest test set.** Confidence intervals are wide.
 - **Conservative language detection.** Without GlotLID, it only catches obvious failures.
 - **chrF++ only measures surface similarity.** The human grade is authoritative.
-- **Current Claude models no longer accept a temperature setting.** This is documented, and the actual parameters are stored with every answer.
 - **Dated results.** They hold for the model versions and date shown.
 
 ## Licenses

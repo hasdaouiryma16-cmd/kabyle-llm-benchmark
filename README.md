@@ -47,7 +47,7 @@ flowchart LR
   subgraph LAB["Labo local · docker compose up · 127.0.0.1 uniquement"]
     UI["lab-ui<br/>React + TS + Vite"] <-->|"REST + SSE"| API["api<br/>FastAPI"]
     API --> DB[("SQLite<br/>tests, runs, notes")]
-    API --> P{{"Fournisseurs pris en charge<br/>Testés : Gemini · Mistral · Ollama<br/>Aussi branchés : Anthropic · OpenAI · OpenRouter"}}
+    API --> P{{"Fournisseurs pris en charge<br/>Testés : Gemini · Mistral · Ollama<br/>Aussi branchés : OpenAI · OpenRouter"}}
     API --> V["Variantes<br/>few-shot · RAG · fine-tuné"]
   end
   T[("data/test/*.jsonl<br/>source de vérité")] <-->|"import / export"| API
@@ -108,7 +108,6 @@ La partie privée du jeu de test (≈ 20 %) n'est pas publiée. Les scores qui l
 - **Un jeu de test de taille modeste.** Les intervalles de confiance sont larges et les petits écarts ne sont pas significatifs.
 - **Une détection automatique de la langue prudente.** Sans GlotLID, elle ne repère que les échecs évidents.
 - **chrF++ ne mesure qu'une proximité de surface.** La note humaine fait foi.
-- **Les modèles Claude actuels n'acceptent plus de réglage de température.** C'est documenté : leurs paramètres réels sont enregistrés avec chaque réponse.
 - **Des résultats datés.** Ils valent pour les versions de modèles et la date indiquées.
 
 ## Licences

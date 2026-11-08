@@ -10,7 +10,6 @@ import time
 from dataclasses import dataclass
 from typing import Any, Protocol
 
-import anthropic
 import httpx
 
 from app.config import Settings
@@ -46,56 +45,6 @@ def _retry_after(headers: Any) -> float | None:
         return float(headers.get("retry-after"))
     except (TypeError, ValueError):
         return None
-
-
-class AnthropicProvider:
-    def __init__(self, settings: Settings):
-        key = settings.anthropic_api_key
-        self._client = (
-            anthropic.AsyncAnthropic(
-                api_key=key.get_secret_value(),
-                max_retries=0,
-                timeout=settings.request_timeout_s,
-            )
-            if key
-            else None
-        )
-
-    def available(self) -> bool:
-        return self._client is not None
-
-    async def chat(self, model, system, messages):
-        assert self._client is not None
-        params = dict(model.params)
-        kwargs: dict[str, Any] = {
-            "model": model.model,
-            "max_tokens": params.pop("max_tokens", 4096),
-            "messages": messages,
-        }
-        if system:
-            kwargs["system"] = system
-        if effort := params.pop("effort", None):
-            kwargs["output_config"] = {"effort": effort}
-        kwargs.update(params)
-        # Pas de repli automatique vers un autre modèle en cas de refus : dans un benchmark,
-        # la réponse doit toujours provenir du modèle évalué. Un refus est enregistré tel quel.
-        started = time.perf_counter()
-        try:
-            response = await self._client.messages.create(**kwargs)
-        except anthropic.RateLimitError as exc:
-            raise ProviderError(str(exc), True, _retry_after(exc.response.headers)) from exc
-        except anthropic.APIStatusError as exc:
-            raise ProviderError(f"{exc.status_code} {exc.message}", exc.status_code >= 500) from exc
-        except anthropic.APIConnectionError as exc:
-            raise ProviderError(f"connexion : {exc}", True) from exc
-        text = "".join(block.text for block in response.content if block.type == "text")
-        return ChatResult(
-            text=text,
-            stop_reason=response.stop_reason,
-            input_tokens=response.usage.input_tokens,
-            output_tokens=response.usage.output_tokens,
-            latency_ms=int((time.perf_counter() - started) * 1000),
-        )
 
 
 class _HttpProvider:
@@ -256,7 +205,6 @@ def _secret(value) -> str | None:
 def build_providers(settings: Settings) -> dict[ProviderName, Provider]:
     timeout = settings.request_timeout_s
     return {
-        ProviderName.anthropic: AnthropicProvider(settings),
         ProviderName.openai: OpenAICompatibleProvider(
             ProviderName.openai, _secret(settings.openai_api_key), timeout
         ),

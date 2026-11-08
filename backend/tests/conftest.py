@@ -50,7 +50,6 @@ def settings(tmp_path):
         prompts_file=tmp_path / "prompts" / "guided.yaml",
         models_config=config,
         glotlid_model_path=tmp_path / "absent.bin",
-        anthropic_api_key=None,
         openai_api_key=None,
         mistral_api_key=None,
         openrouter_api_key=None,

@@ -122,7 +122,7 @@ Les chapitres 1 à 3 donnent la vue d'ensemble : lis-les en premier. Les chapitr
 <h2><span class="num">1</span>Le projet en une page</h2>
 
 <h3>Le problème</h3>
-<p>Le kabyle (taqbaylit) est parlé par plusieurs millions de personnes, mais il existe très peu de textes kabyles numériques. Or les grands modèles d'IA (ChatGPT, Claude, Gemini…) apprennent à partir de textes trouvés sur Internet. Résultat : ils maîtrisent mal le kabyle. Ils le confondent avec l'arabe ou d'autres langues berbères, répondent en français, ou inventent des mots.</p>
+<p>Le kabyle (taqbaylit) est parlé par plusieurs millions de personnes, mais il existe très peu de textes kabyles numériques. Or les grands modèles d'IA (ChatGPT, Gemini, Mistral…) apprennent à partir de textes trouvés sur Internet. Résultat : ils maîtrisent mal le kabyle. Ils le confondent avec l'arabe ou d'autres langues berbères, répondent en français, ou inventent des mots.</p>
 <p>Personne ne sait mesurer précisément <em>à quel point</em> ils le maîtrisent mal, car il n'existe pas de test de référence fiable écrit par une locutrice native. C'est ce que construit ce projet.</p>
 
 <h3>L'objectif, en trois phases</h3>
@@ -156,7 +156,7 @@ Les chapitres 1 à 3 donnent la vue d'ensemble : lis-les en premier. Les chapitr
 <p>Ce chapitre explique les mots qui reviennent partout dans le projet. Pas besoin de tout retenir d'un coup : reviens-y quand un mot bloque.</p>
 
 <h3>LLM (grand modèle de langage)</h3>
-<p>Un LLM est un programme qui a lu une quantité gigantesque de textes et qui a appris une seule chose : <strong>deviner le mot suivant</strong>. En répétant cette devinette mot après mot, il écrit des phrases, traduit, répond à des questions. ChatGPT (OpenAI), Claude (Anthropic), Gemini (Google), Mistral, Qwen, Gemma sont des LLM.</p>
+<p>Un LLM est un programme qui a lu une quantité gigantesque de textes et qui a appris une seule chose : <strong>deviner le mot suivant</strong>. En répétant cette devinette mot après mot, il écrit des phrases, traduit, répond à des questions. ChatGPT (OpenAI), Gemini (Google), Mistral, Qwen, Gemma sont des LLM.</p>
 <div class="box analogy"><span class="t">Analogie</span>
 Imagine quelqu'un qui aurait lu des millions de livres sans jamais parler. Il sait très bien comment les phrases « continuent » d'habitude. S'il a lu beaucoup de français, il écrit un bon français. S'il n'a presque jamais vu de kabyle, il improvise, et c'est là que viennent les mots inventés.</div>
 <p><strong>Les paramètres.</strong> La « mémoire » d'un modèle est faite de nombres appelés paramètres. On parle de « 4B » pour 4 milliards (billions en anglais). Plus il y en a, plus le modèle est capable, mais plus il demande de mémoire et de puissance. Les modèles commerciaux en ont des centaines de milliards. Qwen3.5 4B en a environ 4,7 milliards : c'est un « petit » modèle qui tient sur un PC.</p>
@@ -172,7 +172,7 @@ Imagine quelqu'un qui aurait lu des millions de livres sans jamais parler. Il sa
 </ul>
 
 <h3>API et fournisseur</h3>
-<p>Une <strong>API</strong> est une porte d'entrée pour qu'un programme parle à un autre programme. Les entreprises qui hébergent les modèles (les <strong>fournisseurs</strong> : Anthropic, OpenAI, Google, Mistral, OpenRouter) offrent une API : le labo envoie une question par Internet, le fournisseur renvoie la réponse. Pour s'identifier, il faut une <strong>clé d'API</strong>, une sorte de mot de passe personnel. Elle doit rester secrète, car quelqu'un qui la vole peut dépenser ton argent.</p>
+<p>Une <strong>API</strong> est une porte d'entrée pour qu'un programme parle à un autre programme. Les entreprises qui hébergent les modèles (les <strong>fournisseurs</strong> : OpenAI, Google, Mistral, OpenRouter) offrent une API : le labo envoie une question par Internet, le fournisseur renvoie la réponse. Pour s'identifier, il faut une <strong>clé d'API</strong>, une sorte de mot de passe personnel. Elle doit rester secrète, car quelqu'un qui la vole peut dépenser ton argent.</p>
 
 <h3>Modèle local, Ollama, inférence, GPU</h3>
 <p>Certains modèles sont <strong>open source</strong> : on peut les télécharger et les faire tourner soi-même, gratuitement. <strong>Ollama</strong> est le logiciel qui fait tourner ces modèles sur ton PC et leur donne une API, comme un fournisseur, mais local. Faire répondre un modèle s'appelle l'<strong>inférence</strong>.</p>
@@ -272,7 +272,7 @@ C'est comme donner à chaque phrase une adresse GPS dans une « carte des sens �
   <text x="22" y="378" font-size="13" font-weight="700" fill="#1f2328">Internet · fournisseurs</text>
   <rect x="24" y="392" width="150" height="46" rx="8" fill="#e8effd" stroke="#1d4ed8"/>
   <text x="99" y="412" font-size="10.5" font-weight="700" text-anchor="middle">Payants</text>
-  <text x="99" y="428" font-size="9" text-anchor="middle" fill="#4b5563">Anthropic, OpenAI</text>
+  <text x="99" y="428" font-size="9" text-anchor="middle" fill="#4b5563">OpenAI, Gemini</text>
   <rect x="188" y="392" width="150" height="46" rx="8" fill="#e8effd" stroke="#1d4ed8"/>
   <text x="263" y="412" font-size="10.5" font-weight="700" text-anchor="middle">Gratuits</text>
   <text x="263" y="428" font-size="9" text-anchor="middle" fill="#4b5563">Gemini, Mistral, OpenRouter</text>
@@ -362,7 +362,7 @@ docker compose restart api                 # après une modification de .env</pr
   <tr><td><code>run_models.py</code></td><td>Définit une exécution (<code>Run</code>), ses tests figés (<code>RunItem</code>), chaque réponse (<code>ModelResponse</code>), chaque note (<code>Grade</code>) et les exemples marquants (<code>Favorite</code>).</td></tr>
   <tr><td><code>testset.py</code></td><td>Import/export du jeu de test, écriture du JSONL dans le dépôt, calcul de l'empreinte SHA-256 et du manifeste.</td></tr>
   <tr><td><code>registry.py</code></td><td>Charge la liste des modèles depuis <code>config/models.yaml</code> et la vérifie.</td></tr>
-  <tr><td><code>providers.py</code></td><td>Parle aux fournisseurs : une classe pour Anthropic (SDK officiel), une seule pour tous ceux qui partagent le format OpenAI (OpenAI, Mistral, OpenRouter, Gemini), une pour Ollama, et une factice pour les tests automatiques.</td></tr>
+  <tr><td><code>providers.py</code></td><td>Parle aux fournisseurs : une seule classe pour tous ceux qui partagent le format OpenAI (OpenAI, Mistral, OpenRouter, Gemini), une pour Ollama, et une factice pour les tests automatiques.</td></tr>
   <tr><td><code>variants.py</code></td><td>Construit le message envoyé au modèle selon la variante : simple, few-shot ou RAG.</td></tr>
   <tr><td><code>runner.py</code></td><td>Le moteur d'exécution : sélectionne les tests, appelle les modèles en parallèle, relance en cas d'erreur, applique le plafond de coût.</td></tr>
   <tr><td><code>scoring.py</code></td><td>Scores automatiques : chrF++, BLEU, écriture et langue de la réponse.</td></tr>
@@ -454,7 +454,6 @@ L'interface appelle <code>/api/...</code> sur sa propre adresse (localhost:5173)
 <h3>Les modèles configurés aujourd'hui</h3>
 <table>
   <tr><th style="width:17%">Fournisseur</th><th>Modèles</th><th style="width:16%">Coût</th><th style="width:22%">Clé (.env)</th></tr>
-  <tr><td>Anthropic</td><td>Claude Opus 5.5, Sonnet 5.5, Haiku 5.5</td><td>payant</td><td><code>ANTHROPIC_API_KEY</code></td></tr>
   <tr><td>OpenAI</td><td>GPT-6 Astra, GPT-6.1 Sol, GPT-6 Luna</td><td>payant</td><td><code>OPENAI_API_KEY</code></td></tr>
   <tr><td>Mistral</td><td>Mistral Large, Mistral Small</td><td>plan gratuit « Experiment »</td><td><code>MISTRAL_API_KEY</code></td></tr>
   <tr><td>Google Gemini</td><td>Gemini Flash, Gemini Flash-Lite</td><td>plan gratuit</td><td><code>GEMINI_API_KEY</code></td></tr>
@@ -464,7 +463,7 @@ L'interface appelle <code>/api/...</code> sur sa propre adresse (localhost:5173)
 <p class="small muted">Un modèle dont la clé manque apparaît grisé : il est simplement ignoré, rien ne plante.</p>
 
 <h3>Une seule classe pour quatre fournisseurs</h3>
-<p>OpenAI, Mistral, OpenRouter et Gemini acceptent tous le même format de requête (« chat/completions ») ; seule l'adresse change. Le fichier <code>providers.py</code> a donc une seule classe <code>OpenAICompatibleProvider</code> pour les quatre. Anthropic a son propre format et utilise son SDK officiel. Ollama a aussi le sien.</p>
+<p>OpenAI, Mistral, OpenRouter et Gemini acceptent tous le même format de requête (« chat/completions ») ; seule l'adresse change. Le fichier <code>providers.py</code> a donc une seule classe <code>OpenAICompatibleProvider</code> pour les quatre. Ollama a son propre format.</p>
 <div class="box why"><span class="t">Pourquoi les relances sont gérées par le runner et pas par les SDK</span>
 Chaque SDK a sa propre politique de relance. En les désactivant et en relançant nous-mêmes, tous les fournisseurs sont traités exactement de la même façon : c'est plus juste pour un benchmark.</div>
 
@@ -584,7 +583,7 @@ L'empreinte est comme le numéro de version d'un sujet d'examen : on ne compare 
 </table>
 <p>La note est aussi exprimée en pourcentage : note ÷ 3 × 100. Une moyenne de 1,5 vaut donc 50 %.</p>
 <div class="box why"><span class="t">Pourquoi « à l'aveugle »</span>
-Si tu savais qu'une réponse vient de Claude ou de GPT, tu pourrais inconsciemment être plus indulgente ou plus sévère. L'interface ne reçoit donc ni le nom du modèle, ni les scores automatiques, et les réponses de tous les modèles sont mélangées au hasard. C'est le principe des essais cliniques en « double aveugle ».</div>
+Si tu savais qu'une réponse vient de Gemini ou de GPT, tu pourrais inconsciemment être plus indulgente ou plus sévère. L'interface ne reçoit donc ni le nom du modèle, ni les scores automatiques, et les réponses de tous les modèles sont mélangées au hasard. C'est le principe des essais cliniques en « double aveugle ».</div>
 <p>Les <strong>étiquettes d'erreur</strong> décrivent <em>pourquoi</em> une réponse est mauvaise : mauvaise langue, confusion avec l'arabe, autre langue berbère, mots inventés, orthographe, grammaire, contresens, trop littéral, incomplet, mauvaise écriture, refus. Elles permettent de dire non seulement « ce modèle a 40 % », mais aussi « il échoue surtout parce qu'il invente des mots ».</p>
 
 <h3>chrF++ : la mesure automatique principale</h3>
@@ -820,7 +819,7 @@ Le badge « CI passing » sur le README montre à un recruteur que le projet est
 <h3>Les technologies, en résumé</h3>
 <table>
   <tr><th style="width:20%">Domaine</th><th>Outils</th></tr>
-  <tr><td>Backend</td><td>Python, FastAPI, SQLModel, SQLite, Alembic, httpx, SDK Anthropic, sacrebleu, numpy, uv, ruff, pytest</td></tr>
+  <tr><td>Backend</td><td>Python, FastAPI, SQLModel, SQLite, Alembic, httpx, sacrebleu, numpy, uv, ruff, pytest</td></tr>
   <tr><td>Interface</td><td>React, TypeScript, Vite, Tailwind CSS, Vitest, ESLint</td></tr>
   <tr><td>Site</td><td>Astro, React, Recharts</td></tr>
   <tr><td>IA locale</td><td>Ollama, Qwen3.5 4B, bge-m3 ; Unsloth (QLoRA) sur Colab</td></tr>

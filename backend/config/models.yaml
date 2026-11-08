@@ -6,7 +6,6 @@
 #
 # `params` est transmis tel quel au fournisseur (noms de paramètres propres à chaque API) et
 # enregistré avec chaque réponse. Principe : température 0 partout où l'API l'accepte.
-# Exception documentée : les modèles Claude actuels n'acceptent plus `temperature`.
 # Qwen3.5 : raisonnement désactivé (think: false) pour une réponse directe, comme les autres.
 #
 # `pricing` : prix en USD par million de tokens (entrée, sortie), pour estimer et plafonner
@@ -14,28 +13,6 @@
 # Vérifier les prix sur le site de chaque fournisseur avant un gros run.
 
 models:
-  # ── Anthropic ──────────────────────────────────────────────
-  - key: claude-opus-5-5
-    label: Claude Opus 5.5
-    provider: anthropic
-    model: claude-opus-5-5
-    params: { max_tokens: 4096, effort: medium }
-    pricing: { input: 4.0, output: 20.0 }
-
-  - key: claude-sonnet-5-5
-    label: Claude Sonnet 5.5
-    provider: anthropic
-    model: claude-sonnet-5-5
-    params: { max_tokens: 4096, effort: medium }
-    pricing: { input: 2.0, output: 10.0 }
-
-  - key: claude-haiku-5-5
-    label: Claude Haiku 5.5
-    provider: anthropic
-    model: claude-haiku-5-5
-    params: { max_tokens: 4096, effort: medium }
-    pricing: { input: 0.1, output: 0.5 }
-
   # ── OpenAI (identifiants et prix vérifiés le 2026-10-29 sur developers.openai.com) ──
   - key: gpt-6-astra
     label: GPT-6 Astra

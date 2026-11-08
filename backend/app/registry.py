@@ -10,7 +10,6 @@ from pydantic import BaseModel, Field, model_validator
 
 
 class ProviderName(StrEnum):
-    anthropic = "anthropic"
     openai = "openai"
     mistral = "mistral"
     openrouter = "openrouter"

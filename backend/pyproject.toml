@@ -10,7 +10,6 @@ dependencies = [
   "sqlmodel>=0.0.22",
   "pydantic-settings>=2.6",
   "python-multipart>=0.0.18",
-  "anthropic>=1.0",
   "httpx>=0.28",
   "sacrebleu>=2.4",
   "pyyaml>=6.0",

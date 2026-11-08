@@ -25,7 +25,6 @@ DEFAULT_EMBED_MODEL = "bge-m3"
 RUN = "docker compose run --rm api python -m"
 
 API_KEYS = {
-    ProviderName.anthropic: ("Anthropic (Claude)", "ANTHROPIC_API_KEY"),
     ProviderName.openai: ("OpenAI (GPT)", "OPENAI_API_KEY"),
     ProviderName.mistral: ("Mistral", "MISTRAL_API_KEY"),
     ProviderName.openrouter: ("OpenRouter", "OPENROUTER_API_KEY"),

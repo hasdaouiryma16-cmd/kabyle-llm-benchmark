@@ -7,13 +7,13 @@ Ajouter une entrée dans [`backend/config/models.yaml`](../backend/config/models
 ```yaml
   - key: mistral-medium          # identifiant unique dans le labo
     label: Mistral Medium        # nom affiché
-    provider: mistral            # anthropic | openai | mistral | openrouter | ollama
+    provider: mistral            # openai | mistral | gemini | openrouter | ollama
     model: mistral-medium-latest # identifiant exact chez le fournisseur
     params: { max_tokens: 2048, temperature: 0 }  # transmis tel quel à l'API
     pricing: null                # ou { input: 0.4, output: 2.0 } en $ par million de tokens
 ```
 
-- `params` est envoyé tel quel et enregistré avec chaque réponse. Utiliser les noms de paramètres de l'API concernée (par exemple `max_completion_tokens` pour certains modèles OpenAI). Pour Anthropic, `effort` est converti en `output_config.effort`. Pour Ollama, `think` passe au premier niveau de la requête.
+- `params` est envoyé tel quel et enregistré avec chaque réponse. Utiliser les noms de paramètres de l'API concernée (par exemple `max_completion_tokens` pour certains modèles OpenAI). Pour Ollama, `think` passe au premier niveau de la requête.
 - **Ne jamais inventer un prix** : laisser `null` si on ne le connaît pas. Le coût ne sera alors simplement pas estimé.
 - Le fichier est relu au redémarrage de l'API : `docker compose restart api`.
 - **N'importe quel modèle d'OpenRouter** s'ajoute avec `provider: openrouter` et son identifiant du catalogue (par exemple `meta-llama/llama-3.3-70b-instruct`).

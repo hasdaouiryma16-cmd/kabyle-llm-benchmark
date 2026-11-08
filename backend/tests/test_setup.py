@@ -66,13 +66,11 @@ def test_api_key_presence_never_leaks_value(tmp_path, settings):
 
     config = tmp_path / "real-models.yaml"
     config.write_text(
-        "models:\n  - key: c\n    label: C\n    provider: anthropic\n    model: c\n",
+        "models:\n  - key: c\n    label: C\n    provider: mistral\n    model: c\n",
         encoding="utf-8",
     )
     secret = "valeur-secrete-de-test"
-    s = settings.model_copy(
-        update={"models_config": config, "anthropic_api_key": SecretStr(secret)}
-    )
+    s = settings.model_copy(update={"models_config": config, "mistral_api_key": SecretStr(secret)})
     with TestClient(create_app(s)) as client:
         response = client.get("/api/setup")
     assert secret not in response.text
@@ -80,14 +78,14 @@ def test_api_key_presence_never_leaks_value(tmp_path, settings):
 
 
 def test_empty_key_in_env_file_means_no_key(tmp_path, monkeypatch):
-    # .env copié depuis .env.example : « ANTHROPIC_API_KEY= » ne doit pas compter comme une clé
+    # .env copié depuis .env.example : « OPENAI_API_KEY= » ne doit pas compter comme une clé
     from app.config import Settings
 
     env = tmp_path / ".env"
-    env.write_text("ANTHROPIC_API_KEY=\nOPENAI_API_KEY=  \nMISTRAL_API_KEY=abc\n", encoding="utf-8")
-    for name in ("ANTHROPIC_API_KEY", "OPENAI_API_KEY", "MISTRAL_API_KEY"):
+    env.write_text("OPENAI_API_KEY=\nGEMINI_API_KEY=  \nMISTRAL_API_KEY=abc\n", encoding="utf-8")
+    for name in ("OPENAI_API_KEY", "GEMINI_API_KEY", "MISTRAL_API_KEY"):
         monkeypatch.delenv(name, raising=False)
     s = Settings(_env_file=env)
-    assert s.anthropic_api_key is None
     assert s.openai_api_key is None
+    assert s.gemini_api_key is None
     assert s.mistral_api_key is not None

@@ -29,7 +29,6 @@ class Settings(BaseSettings):
     allowed_hosts: list[str] = ["localhost", "127.0.0.1", "api", "testserver"]
 
     # Fournisseurs (un fournisseur sans clé est simplement indisponible)
-    anthropic_api_key: SecretStr | None = None
     openai_api_key: SecretStr | None = None
     mistral_api_key: SecretStr | None = None
     openrouter_api_key: SecretStr | None = None
@@ -37,7 +36,6 @@ class Settings(BaseSettings):
     ollama_base_url: str = "http://localhost:11434"
 
     @field_validator(
-        "anthropic_api_key",
         "openai_api_key",
         "mistral_api_key",
         "openrouter_api_key",
