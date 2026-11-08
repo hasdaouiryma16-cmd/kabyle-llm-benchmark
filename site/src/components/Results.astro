@@ -4,6 +4,7 @@ import { METHODS, type Method, categoryCount, families, ranked, results } from "
 import { METHOD_STYLE, fmt, isHigh, pct, signed } from "../lib/view";
 import PageHeader from "./PageHeader.astro";
 import SectionHeading from "./SectionHeading.astro";
+import Toc from "./Toc.astro";
 
 interface Props {
   lang: Lang;
@@ -20,6 +21,7 @@ const gainFor = (variant: string) => r?.gains.find((g) => g.variant === variant)
 const date = r ? new Date(r.generated_at).toLocaleDateString(d.locale, { dateStyle: "long" }) : "";
 const ticks = [0, 25, 50, 75, 100];
 const agreement = r?.metric_agreement;
+const tocItems = d.sections.results.filter(([id]) => id !== "accord" || (agreement && agreement.spearman_human_chrf !== null));
 ---
 
 <PageHeader lang={lang} page="results" title={d.pageTitle.results} subtitle={d.resultsLead} />
@@ -27,19 +29,20 @@ const agreement = r?.metric_agreement;
 {!r ? (
   <div class="wrap section"><div class="pending"><strong>{d.pending}</strong>{d.pendingBody}</div></div>
 ) : (
-  <>
-    <section class="section" id="classement">
-      <div class="wrap">
-        <div class="reveal"><SectionHeading eyebrow={d.eyebrows.podium} title={d.rankingTitle} /></div>
-        <div class="toolbar reveal">
+  <div class="wrap doc">
+    <Toc lang={lang} items={tocItems} />
+    <div class="doc-main">
+      <section class="doc-sec" id="classement">
+        <div class="sec-head-row">
+          <SectionHeading title={d.rankingTitle} />
           <div class="seg" role="group" aria-label={d.rankingTitle} data-filter>
             <button type="button" aria-pressed="true" data-f="all">{d.filterAll}</button>
             <button type="button" aria-pressed="false" data-f="base">{d.filterBase}</button>
             <button type="button" aria-pressed="false" data-f="helped">{d.filterHelped}</button>
           </div>
         </div>
-        <div class="table-wrap reveal">
-          <table>
+        <div class="table-wrap">
+          <table class="board">
             <thead>
               <tr>
                 <th>#</th>
@@ -78,8 +81,8 @@ const agreement = r?.metric_agreement;
                         <span class="pt" style={`left:${m.overall.human_pct ?? 0}%`}></span>
                       </div>
                     </td>
-                    <td class="num">{fmt(m.overall.chrf, lang)}</td>
-                    <td class="num">{m.overall.n_graded}</td>
+                    <td class="num mono">{fmt(m.overall.chrf, lang)}</td>
+                    <td class="num mono">{m.overall.n_graded}</td>
                   </tr>
                 );
               })}
@@ -87,14 +90,11 @@ const agreement = r?.metric_agreement;
           </table>
         </div>
         <p class="meta">{d.metaLine(r.test_set.version ?? "", r.test_set.content_hash.slice(0, 12), date)}</p>
-      </div>
-    </section>
+      </section>
 
-    <section class="section band-cream" id="aides">
-      <div class="weave" aria-hidden="true"></div>
-      <div class="wrap rel">
-        <div class="reveal"><SectionHeading eyebrow={d.sections.results[1][1]} title={d.matrixTitle} subtitle={d.matrixLead} /></div>
-        <div class="table-wrap reveal">
+      <section class="doc-sec" id="aides">
+        <SectionHeading title={d.matrixTitle} subtitle={d.matrixLead} />
+        <div class="table-wrap">
           <table class="matrix">
             <thead>
               <tr>
@@ -134,13 +134,11 @@ const agreement = r?.metric_agreement;
           </table>
         </div>
         <p class="note">{d.matrixNaNote}</p>
-      </div>
-    </section>
+      </section>
 
-    <section class="section" id="progression">
-      <div class="wrap">
-        <div class="reveal"><SectionHeading eyebrow={d.sections.results[2][1]} title={d.gainsChartTitle} subtitle={d.gainsChartLead} /></div>
-        <div class="card chart-card reveal">
+      <section class="doc-sec" id="progression">
+        <SectionHeading title={d.gainsChartTitle} subtitle={d.gainsChartLead} />
+        <div class="card chart-card">
           <div class="legend">
             {METHODS.map((m) => (
               <span><i class={`mk ${METHOD_STYLE[m].shape}`} style={`--c:${METHOD_STYLE[m].color}`}></i>{d.method[m]}</span>
@@ -175,14 +173,11 @@ const agreement = r?.metric_agreement;
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section class="section band-cream" id="categories">
-      <div class="weave" aria-hidden="true"></div>
-      <div class="wrap rel">
-        <div class="reveal"><SectionHeading eyebrow={d.sections.results[3][1]} title={d.categoriesTitle} subtitle={d.categoriesLead} /></div>
-        <div class="table-wrap reveal">
+      <section class="doc-sec" id="categories">
+        <SectionHeading title={d.categoriesTitle} subtitle={d.categoriesLead} />
+        <div class="table-wrap">
           <table class="heat">
             <thead>
               <tr>
@@ -197,7 +192,7 @@ const agreement = r?.metric_agreement;
                 <tr>
                   <td class="model-cell">
                     <strong>{familyLabel(m.base ?? m.key)}</strong>
-                    <span class="method-tag" style={`--c:${METHOD_STYLE[methodOf(m)].color};margin-top:4px`}>{d.method[methodOf(m)]}</span>
+                    <span class="method-tag" style={`--c:${METHOD_STYLE[methodOf(m)].color}`}>{d.method[methodOf(m)]}</span>
                   </td>
                   {r.categories.map((c) => {
                     const v = m.by_category[c.id]?.human_pct;
@@ -212,24 +207,22 @@ const agreement = r?.metric_agreement;
             </tbody>
           </table>
         </div>
-      </div>
-    </section>
-
-    {agreement && agreement.spearman_human_chrf !== null && (
-      <section class="section" id="accord">
-        <div class="wrap grid-2 reveal">
-          <div>
-            <SectionHeading eyebrow={d.sections.results[4][1]} title={d.agreementTitle} align="left" />
-            <p class="lead">{d.agreementBody(fmt(agreement.spearman_human_chrf, lang, 2), agreement.n)}</p>
-          </div>
-          <div class="card card-lift kpi">
-            <strong>ρ = {fmt(agreement.spearman_human_chrf, lang, 2)}</strong>
-            <span>Spearman · {agreement.n} {lang === "fr" ? "réponses" : "answers"}</span>
-          </div>
-        </div>
       </section>
-    )}
-  </>
+
+      {agreement && agreement.spearman_human_chrf !== null && (
+        <section class="doc-sec" id="accord">
+          <SectionHeading title={d.agreementTitle} />
+          <div class="agree">
+            <p class="lead">{d.agreementBody(fmt(agreement.spearman_human_chrf, lang, 2), agreement.n)}</p>
+            <div class="agree-num">
+              <strong>ρ = {fmt(agreement.spearman_human_chrf, lang, 2)}</strong>
+              <span>Spearman · {agreement.n} {lang === "fr" ? "réponses" : "answers"}</span>
+            </div>
+          </div>
+        </section>
+      )}
+    </div>
+  </div>
 )}
 
 <script>

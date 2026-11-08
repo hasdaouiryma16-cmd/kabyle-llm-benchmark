@@ -1,11 +1,11 @@
 # Kabyle LLM Benchmark · taqbaylit
 
-> 🇬🇧 [English version](README.en.md) · 🌐 [Site des résultats](https://hasdaouiryma16-cmd.github.io/kabyle-llm-benchmark/)
+> 🇬🇧 [English version](README.en.md) · 🌐 [Site des résultats](https://kabyle-llm-benchmark.vercel.app/)
 
 **Mesurer à quel point les grands modèles de langage maîtrisent le kabyle, puis améliorer un petit modèle open source et prouver le gain avec des chiffres.**
 
 [![CI](https://github.com/hasdaouiryma16-cmd/kabyle-llm-benchmark/actions/workflows/ci.yml/badge.svg)](https://github.com/hasdaouiryma16-cmd/kabyle-llm-benchmark/actions/workflows/ci.yml)
-[![Site](https://github.com/hasdaouiryma16-cmd/kabyle-llm-benchmark/actions/workflows/pages.yml/badge.svg)](https://hasdaouiryma16-cmd.github.io/kabyle-llm-benchmark/)
+[![Site](https://img.shields.io/badge/site-vercel-0e2348)](https://kabyle-llm-benchmark.vercel.app/)
 ![Code : Apache-2.0](https://img.shields.io/badge/code-Apache--2.0-blue) ![Données : CC BY 4.0](https://img.shields.io/badge/donn%C3%A9es-CC%20BY%204.0-green)
 
 > **Statut.** Premiers résultats publiés : 15 configurations de modèles, 41 tests publics, 615 réponses notées à l'aveugle par une locutrice native. Chaque chiffre vient de vraies réponses de modèles et de notations humaines réelles.
@@ -57,7 +57,7 @@ flowchart LR
   P --> OL
   API -->|"export, liste blanche"| R[("data/results/public")]
   R --> VIS["scripts/visuals<br/>PNG LinkedIn + Open Graph"]
-  R --> S["site/ Astro FR/EN"] -->|"GitHub Actions"| GP["GitHub Pages"]
+  R --> S["site/ Astro FR/EN"] -->|"Vercel"| GP["kabyle-llm-benchmark.vercel.app"]
 ```
 
 Le **labo** est une application locale, jamais déployée, car elle utilise des clés API. Seul le **site de résultats**, statique, est public. Les choix techniques et leurs justifications sont dans [`docs/decisions.md`](docs/decisions.md).

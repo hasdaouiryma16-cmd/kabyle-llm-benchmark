@@ -1,11 +1,11 @@
 # Kabyle LLM Benchmark · taqbaylit
 
-> 🇫🇷 [Version française](README.md) · 🌐 [Results site](https://hasdaouiryma16-cmd.github.io/kabyle-llm-benchmark/en/)
+> 🇫🇷 [Version française](README.md) · 🌐 [Results site](https://kabyle-llm-benchmark.vercel.app/en/)
 
 **Measuring how well large language models handle Kabyle, then improving a small open-source model and proving the gain with numbers.**
 
 [![CI](https://github.com/hasdaouiryma16-cmd/kabyle-llm-benchmark/actions/workflows/ci.yml/badge.svg)](https://github.com/hasdaouiryma16-cmd/kabyle-llm-benchmark/actions/workflows/ci.yml)
-[![Site](https://github.com/hasdaouiryma16-cmd/kabyle-llm-benchmark/actions/workflows/pages.yml/badge.svg)](https://hasdaouiryma16-cmd.github.io/kabyle-llm-benchmark/en/)
+[![Site](https://img.shields.io/badge/site-vercel-0e2348)](https://kabyle-llm-benchmark.vercel.app/en/)
 ![Code: Apache-2.0](https://img.shields.io/badge/code-Apache--2.0-blue) ![Data: CC BY 4.0](https://img.shields.io/badge/data-CC%20BY%204.0-green)
 
 > **Status.** First results published: 15 model configurations, 41 public tests, 615 answers graded blind by a native speaker. Every number comes from real model outputs and real human grades.
@@ -57,7 +57,7 @@ flowchart LR
   P --> OL
   API -->|"whitelisted export"| R[("data/results/public")]
   R --> VIS["scripts/visuals<br/>LinkedIn PNGs + Open Graph"]
-  R --> S["site/ Astro FR/EN"] -->|"GitHub Actions"| GP["GitHub Pages"]
+  R --> S["site/ Astro FR/EN"] -->|"Vercel"| GP["kabyle-llm-benchmark.vercel.app"]
 ```
 
 The **lab** is a local application, never deployed, because it uses API keys. Only the static **results site** is public. Technical choices and their rationale are logged in [`docs/decisions.md`](docs/decisions.md) (French).

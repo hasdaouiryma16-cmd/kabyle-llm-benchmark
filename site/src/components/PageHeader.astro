@@ -1,6 +1,5 @@
 ---
-// Bandeau d'en-tête des pages secondaires : fond cobalt profond, trame de losanges,
-// fil d'Ariane, titre serif, raccourcis vers les sections, frise safran.
+// En-tête compact des pages secondaires : fil d'Ariane, titre, description.
 import { type Lang, type PageId, href, t } from "../lib/i18n";
 import Frieze from "./Frieze.astro";
 
@@ -13,7 +12,6 @@ interface Props {
 const { lang, page, title, subtitle } = Astro.props;
 const d = t[lang];
 const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
-const sections = d.sections[page] ?? [];
 ---
 
 <header class="page-banner">
@@ -23,14 +21,8 @@ const sections = d.sections[page] ?? [];
       <span class="dia" aria-hidden="true">◆</span>
       <span aria-current="page">{d.nav[page]}</span>
     </nav>
-    <p class="tif" aria-hidden="true">ⵜⴰⵇⴱⴰⵢⵍⵉⵜ</p>
     <h1>{title}</h1>
     {subtitle && <p class="page-banner-sub">{subtitle}</p>}
-    {sections.length > 0 && (
-      <nav class="jump" aria-label={d.onThisPage}>
-        {sections.map(([id, label]) => <a href={`#${id}`}>{label}</a>)}
-      </nav>
-    )}
   </div>
-  <Frieze variant="diamond" class="banner-frieze" />
+  <Frieze variant="diamond" height={10} class="banner-frieze" />
 </header>

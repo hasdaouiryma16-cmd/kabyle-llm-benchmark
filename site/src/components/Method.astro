@@ -4,6 +4,7 @@ import { METHODS, type Method, categoryCount, families, results } from "../lib/r
 import { METHOD_STYLE, isHigh } from "../lib/view";
 import PageHeader from "./PageHeader.astro";
 import SectionHeading from "./SectionHeading.astro";
+import Toc from "./Toc.astro";
 
 interface Props {
   lang: Lang;
@@ -16,136 +17,123 @@ const pub = r?.test_set.public_items ?? 41;
 const priv = r?.test_set.private_items ?? 11;
 const categories = r?.categories ?? [];
 const label = (c: { label_fr: string; label_en: string }) => (lang === "fr" ? c.label_fr : c.label_en);
-const S = d.sections.method;
 ---
 
 <PageHeader lang={lang} page="method" title={d.pageTitle.method} subtitle={d.methodLead} />
 
-<section class="section" id="jeu-de-test">
-  <div class="wrap">
-    <div class="reveal"><SectionHeading eyebrow={S[0][1]} title={d.testsetTitle} /></div>
-    <div class="narrow reveal">
+<div class="wrap doc">
+  <Toc lang={lang} items={d.sections.method} />
+  <div class="doc-main">
+    <section class="doc-sec" id="jeu-de-test">
+      <SectionHeading title={d.testsetTitle} />
       {d.testsetBody(pub, priv).map((p) => <p class="lead">{p}</p>)}
-    </div>
-    <ul class="cat-list">
-      {categories.map((c, i) => (
-        <li class="card-lift reveal" style={`transition-delay:${(i % 2) * 80}ms`}>
-          <b>{r ? categoryCount(r, c.id) : ""}</b>
-          <div><strong>{label(c)}</strong><span>{d.categoryDescriptions[c.id]}</span></div>
-        </li>
-      ))}
-    </ul>
-  </div>
-</section>
-
-<section class="section band-cream" id="protocole">
-  <div class="weave" aria-hidden="true"></div>
-  <div class="wrap rel">
-    <div class="reveal"><SectionHeading eyebrow={S[1][1]} title={d.protocolTitle} /></div>
-    <div class="grid-3">
-      {d.protocol.map((p, i) => (
-        <div class="card card-lift center reveal" style={`transition-delay:${i * 90}ms`}>
-          <p class="step-n">{String(i + 1).padStart(2, "0")}</p>
-          <h3>{p.h}</h3>
-          <p>{p.p}</p>
-        </div>
-      ))}
-    </div>
-    <h3 class="sub-title reveal">{d.scaleTitle}</h3>
-    <div class="scale reveal">
-      {d.scoreScale.map((s, i) => {
-        const v = (i / 3) * 100;
-        return (
-          <div class={isHigh(v) ? "hi" : ""} style={`--v:${v}`}>
-            <b>{i}</b>
-            {s}
-          </div>
-        );
-      })}
-    </div>
-  </div>
-</section>
-
-<section class="section" id="aides">
-  <div class="wrap">
-    <div class="reveal"><SectionHeading eyebrow={S[2][1]} title={d.methodsTitle} /></div>
-    <div class="grid-3">
-      {d.methods.map((m, i) => (
-        <div class="card card-lift method-card reveal" style={`--c:${METHOD_STYLE[m.id as Method].color};transition-delay:${i * 90}ms`}>
-          <h3>{m.h}</h3>
-          <p>{m.p}</p>
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
-
-<section class="section band-cream" id="modeles">
-  <div class="weave" aria-hidden="true"></div>
-  <div class="wrap rel">
-    <div class="reveal"><SectionHeading eyebrow={S[3][1]} title={d.modelsTitle} /></div>
-    <div class="table-wrap reveal">
-      <table>
+      <table class="plain">
         <thead>
-          <tr>
-            <th>{d.modelsCols.model}</th>
-            <th>{d.modelsCols.maker}</th>
-            <th>{d.modelsCols.access}</th>
-            <th>{d.modelsCols.size}</th>
-            <th>{d.modelsCols.methods}</th>
-          </tr>
+          <tr><th>{lang === "fr" ? "Catégorie" : "Category"}</th><th>{lang === "fr" ? "Ce qui est demandé" : "Task"}</th><th class="num">Tests</th></tr>
         </thead>
         <tbody>
-          {fams.map((f) => {
-            const info = MODEL_INFO[f.key];
-            return (
-              <tr>
-                <td><strong>{f.label}</strong></td>
-                <td>{info?.maker ?? f.provider}</td>
-                <td>{f.local ? d.access.local : d.access.api}</td>
-                <td>{sizeLabel(info?.params ?? null, lang)}</td>
-                <td>
-                  <span class="tags">
-                    {METHODS.filter((m) => f.byMethod[m]).map((m) => (
-                      <span class="method-tag" style={`--c:${METHOD_STYLE[m].color}`}>{d.method[m]}</span>
-                    ))}
-                  </span>
-                </td>
-              </tr>
-            );
-          })}
+          {categories.map((c) => (
+            <tr>
+              <td><strong>{label(c)}</strong></td>
+              <td>{d.categoryDescriptions[c.id]}</td>
+              <td class="num mono">{r ? categoryCount(r, c.id) : ""}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
-    </div>
-  </div>
-</section>
+    </section>
 
-<section class="section" id="glossaire">
-  <div class="wrap">
-    <div class="reveal"><SectionHeading eyebrow={S[4][1]} title={d.glossaryTitle} /></div>
-    <dl class="glossary">
-      {d.glossary.map((g, i) => (
-        <div class="card-lift reveal" style={`transition-delay:${(i % 2) * 80}ms`}><dt>{g.t}</dt><dd>{g.d}</dd></div>
-      ))}
-    </dl>
-  </div>
-</section>
+    <section class="doc-sec" id="protocole">
+      <SectionHeading title={d.protocolTitle} />
+      <ol class="steps">
+        {d.protocol.map((p) => (
+          <li><h3>{p.h}</h3><p>{p.p}</p></li>
+        ))}
+      </ol>
+      <h3 class="sub-title">{d.scaleTitle}</h3>
+      <div class="scale">
+        {d.scoreScale.map((s, i) => {
+          const v = (i / 3) * 100;
+          return (
+            <div class={isHigh(v) ? "hi" : ""} style={`--v:${v}`}>
+              <b>{i}</b>
+              {s}
+            </div>
+          );
+        })}
+      </div>
+    </section>
 
-<section class="section band-cream" id="limites">
-  <div class="weave" aria-hidden="true"></div>
-  <div class="wrap narrow rel">
-    <div class="reveal"><SectionHeading eyebrow={S[5][1]} title={d.limitsTitle} /></div>
-    <ul class="limits">
-      {d.limits.map((l) => <li class="reveal">{l}</li>)}
-    </ul>
-  </div>
-</section>
+    <section class="doc-sec" id="aides">
+      <SectionHeading title={d.methodsTitle} />
+      <div class="method-list">
+        {d.methods.map((m) => (
+          <div class="method-card" style={`--c:${METHOD_STYLE[m.id as Method].color}`}>
+            <h3><i class={`mk ${METHOD_STYLE[m.id as Method].shape}`} style={`--c:${METHOD_STYLE[m.id as Method].color}`}></i>{m.h}</h3>
+            <p>{m.p}</p>
+          </div>
+        ))}
+      </div>
+    </section>
 
-<section class="story">
-  <div class="lattice" aria-hidden="true"></div>
-  <div class="wrap narrow center reveal">
-    <SectionHeading title={d.reproduceTitle} dark />
-    <p class="story-p">{d.reproduceBody}</p>
-    <a class="btn btn-saffron" href={REPO_URL}>{d.repo}</a>
+    <section class="doc-sec" id="modeles">
+      <SectionHeading title={d.modelsTitle} />
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>{d.modelsCols.model}</th>
+              <th>{d.modelsCols.maker}</th>
+              <th>{d.modelsCols.access}</th>
+              <th>{d.modelsCols.size}</th>
+              <th>{d.modelsCols.methods}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {fams.map((f) => {
+              const info = MODEL_INFO[f.key];
+              return (
+                <tr>
+                  <td><strong>{f.label}</strong></td>
+                  <td>{info?.maker ?? f.provider}</td>
+                  <td>{f.local ? d.access.local : d.access.api}</td>
+                  <td>{sizeLabel(info?.params ?? null, lang)}</td>
+                  <td>
+                    <span class="tags">
+                      {METHODS.filter((m) => f.byMethod[m]).map((m) => (
+                        <span class="method-tag" style={`--c:${METHOD_STYLE[m].color}`}>{d.method[m]}</span>
+                      ))}
+                    </span>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="doc-sec" id="glossaire">
+      <SectionHeading title={d.glossaryTitle} />
+      <dl class="glossary">
+        {d.glossary.map((g) => (
+          <div><dt>{g.t}</dt><dd>{g.d}</dd></div>
+        ))}
+      </dl>
+    </section>
+
+    <section class="doc-sec" id="limites">
+      <SectionHeading title={d.limitsTitle} />
+      <ul class="limits">
+        {d.limits.map((l) => <li>{l}</li>)}
+      </ul>
+      <div class="open-box">
+        <div>
+          <h3>{d.reproduceTitle}</h3>
+          <p>{d.reproduceBody}</p>
+        </div>
+        <a class="btn btn-primary" href={REPO_URL}>{d.repo} →</a>
+      </div>
+    </section>
   </div>
-</section>
+</div>

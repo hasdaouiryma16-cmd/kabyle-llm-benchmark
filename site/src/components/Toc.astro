@@ -1,0 +1,39 @@
+---
+// Sommaire de page : colonne fixe sur ordinateur, rangée défilante sur téléphone.
+// La section visible est surlignée.
+import { type Lang, t } from "../lib/i18n";
+
+interface Props {
+  lang: Lang;
+  items: [string, string][];
+}
+const { lang, items } = Astro.props;
+const d = t[lang];
+---
+
+<nav class="toc" aria-label={d.onThisPage} data-toc>
+  <p class="toc-title">{d.onThisPage}</p>
+  <ol>
+    {items.map(([id, label], i) => (
+      <li><a href={`#${id}`} data-toc-link={id}><span>{String(i + 1).padStart(2, "0")}</span>{label}</a></li>
+    ))}
+  </ol>
+</nav>
+
+<script>
+  const links = [...document.querySelectorAll<HTMLAnchorElement>("[data-toc-link]")];
+  const targets = links.map((a) => document.getElementById(a.dataset.tocLink ?? "")).filter(Boolean) as HTMLElement[];
+  if (targets.length && "IntersectionObserver" in window) {
+    const visible = new Set<string>();
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => (e.isIntersecting ? visible.add(e.target.id) : visible.delete(e.target.id)));
+        const current = targets.find((t) => visible.has(t.id))?.id;
+        if (current)
+          links.forEach((a) => (a.dataset.tocLink === current ? a.setAttribute("aria-current", "true") : a.removeAttribute("aria-current")));
+      },
+      { rootMargin: "-100px 0px -55% 0px" },
+    );
+    targets.forEach((t) => io.observe(t));
+  }
+</script>
