@@ -99,7 +99,7 @@ const fr = {
   gainsChartLead: "Le point gris est le modèle seul ; chaque marque colorée, le même modèle avec une aide.",
   categoriesTitle: "Par catégorie",
   categoriesLead:
-    "Peu de tests par catégorie (voir le nombre sous chaque titre) : ces scores donnent une tendance, pas un classement.",
+    "Chaque catégorie repose sur moins de tests que le score global : ces scores donnent une tendance, pas un classement.",
   testsCount: (n: number) => `${n} test${n > 1 ? "s" : ""}`,
   agreementTitle: "La note automatique confirme-t-elle la note humaine ?",
   agreementBody: (rho: string, n: number) =>
@@ -170,7 +170,7 @@ const fr = {
   limitsTitle: "Limites",
   limits: [
     "Une seule annotatrice : les notes reflètent une variété de kabyle et des choix d'orthographe. Plusieurs références par test limitent ce biais sans le supprimer.",
-    "41 tests publics : les fourchettes sont larges, et les petits écarts entre modèles ne sont pas significatifs. Les scores par catégorie (2 à 4 tests hors traduction) sont indicatifs.",
+    "41 tests publics : les fourchettes sont larges, et les petits écarts entre modèles ne sont pas significatifs. Les scores par catégorie sont indicatifs.",
     "Les 11 tests privés n'ont pas été utilisés ici : les offres gratuites des API peuvent réutiliser les requêtes, seuls les tests publics leur ont été envoyés.",
     "Deux réponses n'ont jamais pu être obtenues (un modèle qui tourne en boucle, une limite de quota) : elles sont comptées avec la note 1.",
     "Une partie des modèles a été évaluée avant la correction d'une faute de frappe dans deux consignes (version 1.0.1) ; la note n'en a pas tenu compte.",
@@ -310,7 +310,7 @@ const en: Dict = {
   gainsChartLead: "The grey dot is the model alone; each colored mark is the same model with one kind of help.",
   categoriesTitle: "By category",
   categoriesLead:
-    "Few tests per category (see the count under each heading): these scores show a trend, not a ranking.",
+    "Each category rests on fewer tests than the overall score: these scores show a trend, not a ranking.",
   testsCount: (n) => `${n} test${n > 1 ? "s" : ""}`,
   agreementTitle: "Does the automatic score agree with the human grade?",
   agreementBody: (rho, n) =>
@@ -379,7 +379,7 @@ const en: Dict = {
   limitsTitle: "Limitations",
   limits: [
     "A single annotator: grades reflect one variety of Kabyle and particular spelling choices. Several references per test reduce this bias without removing it.",
-    "41 public tests: ranges are wide, and small gaps between models are not significant. Per-category scores (2 to 4 tests outside translation) are indicative.",
+    "41 public tests: ranges are wide, and small gaps between models are not significant. Per-category scores are indicative.",
     "The 11 private tests were not used here: free API tiers may reuse requests, so only public tests were sent to them.",
     "Two answers could never be obtained (a model stuck in a loop, a quota limit): they are counted with grade 1.",
     "Some models were evaluated before a typo was fixed in two prompts (version 1.0.1); grading did not penalize it.",

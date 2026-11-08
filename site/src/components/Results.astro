@@ -1,6 +1,6 @@
 ---
 import { type Lang, t } from "../lib/i18n";
-import { METHODS, type Method, categoryCount, families, ranked, results } from "../lib/results";
+import { METHODS, type Method, families, ranked, results } from "../lib/results";
 import { METHOD_STYLE, fmt, isHigh, pct, signed } from "../lib/view";
 import PageHeader from "./PageHeader.astro";
 import SectionHeading from "./SectionHeading.astro";
@@ -183,7 +183,7 @@ const tocItems = d.sections.results.filter(([id]) => id !== "accord" || (agreeme
               <tr>
                 <th>{d.colModel}</th>
                 {r.categories.map((c) => (
-                  <th style="text-align:center">{label(c)}<small>{d.testsCount(categoryCount(r, c.id))}</small></th>
+                  <th style="text-align:center">{label(c)}</th>
                 ))}
               </tr>
             </thead>

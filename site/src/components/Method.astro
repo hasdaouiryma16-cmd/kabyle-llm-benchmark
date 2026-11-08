@@ -1,6 +1,6 @@
 ---
 import { type Lang, MODEL_INFO, REPO_URL, sizeLabel, t } from "../lib/i18n";
-import { METHODS, type Method, categoryCount, families, results } from "../lib/results";
+import { METHODS, type Method, families, results } from "../lib/results";
 import { METHOD_STYLE, isHigh } from "../lib/view";
 import PageHeader from "./PageHeader.astro";
 import SectionHeading from "./SectionHeading.astro";
@@ -29,14 +29,13 @@ const label = (c: { label_fr: string; label_en: string }) => (lang === "fr" ? c.
       {d.testsetBody(pub, priv).map((p) => <p class="lead">{p}</p>)}
       <table class="plain">
         <thead>
-          <tr><th>{lang === "fr" ? "Catégorie" : "Category"}</th><th>{lang === "fr" ? "Ce qui est demandé" : "Task"}</th><th class="num">Tests</th></tr>
+          <tr><th>{lang === "fr" ? "Catégorie" : "Category"}</th><th>{lang === "fr" ? "Ce qui est demandé" : "Task"}</th></tr>
         </thead>
         <tbody>
           {categories.map((c) => (
             <tr>
               <td><strong>{label(c)}</strong></td>
               <td>{d.categoryDescriptions[c.id]}</td>
-              <td class="num mono">{r ? categoryCount(r, c.id) : ""}</td>
             </tr>
           ))}
         </tbody>
