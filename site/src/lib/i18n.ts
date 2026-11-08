@@ -22,7 +22,7 @@ const fr = {
     method: "Méthode",
   } as Record<PageId, string>,
   description:
-    "Un benchmark ouvert de la maîtrise du kabyle (taqbaylit) par les modèles de langage, noté à l'aveugle par une locutrice native, et la mesure de ce que few-shot, RAG et fine-tuning leur apportent.",
+    "Un benchmark ouvert de la maîtrise du kabyle (taqbaylit) par les modèles de langage, noté à l'aveugle par son autrice, locutrice native, et la mesure de ce que few-shot, RAG et fine-tuning leur apportent.",
   switchLang: "English",
   theme: "Changer de thème",
   menu: "Menu",
@@ -32,7 +32,7 @@ const fr = {
   greeting: "Azul !",
   heroTitle: "Les IA parlent‑elles kabyle ?",
   heroLead:
-    "15 configurations de modèles de langage, 41 tests écrits par une locutrice native, 615 réponses notées à l'aveugle. Ce que les modèles savent vraiment du kabyle, et ce qu'on peut leur apprendre.",
+    "15 configurations de modèles de langage, 41 tests écrits par l'autrice, locutrice native du kabyle, 615 réponses notées à l'aveugle. Ce que les modèles savent vraiment du kabyle, et ce qu'on peut leur apprendre.",
   heroCta: "Voir les résultats",
   heroCta2: "Lire les réponses",
   kpi: {
@@ -103,7 +103,7 @@ const fr = {
   testsCount: (n: number) => `${n} test${n > 1 ? "s" : ""}`,
   agreementTitle: "La note automatique confirme-t-elle la note humaine ?",
   agreementBody: (rho: string, n: number) =>
-    `Corrélation de rang de Spearman de ${rho} entre la note humaine et chrF++ sur ${n} réponses : un accord fort. La métrique automatique classe les réponses dans le même sens que la locutrice, mais ne la remplace pas : elle ne comprend pas le sens.`,
+    `Corrélation de rang de Spearman de ${rho} entre la note humaine et chrF++ sur ${n} réponses : un accord fort. La métrique automatique classe les réponses dans le même sens que l'autrice, mais ne remplace pas sa note : elle ne comprend pas le sens.`,
   metaLine: (version: string, hash: string, date: string) => `Jeu de test ${version} · empreinte SHA-256 ${hash}… · résultats exportés le ${date}`,
 
   // ── Réponses ──
@@ -131,7 +131,7 @@ const fr = {
   methodLead: "Comment le benchmark a été construit, ce que veulent dire les chiffres, et ce qu'ils ne disent pas.",
   testsetTitle: "Le jeu de test",
   testsetBody: (pub: number, priv: number) => [
-    `Tous les textes kabyles du jeu de test (références, textes de compréhension, consignes en kabyle) sont écrits à la main par une locutrice native. Aucun n'est généré par une IA.`,
+    `Tous les textes kabyles du jeu de test (références, textes de compréhension, consignes en kabyle) sont écrits à la main par l'autrice du benchmark, locutrice native du kabyle. Aucun n'est généré par une IA.`,
     `Le jeu compte ${pub + priv} tests : ${pub} publics, utilisés pour ces résultats, et ${priv} gardés privés pour de futures évaluations à l'abri de toute fuite dans les données d'entraînement.`,
   ],
   categoryDescriptions: {
@@ -191,7 +191,7 @@ const fr = {
   points: "pts",
 
   // ── Habillage ──
-  announce: ["41 tests écrits par une locutrice native", "15 configurations de modèles", "615 réponses notées à l'aveugle"],
+  announce: ["41 tests écrits par l'autrice, locutrice native", "15 configurations de modèles", "615 réponses notées à l'aveugle"],
   onThisPage: "Sur cette page",
   sections: {
     results: [
@@ -251,7 +251,7 @@ const en: Dict = {
     method: "Method",
   },
   description:
-    "An open benchmark of how well language models handle Kabyle (Taqbaylit), blind-graded by a native speaker, and a measurement of what few-shot, RAG and fine-tuning add.",
+    "An open benchmark of how well language models handle Kabyle (Taqbaylit), blind-graded by its author, a native speaker, and a measurement of what few-shot, RAG and fine-tuning add.",
   switchLang: "Français",
   theme: "Toggle theme",
   menu: "Menu",
@@ -260,7 +260,7 @@ const en: Dict = {
   greeting: "Azul!",
   heroTitle: "Do AI models speak Kabyle?",
   heroLead:
-    "15 language-model configurations, 41 tests written by a native speaker, 615 answers graded blind. What models really know about Kabyle, and what we can teach them.",
+    "15 language-model configurations, 41 tests written by the author, a native Kabyle speaker, 615 answers graded blind. What models really know about Kabyle, and what we can teach them.",
   heroCta: "See the results",
   heroCta2: "Read the answers",
   kpi: {
@@ -314,7 +314,7 @@ const en: Dict = {
   testsCount: (n) => `${n} test${n > 1 ? "s" : ""}`,
   agreementTitle: "Does the automatic score agree with the human grade?",
   agreementBody: (rho, n) =>
-    `Spearman rank correlation of ${rho} between the human grade and chrF++ over ${n} answers: strong agreement. The automatic metric ranks answers in the same direction as the native speaker, but cannot replace her: it does not understand meaning.`,
+    `Spearman rank correlation of ${rho} between the human grade and chrF++ over ${n} answers: strong agreement. The automatic metric ranks answers in the same direction as the author, but cannot replace her grade: it does not understand meaning.`,
   metaLine: (version, hash, date) => `Test set ${version} · SHA-256 ${hash}… · results exported on ${date}`,
 
   answersLead:
@@ -340,7 +340,7 @@ const en: Dict = {
   methodLead: "How the benchmark was built, what the numbers mean, and what they do not say.",
   testsetTitle: "The test set",
   testsetBody: (pub, priv) => [
-    "Every Kabyle text in the test set (references, comprehension texts, prompts written in Kabyle) is handwritten by a native speaker. None is AI-generated.",
+    "Every Kabyle text in the test set (references, comprehension texts, prompts written in Kabyle) is handwritten by the benchmark's author, a native Kabyle speaker. None is AI-generated.",
     `The set has ${pub + priv} tests: ${pub} public ones, used for these results, and ${priv} kept private for future evaluations safe from any leak into training data.`,
   ],
   categoryDescriptions: {
@@ -398,7 +398,7 @@ const en: Dict = {
   license: "Code: Apache-2.0 · Data: CC BY 4.0",
   points: "pts",
 
-  announce: ["41 tests written by a native speaker", "15 model configurations", "615 answers graded blind"],
+  announce: ["41 tests written by the author, a native speaker", "15 model configurations", "615 answers graded blind"],
   onThisPage: "On this page",
   sections: {
     results: [

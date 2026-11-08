@@ -51,7 +51,7 @@ const kpis = r
       { v: pct(best?.overall.human_pct, lang), l: d.kpi.best, s: best?.label },
       { v: `+${fmt(ftGain?.overall.gain_points, lang)} ${d.points}`, l: d.kpi.gain, s: familyOf(ftGain?.base ?? "")?.label },
       { v: totalGraded(r).toLocaleString(d.locale), l: d.kpi.graded, s: `${order.length} configurations` },
-      { v: String(r.test_set.public_items ?? r.items?.length ?? ""), l: d.kpi.tests, s: lang === "fr" ? "écrits par une locutrice native" : "written by a native speaker" },
+      { v: String(r.test_set.public_items ?? r.items?.length ?? ""), l: d.kpi.tests, s: lang === "fr" ? "écrits par l'autrice, locutrice native" : "written by the author, a native speaker" },
     ]
   : [];
 ---
