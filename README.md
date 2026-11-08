@@ -8,7 +8,7 @@
 [![Site](https://github.com/hasdaouiryma16-cmd/kabyle-llm-benchmark/actions/workflows/pages.yml/badge.svg)](https://hasdaouiryma16-cmd.github.io/kabyle-llm-benchmark/)
 ![Code : Apache-2.0](https://img.shields.io/badge/code-Apache--2.0-blue) ![Données : CC BY 4.0](https://img.shields.io/badge/donn%C3%A9es-CC%20BY%204.0-green)
 
-> **Statut.** Le labo, les pipelines et le site sont prêts. Le jeu de test est en cours d'écriture et **aucun résultat n'est encore publié**. Chaque chiffre de ce dépôt viendra de vraies réponses de modèles et de notations humaines réelles.
+> **Statut.** Premiers résultats publiés : 15 configurations de modèles, 41 tests publics, 615 réponses notées à l'aveugle par une locutrice native. Chaque chiffre vient de vraies réponses de modèles et de notations humaines réelles.
 
 ## Pourquoi
 

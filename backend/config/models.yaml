@@ -159,6 +159,30 @@ models:
     pricing: { input: 0, output: 0 }
     public_only: true
 
+  # Bonus : le meilleur modèle (Gemini Flash) avec les mêmes aides, pour voir s'il progresse
+  # encore ou s'il est déjà au plafond.
+  - key: gemini-flash-fewshot
+    label: Gemini Flash + few-shot
+    provider: gemini
+    model: gemini-flash-latest
+    base: gemini-flash
+    variant: fewshot
+    variant_params: { k: 5, selection: similar }
+    params: { max_tokens: 2048, temperature: 0 }
+    pricing: { input: 0, output: 0 }
+    public_only: true
+
+  - key: gemini-flash-rag
+    label: Gemini Flash + RAG
+    provider: gemini
+    model: gemini-flash-latest
+    base: gemini-flash
+    variant: rag
+    variant_params: { k: 8 }
+    params: { max_tokens: 2048, temperature: 0 }
+    pricing: { input: 0, output: 0 }
+    public_only: true
+
   # ── OpenRouter : modèles gratuits (suffixe :free, liste vérifiée le 2026-10-31 sur
   #    openrouter.ai/api/v1/models ; elle change souvent). Requêtes potentiellement
   #    réutilisées par les hébergeurs : tests publics seulement. ──

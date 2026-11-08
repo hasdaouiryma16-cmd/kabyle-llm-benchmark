@@ -38,6 +38,10 @@ jobs:
       - run: npm ci
       # Le build copie data/results/public/ (exporté par le labo) : aucune donnée inventée
       - run: npm run build
+        env:
+          # Le site principal est sur Vercel (racine du domaine) ; GitHub Pages le sert sous un sous-chemin
+          SITE_URL: https://hasdaouiryma16-cmd.github.io
+          BASE_PATH: /kabyle-llm-benchmark/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site/dist

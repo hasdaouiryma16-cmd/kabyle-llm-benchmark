@@ -1,0 +1,151 @@
+---
+import { type Lang, href, t } from "../lib/i18n";
+import { type Method, families, ranked, results, totalGraded } from "../lib/results";
+import { METHOD_STYLE, fmt, joinList, pct } from "../lib/view";
+import Motif from "./Motif.astro";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const d = t[lang];
+const base = import.meta.env.BASE_URL.replace(/\/?$/, "/");
+
+const r = results;
+const order = r ? ranked(r) : [];
+const fams = r ? families(r) : [];
+const gains = r?.gains.filter((g) => g.overall.gain_points !== undefined) ?? [];
+const variantOf = (key: string) => r?.models.find((m) => m.key === key);
+const familyOf = (key: string) => fams.find((f) => f.key === key);
+
+const best = order[0];
+const ftGain = [...gains].filter((g) => g.variant_type === "finetuned").sort((a, b) => (b.overall.gain_points ?? 0) - (a.overall.gain_points ?? 0))[0];
+const largeFewshot = gains.filter((g) => g.variant_type === "fewshot" && !familyOf(g.base)?.local);
+const fsMin = Math.min(...largeFewshot.map((g) => g.overall.gain_points ?? 0));
+const fsMax = Math.max(...largeFewshot.map((g) => g.overall.gain_points ?? 0));
+const small = fams.filter((f) => f.local);
+const ftAfter = ftGain?.overall.after_pct ?? 0;
+const beaten = fams.filter((f) => !f.local && (f.byMethod.base?.overall.human_pct ?? 100) < ftAfter).map((f) => f.label);
+
+const findings =
+  r && best && ftGain
+    ? d.findings({
+        bestLabel: best.label,
+        bestPct: fmt(best.overall.human_pct, lang),
+        fewshotLarge:
+          Math.round(fsMin) === Math.round(fsMax)
+            ? `${Math.round(fsMax)}`
+            : `${Math.round(fsMin)} ${lang === "fr" ? "à" : "to"} ${Math.round(fsMax)}`,
+        fewshotLargeLabels: joinList(largeFewshot.map((g) => familyOf(g.base)?.label ?? g.base), lang),
+        smallLabels: joinList(small.map((f) => f.label), lang),
+        smallBase: joinList(small.map((f) => pct(f.byMethod.base?.overall.human_pct, lang)), lang),
+        ftLabel: familyOf(ftGain.base)?.label ?? ftGain.base,
+        ftBefore: fmt(ftGain.overall.before_pct, lang),
+        ftAfter: fmt(ftGain.overall.after_pct, lang),
+        ftBeats: joinList(beaten, lang),
+      })
+    : [];
+const podium = order.slice(0, 3);
+---
+
+<section class="hero">
+  <Motif />
+  <div class="wrap">
+    <span class="greeting"><span class="kab" aria-hidden="true">ⵣ</span> {d.greeting}</span>
+    <h1>{d.heroTitle}</h1>
+    <p class="lead">{d.heroLead}</p>
+    <div class="cta">
+      <a class="btn btn-primary" href={href(base, "results", lang)}>{d.heroCta} →</a>
+      <a class="btn btn-secondary" href={href(base, "answers", lang)}>{d.heroCta2}</a>
+    </div>
+  </div>
+</section>
+<div class="frieze big" aria-hidden="true"></div>
+
+{!r ? (
+  <div class="wrap section"><div class="pending"><strong>{d.pending}</strong>{d.pendingBody}</div></div>
+) : (
+  <>
+    <section class="section" style="padding-top:32px">
+      <div class="wrap grid-4">
+        <div class="card kpi" style="--k:var(--gold)">
+          <strong>{pct(best?.overall.human_pct, lang)}</strong>
+          <span>{d.kpi.best}</span>
+          <small>{best?.label}</small>
+        </div>
+        <div class="card kpi" style="--k:var(--m-finetuned)">
+          <strong>+{fmt(ftGain?.overall.gain_points, lang)} {d.points}</strong>
+          <span>{d.kpi.gain}</span>
+          <small>{familyOf(ftGain?.base ?? "")?.label}</small>
+        </div>
+        <div class="card kpi" style="--k:var(--green)">
+          <strong>{totalGraded(r).toLocaleString(d.locale)}</strong>
+          <span>{d.kpi.graded}</span>
+          <small>{order.length} {lang === "fr" ? "configurations" : "configurations"}</small>
+        </div>
+        <div class="card kpi" style="--k:var(--blue)">
+          <strong>{r.test_set.public_items ?? r.items?.length}</strong>
+          <span>{d.kpi.tests}</span>
+          <small>{lang === "fr" ? "écrits par une locutrice native" : "written by a native speaker"}</small>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <span class="eyebrow">{lang === "fr" ? "Synthèse" : "Summary"}</span>
+        <h2>{d.findingsTitle}</h2>
+        <ol class="findings" style="margin-top:24px">
+          {findings.map((f) => (
+            <li><div><h3>{f.h}</h3><p>{f.p}</p></div></li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <span class="eyebrow">{lang === "fr" ? "Classement" : "Leaderboard"}</span>
+        <h2>{d.homeTopTitle}</h2>
+        <div class="podium" style="margin-top:24px">
+          {podium.map((m, i) => {
+            const style = METHOD_STYLE[(m.variant as Method) ?? "base"];
+            return (
+              <div class="card">
+                <span class="rank-badge">{i + 1}</span>
+                <h3>{variantOf(m.base ?? m.key)?.label ?? m.label}</h3>
+                <span class="method-tag" style={`--c:${style.color}`}>{d.method[m.variant] ?? m.variant}</span>
+                <div class="score" style="margin-top:12px">{pct(m.overall.human_pct, lang)}</div>
+                {m.overall.human_pct_ci95 && (
+                  <p class="meta" style="margin-top:2px">
+                    {lang === "fr" ? "fourchette" : "range"} {fmt(m.overall.human_pct_ci95[0], lang, 0)}–{pct(m.overall.human_pct_ci95[1], lang, 0)}
+                  </p>
+                )}
+              </div>
+            );
+          })}
+        </div>
+        <p style="margin-top:20px"><a class="btn btn-secondary" href={href(base, "results", lang)}>{d.homeTopMore} →</a></p>
+      </div>
+    </section>
+  </>
+)}
+
+<section class="section">
+  <div class="wrap grid-2">
+    <div>
+      <span class="eyebrow">Taqbaylit · <span class="kab">ⵜⴰⵇⴱⴰⵢⵍⵉⵜ</span></span>
+      <h2>{d.whyTitle}</h2>
+      {d.whyBody.map((p) => <p class="lead" style="margin-bottom:14px">{p}</p>)}
+      <p style="margin-top:18px"><a class="btn btn-secondary" href={href(base, "method", lang)}>{d.nav.method} →</a></p>
+    </div>
+    <div class="grid-3" style="grid-template-columns:1fr">
+      {d.facts.map((f, i) => (
+        <div class="card kpi" style={`--k:${i === 0 ? "var(--accent)" : "var(--gold)"}`}>
+          <strong>{f.value}</strong>
+          <span>{f.label}</span>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

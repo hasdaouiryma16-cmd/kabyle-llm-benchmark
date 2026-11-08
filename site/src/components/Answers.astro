@@ -1,0 +1,71 @@
+---
+import { type Lang, t } from "../lib/i18n";
+import { type Method, families, ranked, results } from "../lib/results";
+import { METHOD_STYLE } from "../lib/view";
+import AnswerExplorer from "./AnswerExplorer";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const d = t[lang];
+const r = results;
+const fams = r ? families(r) : [];
+const models = (r ? ranked(r) : []).map((m) => {
+  const method = (m.variant as Method) ?? "base";
+  return {
+    key: m.key,
+    family: fams.find((f) => f.key === (m.base ?? m.key))?.label ?? m.label,
+    method,
+    methodLabel: d.method[method],
+    color: METHOD_STYLE[method].color,
+  };
+});
+const categories = (r?.categories ?? []).map((c) => ({ id: c.id, label: lang === "fr" ? c.label_fr : c.label_en }));
+const items = (r?.items ?? []).map(({ id, category, prompt, source_text, context, references, answers }) => ({
+  id,
+  category,
+  prompt,
+  source_text,
+  context,
+  references,
+  answers: answers.map(({ model_key, output, score }) => ({ model_key, output, score })),
+}));
+const text = {
+  pickCategory: d.pickCategory,
+  allCategories: d.allCategories,
+  pickTest: d.pickTest,
+  search: d.search,
+  sortBy: d.sortBy,
+  sortScore: d.sortScore,
+  sortModel: d.sortModel,
+  context: d.context,
+  prompt: d.prompt,
+  source: d.source,
+  references: d.references,
+  answer: d.answer,
+  noAnswer: d.noAnswer,
+  score: d.score,
+  showMore: d.showMore,
+  showLess: d.showLess,
+  scoreScale: d.scoreScale,
+};
+---
+
+<div class="page-head">
+  <div class="wrap">
+    <span class="eyebrow">{d.siteName}</span>
+    <h1>{d.pageTitle.answers}</h1>
+    <p class="lead">{d.answersLead}</p>
+  </div>
+</div>
+
+<section class="section" style="padding-top:16px">
+  <div class="wrap">
+    {items.length === 0 ? (
+      <div class="pending"><strong>{d.pending}</strong>{d.pendingBody}</div>
+    ) : (
+      <AnswerExplorer client:load items={items} models={models} categories={categories} text={text} />
+    )}
+  </div>
+</section>

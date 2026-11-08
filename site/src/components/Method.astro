@@ -1,0 +1,146 @@
+---
+import { type Lang, MODEL_INFO, REPO_URL, sizeLabel, t } from "../lib/i18n";
+import { METHODS, type Method, categoryCount, families, results } from "../lib/results";
+import { METHOD_STYLE, isHigh } from "../lib/view";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const d = t[lang];
+const r = results;
+const fams = r ? families(r) : [];
+const pub = r?.test_set.public_items ?? 41;
+const priv = r?.test_set.private_items ?? 11;
+const categories = r?.categories ?? [];
+const label = (c: { label_fr: string; label_en: string }) => (lang === "fr" ? c.label_fr : c.label_en);
+---
+
+<div class="page-head">
+  <div class="wrap">
+    <span class="eyebrow">{d.siteName}</span>
+    <h1>{d.pageTitle.method}</h1>
+    <p class="lead">{d.methodLead}</p>
+  </div>
+</div>
+
+<section class="section" id="jeu-de-test">
+  <div class="wrap">
+    <h2>{d.testsetTitle}</h2>
+    {d.testsetBody(pub, priv).map((p) => <p class="lead" style="margin-bottom:14px">{p}</p>)}
+    <ul class="cat-list" style="margin-top:20px">
+      {categories.map((c) => (
+        <li>
+          <b>{r ? categoryCount(r, c.id) : ""}</b>
+          <div><strong>{label(c)}</strong><br /><span>{d.categoryDescriptions[c.id]}</span></div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="protocole">
+  <div class="wrap">
+    <h2>{d.protocolTitle}</h2>
+    <div class="grid-3" style="margin-top:20px">
+      {d.protocol.map((p) => (
+        <div class="card"><h3>{p.h}</h3><p>{p.p}</p></div>
+      ))}
+    </div>
+    <h3 style="margin-top:36px;font-size:20px">{d.scaleTitle}</h3>
+    <div class="scale" style="margin-top:12px">
+      {d.scoreScale.map((s, i) => {
+        const v = (i / 3) * 100;
+        return (
+          <div class={isHigh(v) ? "hi" : ""} style={`--v:${v}`}>
+            <b>{i}</b>
+            {s}
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<section class="section" id="aides">
+  <div class="wrap">
+    <h2>{d.methodsTitle}</h2>
+    <div class="grid-3" style="margin-top:20px">
+      {d.methods.map((m) => (
+        <div class="card method-card" style={`--c:${METHOD_STYLE[m.id as Method].color}`}>
+          <h3>{m.h}</h3>
+          <p>{m.p}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="section" id="modeles">
+  <div class="wrap">
+    <h2>{d.modelsTitle}</h2>
+    <div class="table-wrap" style="margin-top:20px">
+      <table>
+        <thead>
+          <tr>
+            <th>{d.modelsCols.model}</th>
+            <th>{d.modelsCols.maker}</th>
+            <th>{d.modelsCols.access}</th>
+            <th>{d.modelsCols.size}</th>
+            <th>{d.modelsCols.methods}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {fams.map((f) => {
+            const info = MODEL_INFO[f.key];
+            return (
+              <tr>
+                <td><strong>{f.label}</strong></td>
+                <td>{info?.maker ?? f.provider}</td>
+                <td>{f.local ? d.access.local : d.access.api}</td>
+                <td>{sizeLabel(info?.params ?? null, lang)}</td>
+                <td>
+                  <span style="display:inline-flex;gap:6px;flex-wrap:wrap">
+                    {METHODS.filter((m) => f.byMethod[m]).map((m) => (
+                      <span class="method-tag" style={`--c:${METHOD_STYLE[m].color}`}>{d.method[m]}</span>
+                    ))}
+                  </span>
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="glossaire">
+  <div class="wrap">
+    <h2>{d.glossaryTitle}</h2>
+    <dl class="glossary" style="margin-top:20px">
+      {d.glossary.map((g) => (
+        <div><dt>{g.t}</dt><dd>{g.d}</dd></div>
+      ))}
+    </dl>
+  </div>
+</section>
+
+<section class="section" id="limites">
+  <div class="wrap">
+    <h2>{d.limitsTitle}</h2>
+    <ul class="limits" style="margin-top:20px">
+      {d.limits.map((l) => <li>{l}</li>)}
+    </ul>
+  </div>
+</section>
+
+<section class="section" id="ouvert">
+  <div class="wrap grid-2">
+    <div>
+      <h2>{d.reproduceTitle}</h2>
+      <p class="lead">{d.reproduceBody}</p>
+    </div>
+    <div><a class="btn btn-primary" href={REPO_URL}>{d.repo} →</a></div>
+  </div>
+</section>

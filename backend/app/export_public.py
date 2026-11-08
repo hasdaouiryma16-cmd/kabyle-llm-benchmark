@@ -45,9 +45,23 @@ def build_public_results(session: Session, settings: Settings) -> dict[str, Any]
     results = compute_results(session)
     manifest = read_manifest(settings) or {}
     examples = []
-    for row in response_rows(session, results["test_set_hash"], favorites_only=True):
+    items: dict[str, dict[str, Any]] = {}
+    for row in response_rows(session, results["test_set_hash"]):
         item = row["item"]
         if item.get("split") != "public":
+            continue
+        public_item = items.setdefault(
+            item["id"], {**{k: item.get(k) for k in PUBLIC_ITEM_FIELDS}, "answers": []}
+        )
+        public_item["answers"].append(
+            {
+                "model_key": row["model_key"],
+                "output": row["output"],
+                "score": row["score"],
+                "chrf": row["chrf"],
+            }
+        )
+        if not row["favorite"]:
             continue
         examples.append(
             {
@@ -102,6 +116,8 @@ def build_public_results(session: Session, settings: Settings) -> dict[str, Any]
         "gains": results["gains"],
         "metric_agreement": results["metric_agreement"],
         "examples": examples,
+        # Toutes les réponses aux tests publics, pour comparer les modèles test par test
+        "items": [items[k] for k in sorted(items)],
     }
 
 

@@ -97,3 +97,8 @@ def test_export_public_publishes_only_public_favorites(client, settings):
     data = json.loads(published)
     assert data["models"][0]["overall"]["n_graded"] >= 1
     assert "params" not in json.dumps(data["models"])
+    # Les réponses aux tests publics sont publiées, test par test ; jamais les tests privés
+    assert len(data["items"]) == 1
+    answer = data["items"][0]["answers"][0]
+    assert len(data["items"][0]["answers"]) == 1
+    assert (answer["model_key"], answer["output"], answer["score"]) == ("mock-a", "ref-a", 2)

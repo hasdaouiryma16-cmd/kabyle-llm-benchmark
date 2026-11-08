@@ -1,0 +1,260 @@
+---
+import { type Lang, t } from "../lib/i18n";
+import { METHODS, type Method, categoryCount, families, ranked, results } from "../lib/results";
+import { METHOD_STYLE, fmt, isHigh, pct, signed } from "../lib/view";
+
+interface Props {
+  lang: Lang;
+}
+const { lang } = Astro.props;
+const d = t[lang];
+const r = results;
+const order = r ? ranked(r) : [];
+const fams = r ? families(r) : [];
+const label = (c: { label_fr: string; label_en: string }) => (lang === "fr" ? c.label_fr : c.label_en);
+const familyLabel = (key: string) => fams.find((f) => f.key === key)?.label ?? key;
+const methodOf = (m: { variant: string }) => (m.variant as Method) ?? "base";
+const gainFor = (variant: string) => r?.gains.find((g) => g.variant === variant)?.overall;
+const date = r ? new Date(r.generated_at).toLocaleDateString(d.locale, { dateStyle: "long" }) : "";
+const ticks = [0, 25, 50, 75, 100];
+const agreement = r?.metric_agreement;
+---
+
+<div class="page-head">
+  <div class="wrap">
+    <span class="eyebrow">{d.siteName}</span>
+    <h1>{d.pageTitle.results}</h1>
+    <p class="lead">{d.resultsLead}</p>
+  </div>
+</div>
+
+{!r ? (
+  <div class="wrap section"><div class="pending"><strong>{d.pending}</strong>{d.pendingBody}</div></div>
+) : (
+  <>
+    <!-- Classement général -->
+    <section class="section" id="classement">
+      <div class="wrap">
+        <h2>{d.rankingTitle}</h2>
+        <div class="seg" role="group" aria-label={d.rankingTitle} data-filter>
+          <button type="button" aria-pressed="true" data-f="all">{d.filterAll}</button>
+          <button type="button" aria-pressed="false" data-f="base">{d.filterBase}</button>
+          <button type="button" aria-pressed="false" data-f="helped">{d.filterHelped}</button>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>{d.colModel}</th>
+                <th>{d.colMethod}</th>
+                <th class="num">{d.colScore}</th>
+                <th>{d.colRange}</th>
+                <th class="num" title="chrF++">{d.colChrf}</th>
+                <th class="num">{d.colN}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {order.map((m, i) => {
+                const method = methodOf(m);
+                const style = METHOD_STYLE[method];
+                const ci = m.overall.human_pct_ci95;
+                return (
+                  <tr data-row data-kind={method === "base" ? "base" : "helped"}>
+                    <td class="rank" data-rank>{i + 1}</td>
+                    <td class="model-cell">
+                      <strong>{familyLabel(m.base ?? m.key)}</strong>
+                      <small>{fams.find((f) => f.key === (m.base ?? m.key))?.local ? d.access.local : d.access.api}</small>
+                    </td>
+                    <td><span class="method-tag" style={`--c:${style.color}`}>{d.method[method]}</span></td>
+                    <td class="num score-strong">{pct(m.overall.human_pct, lang)}</td>
+                    <td class="range-cell">
+                      <div
+                        class="range"
+                        style={`--c:${style.color}`}
+                        role="img"
+                        aria-label={ci ? `${pct(m.overall.human_pct, lang)} (${fmt(ci[0], lang)}–${pct(ci[1], lang)})` : pct(m.overall.human_pct, lang)}
+                        title={ci ? `${fmt(ci[0], lang)} – ${pct(ci[1], lang)}` : ""}
+                      >
+                        <span class="track"></span>
+                        {ci && <span class="ci" style={`left:${ci[0]}%;width:${Math.max(ci[1] - ci[0], 1)}%`}></span>}
+                        <span class="pt" style={`left:${m.overall.human_pct ?? 0}%`}></span>
+                      </div>
+                    </td>
+                    <td class="num">{fmt(m.overall.chrf, lang)}</td>
+                    <td class="num">{m.overall.n_graded}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+        <p class="meta">{d.metaLine(r.test_set.version ?? "", r.test_set.content_hash.slice(0, 12), date)}</p>
+      </div>
+    </section>
+
+    <!-- Matrice modèle × aide -->
+    <section class="section" id="aides">
+      <div class="wrap">
+        <h2>{d.matrixTitle}</h2>
+        <p class="lead">{d.matrixLead}</p>
+        <div class="table-wrap">
+          <table class="matrix">
+            <thead>
+              <tr>
+                <th>{d.colModel}</th>
+                {METHODS.map((m) => (
+                  <th><span class="dot" style={`background:${METHOD_STYLE[m].color}`}></span>{d.method[m]}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {fams.map((f) => (
+                <tr>
+                  <td class="model-cell">
+                    <strong>{f.label}</strong>
+                    <small>{f.local ? d.access.local : d.access.api}</small>
+                  </td>
+                  {METHODS.map((m) => {
+                    const res = f.byMethod[m];
+                    if (!res) {
+                      const na = m === "finetuned" && !f.local;
+                      return <td><span class="cell empty">{na ? d.matrixNotApplicable : d.matrixNotTested}</span></td>;
+                    }
+                    const v = res.overall.human_pct ?? 0;
+                    const g = m === "base" ? null : gainFor(res.key);
+                    return (
+                      <td>
+                        <span class={`cell${isHigh(v) ? " hi" : ""}`} style={`--v:${v}`}>
+                          <b>{pct(v, lang)}</b>
+                          {g?.gain_points !== undefined && <small>{signed(g.gain_points, lang)} {d.points}</small>}
+                        </span>
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p class="note">{d.matrixNaNote}</p>
+      </div>
+    </section>
+
+    <!-- Graphique en haltères -->
+    <section class="section" id="progression">
+      <div class="wrap">
+        <h2>{d.gainsChartTitle}</h2>
+        <p class="lead">{d.gainsChartLead}</p>
+        <div class="card">
+          <div class="legend">
+            {METHODS.map((m) => (
+              <span><i class={`mk ${METHOD_STYLE[m].shape}`} style={`--c:${METHOD_STYLE[m].color}`}></i>{d.method[m]}</span>
+            ))}
+          </div>
+          <div class="dumbbell">
+            {fams.map((f) => {
+              const pts = METHODS.flatMap((m) => {
+                const res = f.byMethod[m];
+                return res ? [{ m, v: res.overall.human_pct ?? 0 }] : [];
+              });
+              const lo = Math.min(...pts.map((p) => p.v));
+              const hi = Math.max(...pts.map((p) => p.v));
+              return (
+                <div class="db-row">
+                  <span>{f.label}</span>
+                  <div class="db-track">
+                    <span class="db-line" style={`left:${lo}%;width:${hi - lo}%`}></span>
+                    {pts.map((p) => (
+                      <span class="db-mark" style={`left:${p.v}%`} tabindex="0" aria-label={`${f.label}, ${d.method[p.m]} : ${pct(p.v, lang)}`}>
+                        <i class={`mk ${METHOD_STYLE[p.m].shape}`} style={`--c:${METHOD_STYLE[p.m].color}`}></i>
+                        <span class="tip">{d.method[p.m]} · {pct(p.v, lang)}</span>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+            <div class="db-axis">
+              <span></span>
+              <div>{ticks.map((x) => <i style={`left:${x}%`}>{pct(x, lang, 0)}</i>)}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Par catégorie -->
+    <section class="section" id="categories">
+      <div class="wrap">
+        <h2>{d.categoriesTitle}</h2>
+        <p class="lead">{d.categoriesLead}</p>
+        <div class="table-wrap">
+          <table class="heat">
+            <thead>
+              <tr>
+                <th>{d.colModel}</th>
+                {r.categories.map((c) => (
+                  <th style="text-align:center">{label(c)}<small>{d.testsCount(categoryCount(r, c.id))}</small></th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {order.map((m) => (
+                <tr>
+                  <td class="model-cell">
+                    <strong>{familyLabel(m.base ?? m.key)}</strong>
+                    <span class="method-tag" style={`--c:${METHOD_STYLE[methodOf(m)].color};margin-top:4px`}>{d.method[methodOf(m)]}</span>
+                  </td>
+                  {r.categories.map((c) => {
+                    const v = m.by_category[c.id]?.human_pct;
+                    return (
+                      <td class="h">
+                        <span class={`hc${isHigh(v) ? " hi" : ""}`} style={`--v:${v ?? 0}`}>{v === null || v === undefined ? "—" : fmt(v, lang, 0)}</span>
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    {agreement && agreement.spearman_human_chrf !== null && (
+      <section class="section" id="accord">
+        <div class="wrap grid-2">
+          <div>
+            <h2>{d.agreementTitle}</h2>
+            <p class="lead">{d.agreementBody(fmt(agreement.spearman_human_chrf, lang, 2), agreement.n)}</p>
+          </div>
+          <div class="card kpi" style="--k:var(--green)">
+            <strong>ρ = {fmt(agreement.spearman_human_chrf, lang, 2)}</strong>
+            <span>Spearman · {agreement.n} {lang === "fr" ? "réponses" : "answers"}</span>
+          </div>
+        </div>
+      </section>
+    )}
+  </>
+)}
+
+<script>
+  const group = document.querySelector("[data-filter]");
+  group?.addEventListener("click", (e) => {
+    const btn = (e.target as HTMLElement).closest("button");
+    if (!btn) return;
+    const f = btn.dataset.f;
+    group.querySelectorAll("button").forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+    let n = 0;
+    document.querySelectorAll<HTMLElement>("[data-row]").forEach((row) => {
+      const show = f === "all" || row.dataset.kind === f;
+      row.hidden = !show;
+      if (show) {
+        n += 1;
+        const rank = row.querySelector("[data-rank]");
+        if (rank) rank.textContent = String(n);
+      }
+    });
+  });
+</script>

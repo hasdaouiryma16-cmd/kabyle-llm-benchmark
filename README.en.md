@@ -8,7 +8,7 @@
 [![Site](https://github.com/hasdaouiryma16-cmd/kabyle-llm-benchmark/actions/workflows/pages.yml/badge.svg)](https://hasdaouiryma16-cmd.github.io/kabyle-llm-benchmark/en/)
 ![Code: Apache-2.0](https://img.shields.io/badge/code-Apache--2.0-blue) ![Data: CC BY 4.0](https://img.shields.io/badge/data-CC%20BY%204.0-green)
 
-> **Status.** The lab, pipelines and site are ready. The test set is being written and **no results are published yet**. Every number in this repository will come from real model outputs and real human grades.
+> **Status.** First results published: 15 model configurations, 41 public tests, 615 answers graded blind by a native speaker. Every number comes from real model outputs and real human grades.
 
 ## Why
 
