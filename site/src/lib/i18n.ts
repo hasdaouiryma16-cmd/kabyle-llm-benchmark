@@ -30,7 +30,7 @@ const fr = {
 
   // ── Accueil ──
   greeting: "Azul !",
-  heroTitle: "Les IA parlent-elles kabyle ?",
+  heroTitle: "Les IA parlent‑elles kabyle ?",
   heroLead:
     "15 configurations de modèles de langage, 41 tests écrits par une locutrice native, 615 réponses notées à l'aveugle. Ce que les modèles savent vraiment du kabyle, et ce qu'on peut leur apprendre.",
   heroCta: "Voir les résultats",
@@ -99,7 +99,7 @@ const fr = {
   gainsChartLead: "Le point gris est le modèle seul ; chaque marque colorée, le même modèle avec une aide.",
   categoriesTitle: "Par catégorie",
   categoriesLead:
-    "Hors traduction français → kabyle, chaque catégorie ne compte que quelques tests : un seul test change le score de 8 à 50 points. À lire comme une tendance.",
+    "Peu de tests par catégorie (voir le nombre sous chaque titre) : ces scores donnent une tendance, pas un classement.",
   testsCount: (n: number) => `${n} test${n > 1 ? "s" : ""}`,
   agreementTitle: "La note automatique confirme-t-elle la note humaine ?",
   agreementBody: (rho: string, n: number) =>
@@ -189,6 +189,41 @@ const fr = {
   thanksBody: "Merci d'avoir lu jusqu'ici.",
   license: "Code : Apache-2.0 · Données : CC BY 4.0",
   points: "pts",
+
+  // ── Habillage ──
+  announce: ["41 tests écrits par une locutrice native", "15 configurations de modèles", "615 réponses notées à l'aveugle"],
+  onThisPage: "Sur cette page",
+  sections: {
+    results: [
+      ["classement", "Classement"],
+      ["aides", "Apport des aides"],
+      ["progression", "Progression"],
+      ["categories", "Par catégorie"],
+      ["accord", "Note automatique"],
+    ],
+    method: [
+      ["jeu-de-test", "Jeu de test"],
+      ["protocole", "Protocole"],
+      ["aides", "Aides"],
+      ["modeles", "Modèles"],
+      ["glossaire", "Glossaire"],
+      ["limites", "Limites"],
+    ],
+  } as Record<string, [string, string][]>,
+  eyebrows: {
+    kpi: "En chiffres",
+    findings: "Synthèse",
+    podium: "Classement",
+    why: "Taqbaylit",
+  },
+  footAbout:
+    "Un benchmark ouvert pour mesurer ce que les modèles de langage savent du kabyle, et ce qu'on peut leur apprendre.",
+  footSite: "Le site",
+  footProject: "Le projet",
+  footCode: "Code source",
+  footData: "Résultats bruts (JSON)",
+  footAuthor: "L'autrice",
+  footMade: "Fait avec soin pour la Kabylie",
 };
 
 export interface FindingValues {
@@ -275,7 +310,7 @@ const en: Dict = {
   gainsChartLead: "The grey dot is the model alone; each colored mark is the same model with one kind of help.",
   categoriesTitle: "By category",
   categoriesLead:
-    "Apart from French → Kabyle translation, each category has only a few tests: a single test moves the score by 8 to 50 points. Read it as a trend.",
+    "Few tests per category (see the count under each heading): these scores show a trend, not a ranking.",
   testsCount: (n) => `${n} test${n > 1 ? "s" : ""}`,
   agreementTitle: "Does the automatic score agree with the human grade?",
   agreementBody: (rho, n) =>
@@ -362,6 +397,39 @@ const en: Dict = {
   thanksBody: "Thank you for reading.",
   license: "Code: Apache-2.0 · Data: CC BY 4.0",
   points: "pts",
+
+  announce: ["41 tests written by a native speaker", "15 model configurations", "615 answers graded blind"],
+  onThisPage: "On this page",
+  sections: {
+    results: [
+      ["classement", "Leaderboard"],
+      ["aides", "What helps"],
+      ["progression", "Progress"],
+      ["categories", "By category"],
+      ["accord", "Automatic metric"],
+    ],
+    method: [
+      ["jeu-de-test", "Test set"],
+      ["protocole", "Protocol"],
+      ["aides", "Methods"],
+      ["modeles", "Models"],
+      ["glossaire", "Glossary"],
+      ["limites", "Limitations"],
+    ],
+  },
+  eyebrows: {
+    kpi: "Key figures",
+    findings: "Summary",
+    podium: "Leaderboard",
+    why: "Taqbaylit",
+  },
+  footAbout: "An open benchmark measuring what language models know about Kabyle, and what they can be taught.",
+  footSite: "The site",
+  footProject: "The project",
+  footCode: "Source code",
+  footData: "Raw results (JSON)",
+  footAuthor: "The author",
+  footMade: "Made with care for Kabylie",
 };
 
 export const t: Record<Lang, Dict> = { fr, en };

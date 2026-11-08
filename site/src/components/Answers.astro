@@ -3,6 +3,7 @@ import { type Lang, t } from "../lib/i18n";
 import { type Method, families, ranked, results } from "../lib/results";
 import { METHOD_STYLE } from "../lib/view";
 import AnswerExplorer from "./AnswerExplorer";
+import PageHeader from "./PageHeader.astro";
 
 interface Props {
   lang: Lang;
@@ -52,15 +53,9 @@ const text = {
 };
 ---
 
-<div class="page-head">
-  <div class="wrap">
-    <span class="eyebrow">{d.siteName}</span>
-    <h1>{d.pageTitle.answers}</h1>
-    <p class="lead">{d.answersLead}</p>
-  </div>
-</div>
+<PageHeader lang={lang} page="answers" title={d.pageTitle.answers} subtitle={d.answersLead} />
 
-<section class="section" style="padding-top:16px">
+<section class="section">
   <div class="wrap">
     {items.length === 0 ? (
       <div class="pending"><strong>{d.pending}</strong>{d.pendingBody}</div>

@@ -195,7 +195,7 @@ export default function AnswerExplorer({
             </dl>
           </div>
           <div className="card" style={{ padding: 0 }}>
-            <div className="ans-head" style={{ padding: "14px 18px", borderBottom: "1px solid var(--line)" }}>
+            <div className="ans-head">
               <strong>
                 {answers.length} {text.answer.toLowerCase()}s
               </strong>

@@ -2,6 +2,8 @@
 import { type Lang, t } from "../lib/i18n";
 import { METHODS, type Method, categoryCount, families, ranked, results } from "../lib/results";
 import { METHOD_STYLE, fmt, isHigh, pct, signed } from "../lib/view";
+import PageHeader from "./PageHeader.astro";
+import SectionHeading from "./SectionHeading.astro";
 
 interface Props {
   lang: Lang;
@@ -20,28 +22,23 @@ const ticks = [0, 25, 50, 75, 100];
 const agreement = r?.metric_agreement;
 ---
 
-<div class="page-head">
-  <div class="wrap">
-    <span class="eyebrow">{d.siteName}</span>
-    <h1>{d.pageTitle.results}</h1>
-    <p class="lead">{d.resultsLead}</p>
-  </div>
-</div>
+<PageHeader lang={lang} page="results" title={d.pageTitle.results} subtitle={d.resultsLead} />
 
 {!r ? (
   <div class="wrap section"><div class="pending"><strong>{d.pending}</strong>{d.pendingBody}</div></div>
 ) : (
   <>
-    <!-- Classement général -->
     <section class="section" id="classement">
       <div class="wrap">
-        <h2>{d.rankingTitle}</h2>
-        <div class="seg" role="group" aria-label={d.rankingTitle} data-filter>
-          <button type="button" aria-pressed="true" data-f="all">{d.filterAll}</button>
-          <button type="button" aria-pressed="false" data-f="base">{d.filterBase}</button>
-          <button type="button" aria-pressed="false" data-f="helped">{d.filterHelped}</button>
+        <div class="reveal"><SectionHeading eyebrow={d.eyebrows.podium} title={d.rankingTitle} /></div>
+        <div class="toolbar reveal">
+          <div class="seg" role="group" aria-label={d.rankingTitle} data-filter>
+            <button type="button" aria-pressed="true" data-f="all">{d.filterAll}</button>
+            <button type="button" aria-pressed="false" data-f="base">{d.filterBase}</button>
+            <button type="button" aria-pressed="false" data-f="helped">{d.filterHelped}</button>
+          </div>
         </div>
-        <div class="table-wrap">
+        <div class="table-wrap reveal">
           <table>
             <thead>
               <tr>
@@ -93,12 +90,11 @@ const agreement = r?.metric_agreement;
       </div>
     </section>
 
-    <!-- Matrice modèle × aide -->
-    <section class="section" id="aides">
-      <div class="wrap">
-        <h2>{d.matrixTitle}</h2>
-        <p class="lead">{d.matrixLead}</p>
-        <div class="table-wrap">
+    <section class="section band-cream" id="aides">
+      <div class="weave" aria-hidden="true"></div>
+      <div class="wrap rel">
+        <div class="reveal"><SectionHeading eyebrow={d.sections.results[1][1]} title={d.matrixTitle} subtitle={d.matrixLead} /></div>
+        <div class="table-wrap reveal">
           <table class="matrix">
             <thead>
               <tr>
@@ -141,12 +137,10 @@ const agreement = r?.metric_agreement;
       </div>
     </section>
 
-    <!-- Graphique en haltères -->
     <section class="section" id="progression">
       <div class="wrap">
-        <h2>{d.gainsChartTitle}</h2>
-        <p class="lead">{d.gainsChartLead}</p>
-        <div class="card">
+        <div class="reveal"><SectionHeading eyebrow={d.sections.results[2][1]} title={d.gainsChartTitle} subtitle={d.gainsChartLead} /></div>
+        <div class="card chart-card reveal">
           <div class="legend">
             {METHODS.map((m) => (
               <span><i class={`mk ${METHOD_STYLE[m].shape}`} style={`--c:${METHOD_STYLE[m].color}`}></i>{d.method[m]}</span>
@@ -184,12 +178,11 @@ const agreement = r?.metric_agreement;
       </div>
     </section>
 
-    <!-- Par catégorie -->
-    <section class="section" id="categories">
-      <div class="wrap">
-        <h2>{d.categoriesTitle}</h2>
-        <p class="lead">{d.categoriesLead}</p>
-        <div class="table-wrap">
+    <section class="section band-cream" id="categories">
+      <div class="weave" aria-hidden="true"></div>
+      <div class="wrap rel">
+        <div class="reveal"><SectionHeading eyebrow={d.sections.results[3][1]} title={d.categoriesTitle} subtitle={d.categoriesLead} /></div>
+        <div class="table-wrap reveal">
           <table class="heat">
             <thead>
               <tr>
@@ -224,12 +217,12 @@ const agreement = r?.metric_agreement;
 
     {agreement && agreement.spearman_human_chrf !== null && (
       <section class="section" id="accord">
-        <div class="wrap grid-2">
+        <div class="wrap grid-2 reveal">
           <div>
-            <h2>{d.agreementTitle}</h2>
+            <SectionHeading eyebrow={d.sections.results[4][1]} title={d.agreementTitle} align="left" />
             <p class="lead">{d.agreementBody(fmt(agreement.spearman_human_chrf, lang, 2), agreement.n)}</p>
           </div>
-          <div class="card kpi" style="--k:var(--green)">
+          <div class="card card-lift kpi">
             <strong>ρ = {fmt(agreement.spearman_human_chrf, lang, 2)}</strong>
             <span>Spearman · {agreement.n} {lang === "fr" ? "réponses" : "answers"}</span>
           </div>

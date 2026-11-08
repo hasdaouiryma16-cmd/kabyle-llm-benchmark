@@ -1,0 +1,19 @@
+---
+import Frieze from "./Frieze.astro";
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  align?: "center" | "left";
+  dark?: boolean;
+}
+const { eyebrow, title, subtitle, align = "center", dark = false } = Astro.props;
+---
+
+<div class:list={["sh", align === "left" && "sh-left", dark && "sh-dark"]}>
+  {eyebrow && <p class="sh-eyebrow"><span class="kab">ⵣ</span> {eyebrow}</p>}
+  <h2>{title}</h2>
+  <div class="sh-frieze"><Frieze variant="carpet" height={12} /></div>
+  {subtitle && <p class="sh-sub">{subtitle}</p>}
+</div>

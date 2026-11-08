@@ -2,6 +2,8 @@
 import { type Lang, MODEL_INFO, REPO_URL, sizeLabel, t } from "../lib/i18n";
 import { METHODS, type Method, categoryCount, families, results } from "../lib/results";
 import { METHOD_STYLE, isHigh } from "../lib/view";
+import PageHeader from "./PageHeader.astro";
+import SectionHeading from "./SectionHeading.astro";
 
 interface Props {
   lang: Lang;
@@ -14,41 +16,43 @@ const pub = r?.test_set.public_items ?? 41;
 const priv = r?.test_set.private_items ?? 11;
 const categories = r?.categories ?? [];
 const label = (c: { label_fr: string; label_en: string }) => (lang === "fr" ? c.label_fr : c.label_en);
+const S = d.sections.method;
 ---
 
-<div class="page-head">
-  <div class="wrap">
-    <span class="eyebrow">{d.siteName}</span>
-    <h1>{d.pageTitle.method}</h1>
-    <p class="lead">{d.methodLead}</p>
-  </div>
-</div>
+<PageHeader lang={lang} page="method" title={d.pageTitle.method} subtitle={d.methodLead} />
 
 <section class="section" id="jeu-de-test">
   <div class="wrap">
-    <h2>{d.testsetTitle}</h2>
-    {d.testsetBody(pub, priv).map((p) => <p class="lead" style="margin-bottom:14px">{p}</p>)}
-    <ul class="cat-list" style="margin-top:20px">
-      {categories.map((c) => (
-        <li>
+    <div class="reveal"><SectionHeading eyebrow={S[0][1]} title={d.testsetTitle} /></div>
+    <div class="narrow reveal">
+      {d.testsetBody(pub, priv).map((p) => <p class="lead">{p}</p>)}
+    </div>
+    <ul class="cat-list">
+      {categories.map((c, i) => (
+        <li class="card-lift reveal" style={`transition-delay:${(i % 2) * 80}ms`}>
           <b>{r ? categoryCount(r, c.id) : ""}</b>
-          <div><strong>{label(c)}</strong><br /><span>{d.categoryDescriptions[c.id]}</span></div>
+          <div><strong>{label(c)}</strong><span>{d.categoryDescriptions[c.id]}</span></div>
         </li>
       ))}
     </ul>
   </div>
 </section>
 
-<section class="section" id="protocole">
-  <div class="wrap">
-    <h2>{d.protocolTitle}</h2>
-    <div class="grid-3" style="margin-top:20px">
-      {d.protocol.map((p) => (
-        <div class="card"><h3>{p.h}</h3><p>{p.p}</p></div>
+<section class="section band-cream" id="protocole">
+  <div class="weave" aria-hidden="true"></div>
+  <div class="wrap rel">
+    <div class="reveal"><SectionHeading eyebrow={S[1][1]} title={d.protocolTitle} /></div>
+    <div class="grid-3">
+      {d.protocol.map((p, i) => (
+        <div class="card card-lift center reveal" style={`transition-delay:${i * 90}ms`}>
+          <p class="step-n">{String(i + 1).padStart(2, "0")}</p>
+          <h3>{p.h}</h3>
+          <p>{p.p}</p>
+        </div>
       ))}
     </div>
-    <h3 style="margin-top:36px;font-size:20px">{d.scaleTitle}</h3>
-    <div class="scale" style="margin-top:12px">
+    <h3 class="sub-title reveal">{d.scaleTitle}</h3>
+    <div class="scale reveal">
       {d.scoreScale.map((s, i) => {
         const v = (i / 3) * 100;
         return (
@@ -64,10 +68,10 @@ const label = (c: { label_fr: string; label_en: string }) => (lang === "fr" ? c.
 
 <section class="section" id="aides">
   <div class="wrap">
-    <h2>{d.methodsTitle}</h2>
-    <div class="grid-3" style="margin-top:20px">
-      {d.methods.map((m) => (
-        <div class="card method-card" style={`--c:${METHOD_STYLE[m.id as Method].color}`}>
+    <div class="reveal"><SectionHeading eyebrow={S[2][1]} title={d.methodsTitle} /></div>
+    <div class="grid-3">
+      {d.methods.map((m, i) => (
+        <div class="card card-lift method-card reveal" style={`--c:${METHOD_STYLE[m.id as Method].color};transition-delay:${i * 90}ms`}>
           <h3>{m.h}</h3>
           <p>{m.p}</p>
         </div>
@@ -76,10 +80,11 @@ const label = (c: { label_fr: string; label_en: string }) => (lang === "fr" ? c.
   </div>
 </section>
 
-<section class="section" id="modeles">
-  <div class="wrap">
-    <h2>{d.modelsTitle}</h2>
-    <div class="table-wrap" style="margin-top:20px">
+<section class="section band-cream" id="modeles">
+  <div class="weave" aria-hidden="true"></div>
+  <div class="wrap rel">
+    <div class="reveal"><SectionHeading eyebrow={S[3][1]} title={d.modelsTitle} /></div>
+    <div class="table-wrap reveal">
       <table>
         <thead>
           <tr>
@@ -100,7 +105,7 @@ const label = (c: { label_fr: string; label_en: string }) => (lang === "fr" ? c.
                 <td>{f.local ? d.access.local : d.access.api}</td>
                 <td>{sizeLabel(info?.params ?? null, lang)}</td>
                 <td>
-                  <span style="display:inline-flex;gap:6px;flex-wrap:wrap">
+                  <span class="tags">
                     {METHODS.filter((m) => f.byMethod[m]).map((m) => (
                       <span class="method-tag" style={`--c:${METHOD_STYLE[m].color}`}>{d.method[m]}</span>
                     ))}
@@ -117,30 +122,30 @@ const label = (c: { label_fr: string; label_en: string }) => (lang === "fr" ? c.
 
 <section class="section" id="glossaire">
   <div class="wrap">
-    <h2>{d.glossaryTitle}</h2>
-    <dl class="glossary" style="margin-top:20px">
-      {d.glossary.map((g) => (
-        <div><dt>{g.t}</dt><dd>{g.d}</dd></div>
+    <div class="reveal"><SectionHeading eyebrow={S[4][1]} title={d.glossaryTitle} /></div>
+    <dl class="glossary">
+      {d.glossary.map((g, i) => (
+        <div class="card-lift reveal" style={`transition-delay:${(i % 2) * 80}ms`}><dt>{g.t}</dt><dd>{g.d}</dd></div>
       ))}
     </dl>
   </div>
 </section>
 
-<section class="section" id="limites">
-  <div class="wrap">
-    <h2>{d.limitsTitle}</h2>
-    <ul class="limits" style="margin-top:20px">
-      {d.limits.map((l) => <li>{l}</li>)}
+<section class="section band-cream" id="limites">
+  <div class="weave" aria-hidden="true"></div>
+  <div class="wrap narrow rel">
+    <div class="reveal"><SectionHeading eyebrow={S[5][1]} title={d.limitsTitle} /></div>
+    <ul class="limits">
+      {d.limits.map((l) => <li class="reveal">{l}</li>)}
     </ul>
   </div>
 </section>
 
-<section class="section" id="ouvert">
-  <div class="wrap grid-2">
-    <div>
-      <h2>{d.reproduceTitle}</h2>
-      <p class="lead">{d.reproduceBody}</p>
-    </div>
-    <div><a class="btn btn-primary" href={REPO_URL}>{d.repo} →</a></div>
+<section class="story">
+  <div class="lattice" aria-hidden="true"></div>
+  <div class="wrap narrow center reveal">
+    <SectionHeading title={d.reproduceTitle} dark />
+    <p class="story-p">{d.reproduceBody}</p>
+    <a class="btn btn-saffron" href={REPO_URL}>{d.repo}</a>
   </div>
 </section>

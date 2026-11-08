@@ -25,4 +25,4 @@ export const joinList = (xs: string[], lang: Lang) =>
   xs.length <= 1 ? (xs[0] ?? "") : `${xs.slice(0, -1).join(", ")} ${lang === "fr" ? "et" : "and"} ${xs[xs.length - 1]}`;
 
 /** Le texte passe en blanc au-delà de ce seuil d'intensité (contraste sur la teinte). */
-export const isHigh = (v: number | null | undefined) => (v ?? 0) >= 58;
+export const isHigh = (v: number | null | undefined) => (v ?? 0) >= 66;
