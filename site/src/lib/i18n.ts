@@ -99,7 +99,7 @@ const fr = {
   gainsChartLead: "Le point gris est le modèle seul ; chaque marque colorée, le même modèle avec une aide.",
   categoriesTitle: "Par catégorie",
   categoriesLead:
-    "Chaque catégorie repose sur moins de tests que le score global : ces scores donnent une tendance, pas un classement.",
+    "Le benchmark est centré sur la traduction ; les autres catégories, avec 2 à 4 tests chacune, sont de premiers indicateurs. Le nombre de tests figure sous chaque titre : à lire comme une tendance, pas comme un classement.",
   testsCount: (n: number) => `${n} test${n > 1 ? "s" : ""}`,
   agreementTitle: "La note automatique confirme-t-elle la note humaine ?",
   agreementBody: (rho: string, n: number) =>
@@ -133,6 +133,7 @@ const fr = {
   testsetBody: (pub: number, priv: number) => [
     `Tous les textes kabyles du jeu de test (références, textes de compréhension, consignes en kabyle) sont écrits à la main par l'autrice du benchmark, locutrice native du kabyle. Aucun n'est généré par une IA.`,
     `Le jeu compte ${pub + priv} tests : ${pub} publics, utilisés pour ces résultats, et ${priv} gardés privés pour de futures évaluations à l'abri de toute fuite dans les données d'entraînement.`,
+    `Le jeu est volontairement centré sur la traduction français → kabyle (25 tests sur 41), la tâche la plus facile à évaluer objectivement. Les cinq autres catégories servent de premiers indicateurs et seront renforcées dans la prochaine version.`,
   ],
   categoryDescriptions: {
     translation_fr_kab: "Traduire une phrase du français vers le kabyle.",
@@ -170,7 +171,7 @@ const fr = {
   limitsTitle: "Limites",
   limits: [
     "Une seule annotatrice : les notes reflètent une variété de kabyle et des choix d'orthographe. Plusieurs références par test limitent ce biais sans le supprimer.",
-    "41 tests publics : les fourchettes sont larges, et les petits écarts entre modèles ne sont pas significatifs. Les scores par catégorie sont indicatifs.",
+    "41 tests publics : les fourchettes sont larges, et les petits écarts entre modèles ne sont pas significatifs. Les scores par catégorie (2 à 4 tests hors traduction) sont indicatifs.",
     "Les 11 tests privés n'ont pas été utilisés ici : les offres gratuites des API peuvent réutiliser les requêtes, seuls les tests publics leur ont été envoyés.",
     "Deux réponses n'ont jamais pu être obtenues (un modèle qui tourne en boucle, une limite de quota) : elles sont comptées avec la note 1.",
     "Une partie des modèles a été évaluée avant la correction d'une faute de frappe dans deux consignes (version 1.0.1) ; la note n'en a pas tenu compte.",
@@ -310,7 +311,7 @@ const en: Dict = {
   gainsChartLead: "The grey dot is the model alone; each colored mark is the same model with one kind of help.",
   categoriesTitle: "By category",
   categoriesLead:
-    "Each category rests on fewer tests than the overall score: these scores show a trend, not a ranking.",
+    "The benchmark centres on translation; the other categories, with 2 to 4 tests each, are first indicators. The number of tests is shown under each heading: read it as a trend, not a ranking.",
   testsCount: (n) => `${n} test${n > 1 ? "s" : ""}`,
   agreementTitle: "Does the automatic score agree with the human grade?",
   agreementBody: (rho, n) =>
@@ -342,6 +343,7 @@ const en: Dict = {
   testsetBody: (pub, priv) => [
     "Every Kabyle text in the test set (references, comprehension texts, prompts written in Kabyle) is handwritten by the benchmark's author, a native Kabyle speaker. None is AI-generated.",
     `The set has ${pub + priv} tests: ${pub} public ones, used for these results, and ${priv} kept private for future evaluations safe from any leak into training data.`,
+    `The set deliberately centres on French → Kabyle translation (25 of 41 tests), the task that is easiest to assess objectively. The five other categories are first indicators and will be expanded in the next version.`,
   ],
   categoryDescriptions: {
     translation_fr_kab: "Translate a sentence from French into Kabyle.",
@@ -379,7 +381,7 @@ const en: Dict = {
   limitsTitle: "Limitations",
   limits: [
     "A single annotator: grades reflect one variety of Kabyle and particular spelling choices. Several references per test reduce this bias without removing it.",
-    "41 public tests: ranges are wide, and small gaps between models are not significant. Per-category scores are indicative.",
+    "41 public tests: ranges are wide, and small gaps between models are not significant. Per-category scores (2 to 4 tests outside translation) are indicative.",
     "The 11 private tests were not used here: free API tiers may reuse requests, so only public tests were sent to them.",
     "Two answers could never be obtained (a model stuck in a loop, a quota limit): they are counted with grade 1.",
     "Some models were evaluated before a typo was fixed in two prompts (version 1.0.1); grading did not penalize it.",
