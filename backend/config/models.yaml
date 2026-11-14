@@ -141,7 +141,7 @@ models:
   - key: gemini-flash-fewshot
     label: Gemini Flash + few-shot
     provider: gemini
-    model: gemini-flash-latest
+    model: gemini-3.6-flash
     base: gemini-flash
     variant: fewshot
     variant_params: { k: 5, selection: similar }
@@ -152,7 +152,7 @@ models:
   - key: gemini-flash-rag
     label: Gemini Flash + RAG
     provider: gemini
-    model: gemini-flash-latest
+    model: gemini-3.6-flash
     base: gemini-flash
     variant: rag
     variant_params: { k: 8 }

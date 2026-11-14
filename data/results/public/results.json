@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-08T21:42:32+00:00",
+  "generated_at": "2026-11-14T09:11:58+00:00",
   "test_set": {
     "name": "kab-bench",
     "version": "1.0.2",
@@ -417,17 +417,17 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 2.27,
-        "human_pct": 75.6,
+        "human_mean": 2.29,
+        "human_pct": 76.4,
         "human_pct_ci95": [
-          64.2,
-          86.2
+          65.0,
+          87.8
         ],
         "score_distribution": {
           "0": 6,
           "1": 2,
-          "2": 8,
-          "3": 25
+          "2": 7,
+          "3": 26
         },
         "chrf": 41.1,
         "n_chrf": 34,
@@ -498,8 +498,8 @@
         "translation_fr_kab": {
           "n": 25,
           "n_graded": 25,
-          "human_mean": 2.4,
-          "human_pct": 80.0,
+          "human_mean": 2.44,
+          "human_pct": 81.3,
           "human_pct_ci95": [
             68.0,
             92.0
@@ -507,8 +507,8 @@
           "score_distribution": {
             "0": 2,
             "1": 2,
-            "2": 5,
-            "3": 16
+            "2": 4,
+            "3": 17
           },
           "chrf": 35.3,
           "n_chrf": 25,
@@ -719,16 +719,16 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 2.1,
-        "human_pct": 69.9,
+        "human_mean": 2.07,
+        "human_pct": 69.1,
         "human_pct_ci95": [
-          56.9,
-          82.1
+          56.1,
+          81.3
         ],
         "score_distribution": {
           "0": 9,
-          "1": 2,
-          "2": 6,
+          "1": 3,
+          "2": 5,
           "3": 24
         },
         "chrf": 41.5,
@@ -800,16 +800,16 @@
         "translation_fr_kab": {
           "n": 25,
           "n_graded": 25,
-          "human_mean": 2.28,
-          "human_pct": 76.0,
+          "human_mean": 2.24,
+          "human_pct": 74.7,
           "human_pct_ci95": [
-            60.0,
+            58.7,
             89.3
           ],
           "score_distribution": {
             "0": 4,
-            "1": 1,
-            "2": 4,
+            "1": 2,
+            "2": 3,
             "3": 16
           },
           "chrf": 33.2,
@@ -1476,17 +1476,17 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 0.85,
-        "human_pct": 28.5,
+        "human_mean": 0.88,
+        "human_pct": 29.3,
         "human_pct_ci95": [
           17.9,
-          39.0
+          39.8
         ],
         "score_distribution": {
           "0": 23,
           "1": 7,
-          "2": 5,
-          "3": 6
+          "2": 4,
+          "3": 7
         },
         "chrf": 28.2,
         "n_chrf": 34,
@@ -1557,17 +1557,17 @@
         "translation_fr_kab": {
           "n": 25,
           "n_graded": 25,
-          "human_mean": 1.12,
-          "human_pct": 37.3,
+          "human_mean": 1.16,
+          "human_pct": 38.7,
           "human_pct_ci95": [
             24.0,
-            53.3
+            56.0
           ],
           "score_distribution": {
             "0": 11,
             "1": 5,
-            "2": 4,
-            "3": 5
+            "2": 3,
+            "3": 6
           },
           "chrf": 28.4,
           "n_chrf": 25,
@@ -1629,16 +1629,16 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 0.83,
-        "human_pct": 27.6,
+        "human_mean": 0.8,
+        "human_pct": 26.8,
         "human_pct_ci95": [
           17.1,
-          39.0
+          37.4
         ],
         "score_distribution": {
           "0": 23,
-          "1": 8,
-          "2": 4,
+          "1": 9,
+          "2": 3,
           "3": 6
         },
         "chrf": 21.8,
@@ -1750,16 +1750,16 @@
         "writing": {
           "n": 2,
           "n_graded": 2,
-          "human_mean": 1.5,
-          "human_pct": 50.0,
+          "human_mean": 1,
+          "human_pct": 33.3,
           "human_pct_ci95": [
             33.3,
-            66.7
+            33.3
           ],
           "score_distribution": {
             "0": 0,
-            "1": 1,
-            "2": 1,
+            "1": 2,
+            "2": 0,
             "3": 0
           },
           "chrf": 55.4,
@@ -1782,16 +1782,16 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 0.78,
-        "human_pct": 26.0,
+        "human_mean": 0.76,
+        "human_pct": 25.2,
         "human_pct_ci95": [
-          17.9,
+          17.1,
           35.0
         ],
         "score_distribution": {
           "0": 20,
-          "1": 12,
-          "2": 7,
+          "1": 13,
+          "2": 6,
           "3": 2
         },
         "chrf": 28.5,
@@ -1863,16 +1863,16 @@
         "translation_fr_kab": {
           "n": 25,
           "n_graded": 25,
-          "human_mean": 0.88,
-          "human_pct": 29.3,
+          "human_mean": 0.84,
+          "human_pct": 28.0,
           "human_pct_ci95": [
             18.7,
-            40.0
+            38.7
           ],
           "score_distribution": {
             "0": 9,
-            "1": 11,
-            "2": 4,
+            "1": 12,
+            "2": 3,
             "3": 1
           },
           "chrf": 29.3,
@@ -2496,12 +2496,12 @@
         "n_paired": 41,
         "n_paired_chrf": 34,
         "before_pct": 37.4,
-        "after_pct": 75.6,
-        "gain_points": 38.2,
-        "gain_relative_pct": 102.2,
+        "after_pct": 76.4,
+        "gain_points": 39.0,
+        "gain_relative_pct": 104.3,
         "gain_points_ci95": [
-          24.4,
-          51.2
+          25.2,
+          52.8
         ],
         "chrf_before": 29.2,
         "chrf_after": 41.1,
@@ -2512,12 +2512,12 @@
           "n_paired": 25,
           "n_paired_chrf": 25,
           "before_pct": 26.7,
-          "after_pct": 80.0,
-          "gain_points": 53.3,
-          "gain_relative_pct": 200.0,
+          "after_pct": 81.3,
+          "gain_points": 54.7,
+          "gain_relative_pct": 205.0,
           "gain_points_ci95": [
             38.7,
-            68.0
+            69.3
           ],
           "chrf_before": 23.4,
           "chrf_after": 35.3,
@@ -2710,12 +2710,12 @@
         "n_paired": 41,
         "n_paired_chrf": 34,
         "before_pct": 37.4,
-        "after_pct": 69.9,
-        "gain_points": 32.5,
-        "gain_relative_pct": 87.0,
+        "after_pct": 69.1,
+        "gain_points": 31.7,
+        "gain_relative_pct": 84.8,
         "gain_points_ci95": [
-          18.7,
-          46.3
+          17.9,
+          45.5
         ],
         "chrf_before": 29.2,
         "chrf_after": 41.5,
@@ -2726,11 +2726,11 @@
           "n_paired": 25,
           "n_paired_chrf": 25,
           "before_pct": 26.7,
-          "after_pct": 76.0,
-          "gain_points": 49.3,
-          "gain_relative_pct": 185.0,
+          "after_pct": 74.7,
+          "gain_points": 48.0,
+          "gain_relative_pct": 180.0,
           "gain_points_ci95": [
-            32.0,
+            30.7,
             65.3
           ],
           "chrf_before": 23.4,
@@ -3031,12 +3031,12 @@
         "n_paired": 41,
         "n_paired_chrf": 34,
         "before_pct": 0.0,
-        "after_pct": 28.5,
-        "gain_points": 28.5,
+        "after_pct": 29.3,
+        "gain_points": 29.3,
         "gain_relative_pct": null,
         "gain_points_ci95": [
           17.9,
-          39.0
+          39.8
         ],
         "chrf_before": 9.2,
         "chrf_after": 28.2,
@@ -3047,12 +3047,12 @@
           "n_paired": 25,
           "n_paired_chrf": 25,
           "before_pct": 0.0,
-          "after_pct": 37.3,
-          "gain_points": 37.3,
+          "after_pct": 38.7,
+          "gain_points": 38.7,
           "gain_relative_pct": null,
           "gain_points_ci95": [
             24.0,
-            53.3
+            56.0
           ],
           "chrf_before": 8.5,
           "chrf_after": 28.4,
@@ -3138,11 +3138,11 @@
         "n_paired": 41,
         "n_paired_chrf": 33,
         "before_pct": 0.8,
-        "after_pct": 27.6,
-        "gain_points": 26.8,
-        "gain_relative_pct": 3300.0,
+        "after_pct": 26.8,
+        "gain_points": 26.0,
+        "gain_relative_pct": 3200.0,
         "gain_points_ci95": [
-          17.1,
+          15.4,
           37.4
         ],
         "chrf_before": 2.7,
@@ -3211,11 +3211,11 @@
           "n_paired": 2,
           "n_paired_chrf": 1,
           "before_pct": 16.7,
-          "after_pct": 50.0,
-          "gain_points": 33.3,
-          "gain_relative_pct": 200.0,
+          "after_pct": 33.3,
+          "gain_points": 16.7,
+          "gain_relative_pct": 100.0,
           "gain_points_ci95": [
-            33.3,
+            0.0,
             33.3
           ],
           "chrf_before": 34.4,
@@ -3245,11 +3245,11 @@
         "n_paired": 41,
         "n_paired_chrf": 34,
         "before_pct": 0.0,
-        "after_pct": 26.0,
-        "gain_points": 26.0,
+        "after_pct": 25.2,
+        "gain_points": 25.2,
         "gain_relative_pct": null,
         "gain_points_ci95": [
-          17.9,
+          17.1,
           35.0
         ],
         "chrf_before": 9.2,
@@ -3261,12 +3261,12 @@
           "n_paired": 25,
           "n_paired_chrf": 25,
           "before_pct": 0.0,
-          "after_pct": 29.3,
-          "gain_points": 29.3,
+          "after_pct": 28.0,
+          "gain_points": 28.0,
           "gain_relative_pct": null,
           "gain_points_ci95": [
             18.7,
-            40.0
+            38.7
           ],
           "chrf_before": 8.5,
           "chrf_after": 29.3,
@@ -3452,8 +3452,8 @@
     }
   ],
   "metric_agreement": {
-    "n": 508,
-    "spearman_human_chrf": 0.722
+    "n": 531,
+    "spearman_human_chrf": 0.723
   },
   "examples": [],
   "items": [
@@ -4965,7 +4965,7 @@
         {
           "model_key": "mistral-large-4-rag",
           "output": "Anda-tt tsarut n txxamt ?",
-          "score": 2,
+          "score": 1,
           "chrf": 29.53
         },
         {
@@ -5292,7 +5292,7 @@
         {
           "model_key": "qwen3.5-4b-lora",
           "output": "Arrac tturar zdat uxxam.",
-          "score": 2,
+          "score": 3,
           "chrf": 23.18
         },
         {
@@ -5680,7 +5680,7 @@
         {
           "model_key": "mistral-large-4-fewshot",
           "output": "Tbexsisin wwint deg ɣuct.",
-          "score": 2,
+          "score": 3,
           "chrf": 42.08
         },
         {
@@ -5801,7 +5801,7 @@
         {
           "model_key": "qwen3.5-4b-fewshot",
           "output": "Tettagad ṭṭlam.",
-          "score": 2,
+          "score": 1,
           "chrf": 25.7
         },
         {
@@ -7625,7 +7625,7 @@
         {
           "model_key": "ministral3-8b-rag",
           "output": "ⴰⴷ ⵙⵡⴻⵖ ⵄⵎⴰⵏ",
-          "score": 2,
+          "score": 1,
           "chrf": 55.39
         },
         {
