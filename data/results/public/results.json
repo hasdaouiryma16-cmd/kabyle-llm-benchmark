@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-16T11:43:47+00:00",
+  "generated_at": "2026-11-16T11:45:00+00:00",
   "test_set": {
     "name": "kab-bench",
     "version": "1.0.3",
@@ -1325,16 +1325,16 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 1.15,
-        "human_pct": 38.2,
+        "human_mean": 1.17,
+        "human_pct": 39.0,
         "human_pct_ci95": [
-          26.8,
-          49.6
+          27.6,
+          51.2
         ],
         "score_distribution": {
           "0": 16,
-          "1": 11,
-          "2": 6,
+          "1": 10,
+          "2": 7,
           "3": 8
         },
         "chrf": 31.2,
@@ -1406,16 +1406,16 @@
         "translation_fr_kab": {
           "n": 25,
           "n_graded": 25,
-          "human_mean": 0.84,
-          "human_pct": 28.0,
+          "human_mean": 0.88,
+          "human_pct": 29.3,
           "human_pct_ci95": [
-            14.7,
-            42.7
+            16.0,
+            44.0
           ],
           "score_distribution": {
             "0": 12,
-            "1": 8,
-            "2": 2,
+            "1": 7,
+            "2": 3,
             "3": 3
           },
           "chrf": 25.9,
@@ -2904,13 +2904,13 @@
       "overall": {
         "n_paired": 41,
         "n_paired_chrf": 34,
-        "before_pct": 38.2,
+        "before_pct": 39.0,
         "after_pct": 75.6,
-        "gain_points": 37.4,
-        "gain_relative_pct": 97.9,
+        "gain_points": 36.6,
+        "gain_relative_pct": 93.7,
         "gain_points_ci95": [
-          20.3,
-          52.8
+          19.5,
+          52.0
         ],
         "chrf_before": 31.2,
         "chrf_after": 43.2,
@@ -2920,13 +2920,13 @@
         "translation_fr_kab": {
           "n_paired": 25,
           "n_paired_chrf": 25,
-          "before_pct": 28.0,
+          "before_pct": 29.3,
           "after_pct": 85.3,
-          "gain_points": 57.3,
-          "gain_relative_pct": 204.8,
+          "gain_points": 56.0,
+          "gain_relative_pct": 190.9,
           "gain_points_ci95": [
-            40.0,
-            74.7
+            38.7,
+            73.3
           ],
           "chrf_before": 25.9,
           "chrf_after": 38.8,
@@ -3011,13 +3011,13 @@
       "overall": {
         "n_paired": 41,
         "n_paired_chrf": 34,
-        "before_pct": 38.2,
+        "before_pct": 39.0,
         "after_pct": 72.4,
-        "gain_points": 34.1,
-        "gain_relative_pct": 89.4,
+        "gain_points": 33.3,
+        "gain_relative_pct": 85.4,
         "gain_points_ci95": [
           17.1,
-          49.6
+          48.8
         ],
         "chrf_before": 31.2,
         "chrf_after": 42.4,
@@ -3027,13 +3027,13 @@
         "translation_fr_kab": {
           "n_paired": 25,
           "n_paired_chrf": 25,
-          "before_pct": 28.0,
+          "before_pct": 29.3,
           "after_pct": 80.0,
-          "gain_points": 52.0,
-          "gain_relative_pct": 185.7,
+          "gain_points": 50.7,
+          "gain_relative_pct": 172.7,
           "gain_points_ci95": [
-            34.7,
-            68.0
+            33.3,
+            66.7
           ],
           "chrf_before": 25.9,
           "chrf_after": 35.8,
@@ -7901,7 +7901,7 @@
         {
           "model_key": "gemini-flash-lite",
           "output": "Yenadi ɣef uxeddim seg useggas.",
-          "score": 1,
+          "score": 2,
           "chrf": 19.85
         },
         {
