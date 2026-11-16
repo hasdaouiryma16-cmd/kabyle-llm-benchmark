@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-16T11:39:49+00:00",
+  "generated_at": "2026-11-16T11:40:11+00:00",
   "test_set": {
     "name": "kab-bench",
     "version": "1.0.3",
@@ -1476,17 +1476,17 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 1.12,
-        "human_pct": 37.4,
+        "human_mean": 1.1,
+        "human_pct": 36.6,
         "human_pct_ci95": [
-          26.0,
-          49.6
+          25.2,
+          48.8
         ],
         "score_distribution": {
           "0": 18,
           "1": 8,
-          "2": 7,
-          "3": 8
+          "2": 8,
+          "3": 7
         },
         "chrf": 29.2,
         "n_chrf": 34,
@@ -1557,17 +1557,17 @@
         "translation_fr_kab": {
           "n": 25,
           "n_graded": 25,
-          "human_mean": 0.8,
-          "human_pct": 26.7,
+          "human_mean": 0.76,
+          "human_pct": 25.3,
           "human_pct_ci95": [
-            14.7,
-            40.0
+            13.3,
+            38.7
           ],
           "score_distribution": {
             "0": 14,
             "1": 5,
-            "2": 3,
-            "3": 3
+            "2": 4,
+            "3": 2
           },
           "chrf": 23.4,
           "n_chrf": 25,
@@ -3118,13 +3118,13 @@
       "overall": {
         "n_paired": 41,
         "n_paired_chrf": 34,
-        "before_pct": 37.4,
+        "before_pct": 36.6,
         "after_pct": 69.9,
-        "gain_points": 32.5,
-        "gain_relative_pct": 87.0,
+        "gain_points": 33.3,
+        "gain_relative_pct": 91.1,
         "gain_points_ci95": [
-          18.7,
-          45.5
+          19.5,
+          46.3
         ],
         "chrf_before": 29.2,
         "chrf_after": 41.1,
@@ -3134,12 +3134,12 @@
         "translation_fr_kab": {
           "n_paired": 25,
           "n_paired_chrf": 25,
-          "before_pct": 26.7,
+          "before_pct": 25.3,
           "after_pct": 72.0,
-          "gain_points": 45.3,
-          "gain_relative_pct": 170.0,
+          "gain_points": 46.7,
+          "gain_relative_pct": 184.2,
           "gain_points_ci95": [
-            29.3,
+            32.0,
             61.3
           ],
           "chrf_before": 23.4,
@@ -3225,13 +3225,13 @@
       "overall": {
         "n_paired": 41,
         "n_paired_chrf": 34,
-        "before_pct": 37.4,
+        "before_pct": 36.6,
         "after_pct": 65.9,
-        "gain_points": 28.5,
-        "gain_relative_pct": 76.1,
+        "gain_points": 29.3,
+        "gain_relative_pct": 80.0,
         "gain_points_ci95": [
-          14.6,
-          41.5
+          15.4,
+          42.3
         ],
         "chrf_before": 29.2,
         "chrf_after": 41.5,
@@ -3241,13 +3241,13 @@
         "translation_fr_kab": {
           "n_paired": 25,
           "n_paired_chrf": 25,
-          "before_pct": 26.7,
+          "before_pct": 25.3,
           "after_pct": 69.3,
-          "gain_points": 42.7,
-          "gain_relative_pct": 160.0,
+          "gain_points": 44.0,
+          "gain_relative_pct": 173.7,
           "gain_points_ci95": [
-            25.3,
-            60.0
+            26.7,
+            61.3
           ],
           "chrf_before": 23.4,
           "chrf_after": 33.2,
@@ -7489,7 +7489,7 @@
         {
           "model_key": "mistral-large-4",
           "output": "Tagrest d ɣezzif deg idurar.",
-          "score": 3,
+          "score": 2,
           "chrf": 45.63
         },
         {
