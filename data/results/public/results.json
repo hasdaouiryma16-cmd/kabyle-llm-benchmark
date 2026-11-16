@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-16T11:10:35+00:00",
+  "generated_at": "2026-11-16T11:11:35+00:00",
   "test_set": {
     "name": "kab-bench",
     "version": "1.0.2",
@@ -870,17 +870,17 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 2.22,
-        "human_pct": 74.0,
+        "human_mean": 2.2,
+        "human_pct": 73.2,
         "human_pct_ci95": [
-          62.6,
-          84.6
+          61.0,
+          83.7
         ],
         "score_distribution": {
           "0": 6,
           "1": 3,
-          "2": 8,
-          "3": 24
+          "2": 9,
+          "3": 23
         },
         "chrf": 41.1,
         "n_chrf": 34,
@@ -951,17 +951,17 @@
         "translation_fr_kab": {
           "n": 25,
           "n_graded": 25,
-          "human_mean": 2.36,
-          "human_pct": 78.7,
+          "human_mean": 2.32,
+          "human_pct": 77.3,
           "human_pct_ci95": [
-            65.3,
-            90.7
+            64.0,
+            89.3
           ],
           "score_distribution": {
             "0": 2,
             "1": 3,
-            "2": 4,
-            "3": 16
+            "2": 5,
+            "3": 15
           },
           "chrf": 35.3,
           "n_chrf": 25,
@@ -3119,12 +3119,12 @@
         "n_paired": 41,
         "n_paired_chrf": 34,
         "before_pct": 37.4,
-        "after_pct": 74.0,
-        "gain_points": 36.6,
-        "gain_relative_pct": 97.8,
+        "after_pct": 73.2,
+        "gain_points": 35.8,
+        "gain_relative_pct": 95.7,
         "gain_points_ci95": [
-          22.8,
-          51.2
+          22.0,
+          49.6
         ],
         "chrf_before": 29.2,
         "chrf_after": 41.1,
@@ -3135,11 +3135,11 @@
           "n_paired": 25,
           "n_paired_chrf": 25,
           "before_pct": 26.7,
-          "after_pct": 78.7,
-          "gain_points": 52.0,
-          "gain_relative_pct": 195.0,
+          "after_pct": 77.3,
+          "gain_points": 50.7,
+          "gain_relative_pct": 190.0,
           "gain_points_ci95": [
-            36.0,
+            34.7,
             66.7
           ],
           "chrf_before": 23.4,
@@ -3969,7 +3969,7 @@
   ],
   "metric_agreement": {
     "n": 576,
-    "spearman_human_chrf": 0.71
+    "spearman_human_chrf": 0.708
   },
   "examples": [],
   "items": [
@@ -5885,7 +5885,7 @@
         {
           "model_key": "mistral-large-4-fewshot",
           "output": "D gma ameqqran ixeddem deg França.",
-          "score": 3,
+          "score": 2,
           "chrf": 77.95
         },
         {
