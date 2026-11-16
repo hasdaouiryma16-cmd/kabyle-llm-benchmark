@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-16T09:19:39+00:00",
+  "generated_at": "2026-11-16T09:23:06+00:00",
   "test_set": {
     "name": "kab-bench",
     "version": "1.0.2",
@@ -1476,16 +1476,16 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 1.1,
-        "human_pct": 36.6,
+        "human_mean": 1.12,
+        "human_pct": 37.4,
         "human_pct_ci95": [
-          25.2,
-          48.8
+          26.0,
+          49.6
         ],
         "score_distribution": {
           "0": 18,
-          "1": 9,
-          "2": 6,
+          "1": 8,
+          "2": 7,
           "3": 8
         },
         "chrf": 29.2,
@@ -1537,16 +1537,16 @@
         "culture": {
           "n": 3,
           "n_graded": 3,
-          "human_mean": 1.33,
-          "human_pct": 44.4,
+          "human_mean": 1.67,
+          "human_pct": 55.6,
           "human_pct_ci95": [
             33.3,
             66.7
           ],
           "score_distribution": {
             "0": 0,
-            "1": 2,
-            "2": 1,
+            "1": 1,
+            "2": 2,
             "3": 0
           },
           "chrf": null,
@@ -2904,13 +2904,13 @@
       "overall": {
         "n_paired": 41,
         "n_paired_chrf": 34,
-        "before_pct": 36.6,
+        "before_pct": 37.4,
         "after_pct": 76.4,
-        "gain_points": 39.8,
-        "gain_relative_pct": 108.9,
+        "gain_points": 39.0,
+        "gain_relative_pct": 104.3,
         "gain_points_ci95": [
           25.2,
-          53.7
+          52.8
         ],
         "chrf_before": 29.2,
         "chrf_after": 41.1,
@@ -2965,10 +2965,10 @@
         "culture": {
           "n_paired": 3,
           "n_paired_chrf": 0,
-          "before_pct": 44.4,
+          "before_pct": 55.6,
           "after_pct": 88.9,
-          "gain_points": 44.4,
-          "gain_relative_pct": 100.0,
+          "gain_points": 33.3,
+          "gain_relative_pct": 60.0,
           "gain_points_ci95": [
             0.0,
             66.7
@@ -3225,13 +3225,13 @@
       "overall": {
         "n_paired": 41,
         "n_paired_chrf": 34,
-        "before_pct": 36.6,
+        "before_pct": 37.4,
         "after_pct": 69.1,
-        "gain_points": 32.5,
-        "gain_relative_pct": 88.9,
+        "gain_points": 31.7,
+        "gain_relative_pct": 84.8,
         "gain_points_ci95": [
-          18.7,
-          46.3
+          17.9,
+          45.5
         ],
         "chrf_before": 29.2,
         "chrf_after": 41.5,
@@ -3286,13 +3286,13 @@
         "culture": {
           "n_paired": 3,
           "n_paired_chrf": 0,
-          "before_pct": 44.4,
+          "before_pct": 55.6,
           "after_pct": 66.7,
-          "gain_points": 22.2,
-          "gain_relative_pct": 50.0,
+          "gain_points": 11.1,
+          "gain_relative_pct": 20.0,
           "gain_points_ci95": [
             -33.3,
-            66.7
+            33.3
           ]
         },
         "writing": {
@@ -4844,7 +4844,7 @@
         {
           "model_key": "mistral-large-4",
           "output": "Ce proverbe kabyle signifie littéralement : **« Un [doigt] de la main ne se sépare pas »** (ou « Une partie de la main ne se divise pas »).\n\n**Explication du sens :**\n\nComme les doigts d'une même main sont unis et fonctionnent ensemble sans se séparer, ce proverbe exprime l'idée d'**unité et de solidarité**. Il signifie que :\n\n- Les membres d'une même famille, d'un même clan ou d'une même communauté doivent rester unis et solidaires\n- On ne doit pas séparer ce qui est naturellement uni\n- La cohésion du groupe prime sur les divergences individuelles\n\nC'est un appel à la **fraternité** et à la **non-séparation** au sein du collectif.",
-          "score": 1,
+          "score": 2,
           "chrf": null
         },
         {
