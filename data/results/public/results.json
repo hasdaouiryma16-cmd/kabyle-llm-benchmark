@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-16T11:47:01+00:00",
+  "generated_at": "2026-11-16T11:47:19+00:00",
   "test_set": {
     "name": "kab-bench",
     "version": "1.0.3",
@@ -1325,15 +1325,15 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 1.17,
-        "human_pct": 39.0,
+        "human_mean": 1.15,
+        "human_pct": 38.2,
         "human_pct_ci95": [
-          27.6,
-          51.2
+          26.0,
+          50.4
         ],
         "score_distribution": {
-          "0": 16,
-          "1": 10,
+          "0": 17,
+          "1": 9,
           "2": 7,
           "3": 8
         },
@@ -1426,15 +1426,15 @@
         "translation_kab_fr": {
           "n": 4,
           "n_graded": 4,
-          "human_mean": 1,
-          "human_pct": 33.3,
+          "human_mean": 0.75,
+          "human_pct": 25.0,
           "human_pct_ci95": [
             0.0,
             75.0
           ],
           "score_distribution": {
-            "0": 2,
-            "1": 1,
+            "0": 3,
+            "1": 0,
             "2": 0,
             "3": 1
           },
@@ -2904,13 +2904,13 @@
       "overall": {
         "n_paired": 41,
         "n_paired_chrf": 34,
-        "before_pct": 39.0,
+        "before_pct": 38.2,
         "after_pct": 75.6,
-        "gain_points": 36.6,
-        "gain_relative_pct": 93.7,
+        "gain_points": 37.4,
+        "gain_relative_pct": 97.9,
         "gain_points_ci95": [
           19.5,
-          52.0
+          52.8
         ],
         "chrf_before": 31.2,
         "chrf_after": 43.2,
@@ -2935,10 +2935,10 @@
         "translation_kab_fr": {
           "n_paired": 4,
           "n_paired_chrf": 4,
-          "before_pct": 33.3,
+          "before_pct": 25.0,
           "after_pct": 100.0,
-          "gain_points": 66.7,
-          "gain_relative_pct": 200.0,
+          "gain_points": 75.0,
+          "gain_relative_pct": 300.0,
           "gain_points_ci95": [
             25.0,
             100.0
@@ -3011,13 +3011,13 @@
       "overall": {
         "n_paired": 41,
         "n_paired_chrf": 34,
-        "before_pct": 39.0,
+        "before_pct": 38.2,
         "after_pct": 72.4,
-        "gain_points": 33.3,
-        "gain_relative_pct": 85.4,
+        "gain_points": 34.1,
+        "gain_relative_pct": 89.4,
         "gain_points_ci95": [
-          17.1,
-          48.8
+          17.9,
+          50.4
         ],
         "chrf_before": 31.2,
         "chrf_after": 42.4,
@@ -3042,12 +3042,12 @@
         "translation_kab_fr": {
           "n_paired": 4,
           "n_paired_chrf": 4,
-          "before_pct": 33.3,
+          "before_pct": 25.0,
           "after_pct": 83.3,
-          "gain_points": 50.0,
-          "gain_relative_pct": 150.0,
+          "gain_points": 58.3,
+          "gain_relative_pct": 233.3,
           "gain_points_ci95": [
-            0.0,
+            16.7,
             100.0
           ],
           "chrf_before": 39.7,
@@ -3969,7 +3969,7 @@
   ],
   "metric_agreement": {
     "n": 576,
-    "spearman_human_chrf": 0.698
+    "spearman_human_chrf": 0.699
   },
   "examples": [],
   "items": [
@@ -8016,7 +8016,7 @@
         {
           "model_key": "gemini-flash-lite",
           "output": "Sortez",
-          "score": 1,
+          "score": 0,
           "chrf": 7.05
         },
         {
