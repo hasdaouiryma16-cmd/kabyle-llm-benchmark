@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-16T11:40:11+00:00",
+  "generated_at": "2026-11-16T11:42:02+00:00",
   "test_set": {
     "name": "kab-bench",
     "version": "1.0.3",
@@ -870,17 +870,17 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 2.1,
-        "human_pct": 69.9,
+        "human_mean": 2.17,
+        "human_pct": 72.4,
         "human_pct_ci95": [
-          58.5,
-          80.5
+          61.0,
+          82.9
         ],
         "score_distribution": {
-          "0": 7,
+          "0": 6,
           "1": 2,
           "2": 12,
-          "3": 20
+          "3": 21
         },
         "chrf": 41.1,
         "n_chrf": 34,
@@ -951,17 +951,17 @@
         "translation_fr_kab": {
           "n": 25,
           "n_graded": 25,
-          "human_mean": 2.16,
-          "human_pct": 72.0,
+          "human_mean": 2.28,
+          "human_pct": 76.0,
           "human_pct_ci95": [
-            58.7,
-            85.3
+            64.0,
+            86.7
           ],
           "score_distribution": {
-            "0": 3,
+            "0": 2,
             "1": 2,
             "2": 8,
-            "3": 12
+            "3": 13
           },
           "chrf": 35.3,
           "n_chrf": 25,
@@ -3119,12 +3119,12 @@
         "n_paired": 41,
         "n_paired_chrf": 34,
         "before_pct": 36.6,
-        "after_pct": 69.9,
-        "gain_points": 33.3,
-        "gain_relative_pct": 91.1,
+        "after_pct": 72.4,
+        "gain_points": 35.8,
+        "gain_relative_pct": 97.8,
         "gain_points_ci95": [
-          19.5,
-          46.3
+          22.0,
+          48.8
         ],
         "chrf_before": 29.2,
         "chrf_after": 41.1,
@@ -3135,12 +3135,12 @@
           "n_paired": 25,
           "n_paired_chrf": 25,
           "before_pct": 25.3,
-          "after_pct": 72.0,
-          "gain_points": 46.7,
-          "gain_relative_pct": 184.2,
+          "after_pct": 76.0,
+          "gain_points": 50.7,
+          "gain_relative_pct": 200.0,
           "gain_points_ci95": [
-            32.0,
-            61.3
+            36.0,
+            65.3
           ],
           "chrf_before": 23.4,
           "chrf_after": 35.3,
@@ -7610,7 +7610,7 @@
         {
           "model_key": "mistral-large-4-fewshot",
           "output": "Acḥal tamrilt?",
-          "score": 0,
+          "score": 3,
           "chrf": 27.53
         },
         {
