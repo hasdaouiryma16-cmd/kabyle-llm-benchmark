@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-16T11:49:22+00:00",
+  "generated_at": "2026-11-16T11:50:38+00:00",
   "test_set": {
     "name": "kab-bench",
     "version": "1.0.4",
@@ -2235,17 +2235,17 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 0.68,
-        "human_pct": 22.8,
+        "human_mean": 0.71,
+        "human_pct": 23.6,
         "human_pct_ci95": [
-          13.0,
-          33.3
+          13.8,
+          34.1
         ],
         "score_distribution": {
           "0": 25,
           "1": 8,
-          "2": 4,
-          "3": 4
+          "2": 3,
+          "3": 5
         },
         "chrf": 25.2,
         "n_chrf": 34,
@@ -2336,17 +2336,17 @@
         "translation_kab_fr": {
           "n": 4,
           "n_graded": 4,
-          "human_mean": 1.5,
-          "human_pct": 50.0,
+          "human_mean": 1.75,
+          "human_pct": 58.3,
           "human_pct_ci95": [
             8.3,
-            83.3
+            100.0
           ],
           "score_distribution": {
             "0": 1,
             "1": 1,
-            "2": 1,
-            "3": 1
+            "2": 0,
+            "3": 2
           },
           "chrf": 20.3,
           "n_chrf": 4,
@@ -3868,12 +3868,12 @@
         "n_paired": 41,
         "n_paired_chrf": 34,
         "before_pct": 0.8,
-        "after_pct": 22.8,
-        "gain_points": 22.0,
-        "gain_relative_pct": 2700.0,
+        "after_pct": 23.6,
+        "gain_points": 22.8,
+        "gain_relative_pct": 2800.0,
         "gain_points_ci95": [
           12.2,
-          32.5
+          34.1
         ],
         "chrf_before": 2.7,
         "chrf_after": 25.2,
@@ -3899,12 +3899,12 @@
           "n_paired": 4,
           "n_paired_chrf": 4,
           "before_pct": 0.0,
-          "after_pct": 50.0,
-          "gain_points": 50.0,
+          "after_pct": 58.3,
+          "gain_points": 58.3,
           "gain_relative_pct": null,
           "gain_points_ci95": [
             8.3,
-            83.3
+            100.0
           ],
           "chrf_before": 5.5,
           "chrf_after": 20.3,
@@ -3969,7 +3969,7 @@
   ],
   "metric_agreement": {
     "n": 576,
-    "spearman_human_chrf": 0.697
+    "spearman_human_chrf": 0.696
   },
   "examples": [],
   "items": [
@@ -8276,7 +8276,7 @@
         {
           "model_key": "ministral3-8b-fewshot",
           "output": "C'était très froid.",
-          "score": 2,
+          "score": 3,
           "chrf": 27.98
         },
         {
