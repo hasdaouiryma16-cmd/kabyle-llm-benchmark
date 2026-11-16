@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-16T11:20:18+00:00",
+  "generated_at": "2026-11-16T11:25:31+00:00",
   "test_set": {
     "name": "kab-bench",
     "version": "1.0.2",
@@ -1172,17 +1172,17 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 1.39,
-        "human_pct": 46.3,
+        "human_mean": 1.37,
+        "human_pct": 45.5,
         "human_pct_ci95": [
-          33.3,
-          61.0
+          32.5,
+          60.2
         ],
         "score_distribution": {
           "0": 17,
           "1": 5,
-          "2": 5,
-          "3": 14
+          "2": 6,
+          "3": 13
         },
         "chrf": 33.0,
         "n_chrf": 34,
@@ -1253,17 +1253,17 @@
         "translation_fr_kab": {
           "n": 25,
           "n_graded": 25,
-          "human_mean": 1.84,
-          "human_pct": 61.3,
+          "human_mean": 1.8,
+          "human_pct": 60.0,
           "human_pct_ci95": [
-            45.3,
-            78.7
+            44.0,
+            77.3
           ],
           "score_distribution": {
             "0": 6,
             "1": 4,
-            "2": 3,
-            "3": 12
+            "2": 4,
+            "3": 11
           },
           "chrf": 30.0,
           "n_chrf": 25,
@@ -3333,12 +3333,12 @@
         "n_paired": 41,
         "n_paired_chrf": 34,
         "before_pct": 0.8,
-        "after_pct": 46.3,
-        "gain_points": 45.5,
-        "gain_relative_pct": 5600.0,
+        "after_pct": 45.5,
+        "gain_points": 44.7,
+        "gain_relative_pct": 5500.0,
         "gain_points_ci95": [
           31.7,
-          60.2
+          59.3
         ],
         "chrf_before": 2.7,
         "chrf_after": 33.0,
@@ -3349,12 +3349,12 @@
           "n_paired": 25,
           "n_paired_chrf": 25,
           "before_pct": 0.0,
-          "after_pct": 61.3,
-          "gain_points": 61.3,
+          "after_pct": 60.0,
+          "gain_points": 60.0,
           "gain_relative_pct": null,
           "gain_points_ci95": [
-            45.3,
-            78.7
+            44.0,
+            77.3
           ],
           "chrf_before": 0.6,
           "chrf_after": 30.0,
@@ -3969,7 +3969,7 @@
   ],
   "metric_agreement": {
     "n": 576,
-    "spearman_human_chrf": 0.704
+    "spearman_human_chrf": 0.705
   },
   "examples": [],
   "items": [
@@ -6097,7 +6097,7 @@
         {
           "model_key": "ministral3-8b-lora",
           "output": "Baba yekker qbel ad d-yali wass.",
-          "score": 3,
+          "score": 2,
           "chrf": 27.09
         },
         {
