@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-16T11:42:31+00:00",
+  "generated_at": "2026-11-16T11:43:47+00:00",
   "test_set": {
     "name": "kab-bench",
     "version": "1.0.3",
@@ -262,17 +262,17 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 2.68,
-        "human_pct": 89.4,
+        "human_mean": 2.71,
+        "human_pct": 90.2,
         "human_pct_ci95": [
-          82.1,
+          82.9,
           95.9
         ],
         "score_distribution": {
           "0": 1,
           "1": 2,
-          "2": 6,
-          "3": 32
+          "2": 5,
+          "3": 33
         },
         "chrf": 48.8,
         "n_chrf": 33,
@@ -343,17 +343,17 @@
         "translation_fr_kab": {
           "n": 25,
           "n_graded": 25,
-          "human_mean": 2.84,
-          "human_pct": 94.7,
+          "human_mean": 2.88,
+          "human_pct": 96.0,
           "human_pct_ci95": [
-            89.3,
-            98.7
+            90.7,
+            100.0
           ],
           "score_distribution": {
             "0": 0,
             "1": 0,
-            "2": 4,
-            "3": 21
+            "2": 3,
+            "3": 22
           },
           "chrf": 41.6,
           "n_chrf": 25,
@@ -2690,13 +2690,13 @@
       "overall": {
         "n_paired": 41,
         "n_paired_chrf": 33,
-        "before_pct": 89.4,
+        "before_pct": 90.2,
         "after_pct": 91.9,
-        "gain_points": 2.4,
-        "gain_relative_pct": 2.7,
+        "gain_points": 1.6,
+        "gain_relative_pct": 1.8,
         "gain_points_ci95": [
-          -4.1,
-          8.9
+          -4.9,
+          8.1
         ],
         "chrf_before": 48.8,
         "chrf_after": 47.7,
@@ -2706,13 +2706,13 @@
         "translation_fr_kab": {
           "n_paired": 25,
           "n_paired_chrf": 25,
-          "before_pct": 94.7,
+          "before_pct": 96.0,
           "after_pct": 97.3,
-          "gain_points": 2.7,
-          "gain_relative_pct": 2.8,
+          "gain_points": 1.3,
+          "gain_relative_pct": 1.4,
           "gain_points_ci95": [
-            -2.7,
-            8.0
+            -5.3,
+            6.7
           ],
           "chrf_before": 41.6,
           "chrf_after": 40.4,
@@ -2797,13 +2797,13 @@
       "overall": {
         "n_paired": 41,
         "n_paired_chrf": 33,
-        "before_pct": 89.4,
+        "before_pct": 90.2,
         "after_pct": 87.8,
-        "gain_points": -1.6,
-        "gain_relative_pct": -1.8,
+        "gain_points": -2.4,
+        "gain_relative_pct": -2.7,
         "gain_points_ci95": [
-          -8.1,
-          6.5
+          -8.9,
+          4.9
         ],
         "chrf_before": 48.8,
         "chrf_after": 49.0,
@@ -2813,13 +2813,13 @@
         "translation_fr_kab": {
           "n_paired": 25,
           "n_paired_chrf": 25,
-          "before_pct": 94.7,
+          "before_pct": 96.0,
           "after_pct": 92.0,
-          "gain_points": -2.7,
-          "gain_relative_pct": -2.8,
+          "gain_points": -4.0,
+          "gain_relative_pct": -4.2,
           "gain_points_ci95": [
-            -9.3,
-            4.0
+            -10.7,
+            2.7
           ],
           "chrf_before": 41.6,
           "chrf_after": 42.1,
@@ -7774,7 +7774,7 @@
         {
           "model_key": "gemini-flash",
           "output": "Nettett zzit n uzemmur d weɣrum.",
-          "score": 2,
+          "score": 3,
           "chrf": 35.74
         },
         {
