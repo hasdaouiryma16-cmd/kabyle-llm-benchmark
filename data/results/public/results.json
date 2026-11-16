@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-16T11:46:49+00:00",
+  "generated_at": "2026-11-16T11:47:01+00:00",
   "test_set": {
     "name": "kab-bench",
     "version": "1.0.3",
@@ -2084,16 +2084,16 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 0.76,
-        "human_pct": 25.2,
+        "human_mean": 0.73,
+        "human_pct": 24.4,
         "human_pct_ci95": [
-          15.4,
-          35.0
+          14.6,
+          34.1
         ],
         "score_distribution": {
           "0": 22,
-          "1": 9,
-          "2": 8,
+          "1": 10,
+          "2": 7,
           "3": 2
         },
         "chrf": 28.5,
@@ -2185,16 +2185,16 @@
         "translation_kab_fr": {
           "n": 4,
           "n_graded": 4,
-          "human_mean": 1.25,
-          "human_pct": 41.7,
+          "human_mean": 1,
+          "human_pct": 33.3,
           "human_pct_ci95": [
             0.0,
-            83.3
+            75.0
           ],
           "score_distribution": {
             "0": 2,
-            "1": 0,
-            "2": 1,
+            "1": 1,
+            "2": 0,
             "3": 1
           },
           "chrf": 35.6,
@@ -3761,12 +3761,12 @@
         "n_paired": 41,
         "n_paired_chrf": 34,
         "before_pct": 0.0,
-        "after_pct": 25.2,
-        "gain_points": 25.2,
+        "after_pct": 24.4,
+        "gain_points": 24.4,
         "gain_relative_pct": null,
         "gain_points_ci95": [
-          15.4,
-          35.0
+          14.6,
+          34.1
         ],
         "chrf_before": 9.2,
         "chrf_after": 28.5,
@@ -3792,12 +3792,12 @@
           "n_paired": 4,
           "n_paired_chrf": 4,
           "before_pct": 0.0,
-          "after_pct": 41.7,
-          "gain_points": 41.7,
+          "after_pct": 33.3,
+          "gain_points": 33.3,
           "gain_relative_pct": null,
           "gain_points_ci95": [
             0.0,
-            83.3
+            75.0
           ],
           "chrf_before": 6.3,
           "chrf_after": 35.6,
@@ -8088,7 +8088,7 @@
         {
           "model_key": "qwen3.5-4b-fewshot",
           "output": "Je vais sortir dehors.",
-          "score": 2,
+          "score": 1,
           "chrf": 64.64
         },
         {
