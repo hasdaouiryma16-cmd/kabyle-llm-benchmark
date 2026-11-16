@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-16T11:08:23+00:00",
+  "generated_at": "2026-11-16T11:08:57+00:00",
   "test_set": {
     "name": "kab-bench",
     "version": "1.0.2",
@@ -2235,16 +2235,16 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 0.63,
-        "human_pct": 21.1,
+        "human_mean": 0.66,
+        "human_pct": 22.0,
         "human_pct_ci95": [
-          11.4,
-          31.7
+          12.2,
+          32.5
         ],
         "score_distribution": {
           "0": 26,
-          "1": 8,
-          "2": 3,
+          "1": 7,
+          "2": 4,
           "3": 4
         },
         "chrf": 25.2,
@@ -2316,16 +2316,16 @@
         "translation_fr_kab": {
           "n": 25,
           "n_graded": 25,
-          "human_mean": 0.68,
-          "human_pct": 22.7,
+          "human_mean": 0.72,
+          "human_pct": 24.0,
           "human_pct_ci95": [
-            10.7,
-            36.0
+            12.0,
+            37.3
           ],
           "score_distribution": {
             "0": 14,
-            "1": 7,
-            "2": 2,
+            "1": 6,
+            "2": 3,
             "3": 2
           },
           "chrf": 26.2,
@@ -3868,12 +3868,12 @@
         "n_paired": 41,
         "n_paired_chrf": 34,
         "before_pct": 0.8,
-        "after_pct": 21.1,
-        "gain_points": 20.3,
-        "gain_relative_pct": 2500.0,
+        "after_pct": 22.0,
+        "gain_points": 21.1,
+        "gain_relative_pct": 2600.0,
         "gain_points_ci95": [
-          10.6,
-          30.9
+          11.4,
+          31.7
         ],
         "chrf_before": 2.7,
         "chrf_after": 25.2,
@@ -3884,12 +3884,12 @@
           "n_paired": 25,
           "n_paired_chrf": 25,
           "before_pct": 0.0,
-          "after_pct": 22.7,
-          "gain_points": 22.7,
+          "after_pct": 24.0,
+          "gain_points": 24.0,
           "gain_relative_pct": null,
           "gain_points_ci95": [
-            10.7,
-            36.0
+            12.0,
+            37.3
           ],
           "chrf_before": 0.6,
           "chrf_after": 26.2,
@@ -5631,7 +5631,7 @@
         {
           "model_key": "ministral3-8b-fewshot",
           "output": "Ada tsarut n uxxam?",
-          "score": 1,
+          "score": 2,
           "chrf": 32.63
         },
         {
