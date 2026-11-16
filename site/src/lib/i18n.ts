@@ -171,6 +171,7 @@ const fr = {
   limitsTitle: "Limites",
   limits: [
     "Une seule annotatrice : les notes reflètent une variété de kabyle et des choix d'orthographe. Plusieurs références par test limitent ce biais sans le supprimer.",
+    "Le kabyle varie d'une région à l'autre de la Kabylie : vocabulaire, tournures, prononciation. L'autrice a accepté autant que possible les formes des différentes régions, mais elle ne connaît pas forcément toutes les variantes : une réponse correcte dans un autre parler a pu être sous-notée.",
     "41 tests publics : les fourchettes sont larges, et les petits écarts entre modèles ne sont pas significatifs. Les scores par catégorie (2 à 4 tests hors traduction) sont indicatifs.",
     "Les 11 tests privés n'ont pas été utilisés ici : les offres gratuites des API peuvent réutiliser les requêtes, seuls les tests publics leur ont été envoyés.",
     "Pour Gemini Flash, le modèle seul a été interrogé via gemini-flash-latest, mais few-shot et RAG via gemini-3.6-flash, la version « latest » étant saturée pendant des jours. Leurs écarts avec le modèle seul mêlent donc l'effet de l'aide et celui de la version.",
@@ -380,6 +381,7 @@ const en: Dict = {
   limitsTitle: "Limitations",
   limits: [
     "A single annotator: grades reflect one variety of Kabyle and particular spelling choices. Several references per test reduce this bias without removing it.",
+    "Kabyle varies from one region of Kabylia to another: vocabulary, phrasing, pronunciation. The author accepted forms from the different regions as far as possible, but she may not know every variant: a correct answer in another local variety may have been under-graded.",
     "41 public tests: ranges are wide, and small gaps between models are not significant. Per-category scores (2 to 4 tests outside translation) are indicative.",
     "The 11 private tests were not used here: free API tiers may reuse requests, so only public tests were sent to them.",
     "For Gemini Flash, the model alone was queried through gemini-flash-latest, but few-shot and RAG through gemini-3.6-flash, as the “latest” version was overloaded for days. Their gaps with the model alone therefore mix the effect of the help with that of the version.",

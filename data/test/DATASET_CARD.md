@@ -32,6 +32,7 @@ Jeu de test destiné à évaluer la maîtrise du kabyle (taqbaylit, ISO 639-3 `k
 ## Limites connues
 
 - **Une seule annotatrice** : la variation dialectale et orthographique du kabyle n'est que partiellement couverte. Plusieurs références par test atténuent ce biais.
+- **Variation régionale** : le kabyle varie d'une région à l'autre de la Kabylie (vocabulaire, tournures, prononciation). L'autrice a accepté autant que possible les formes des différentes régions, mais ne connaît pas forcément toutes les variantes ; une réponse correcte dans un autre parler a pu être sous-notée.
 - **Taille modeste** : adaptée à une évaluation comparative, pas à des conclusions statistiques fines.
 - **Thèmes du quotidien surreprésentés** par construction du mode guidé.
 
