@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-16T11:37:09+00:00",
+  "generated_at": "2026-11-16T11:39:49+00:00",
   "test_set": {
     "name": "kab-bench",
     "version": "1.0.3",
@@ -870,17 +870,17 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 2.12,
-        "human_pct": 70.7,
+        "human_mean": 2.1,
+        "human_pct": 69.9,
         "human_pct_ci95": [
           58.5,
-          81.3
+          80.5
         ],
         "score_distribution": {
           "0": 7,
           "1": 2,
-          "2": 11,
-          "3": 21
+          "2": 12,
+          "3": 20
         },
         "chrf": 41.1,
         "n_chrf": 34,
@@ -951,17 +951,17 @@
         "translation_fr_kab": {
           "n": 25,
           "n_graded": 25,
-          "human_mean": 2.2,
-          "human_pct": 73.3,
+          "human_mean": 2.16,
+          "human_pct": 72.0,
           "human_pct_ci95": [
-            60.0,
-            86.7
+            58.7,
+            85.3
           ],
           "score_distribution": {
             "0": 3,
             "1": 2,
-            "2": 7,
-            "3": 13
+            "2": 8,
+            "3": 12
           },
           "chrf": 35.3,
           "n_chrf": 25,
@@ -3119,12 +3119,12 @@
         "n_paired": 41,
         "n_paired_chrf": 34,
         "before_pct": 37.4,
-        "after_pct": 70.7,
-        "gain_points": 33.3,
-        "gain_relative_pct": 89.1,
+        "after_pct": 69.9,
+        "gain_points": 32.5,
+        "gain_relative_pct": 87.0,
         "gain_points_ci95": [
-          19.5,
-          46.3
+          18.7,
+          45.5
         ],
         "chrf_before": 29.2,
         "chrf_after": 41.1,
@@ -3135,11 +3135,11 @@
           "n_paired": 25,
           "n_paired_chrf": 25,
           "before_pct": 26.7,
-          "after_pct": 73.3,
-          "gain_points": 46.7,
-          "gain_relative_pct": 175.0,
+          "after_pct": 72.0,
+          "gain_points": 45.3,
+          "gain_relative_pct": 170.0,
           "gain_points_ci95": [
-            32.0,
+            29.3,
             61.3
           ],
           "chrf_before": 23.4,
@@ -7495,7 +7495,7 @@
         {
           "model_key": "mistral-large-4-fewshot",
           "output": "Tagrest d ɣezzif deg yidurar.",
-          "score": 3,
+          "score": 2,
           "chrf": 30.45
         },
         {
