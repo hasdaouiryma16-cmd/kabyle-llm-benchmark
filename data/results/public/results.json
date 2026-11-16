@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-16T11:25:31+00:00",
+  "generated_at": "2026-11-16T11:27:41+00:00",
   "test_set": {
     "name": "kab-bench",
     "version": "1.0.2",
@@ -719,17 +719,17 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 2.22,
-        "human_pct": 74.0,
+        "human_mean": 2.2,
+        "human_pct": 73.2,
         "human_pct_ci95": [
           61.0,
-          86.2
+          84.6
         ],
         "score_distribution": {
           "0": 7,
           "1": 3,
-          "2": 5,
-          "3": 26
+          "2": 6,
+          "3": 25
         },
         "chrf": 42.4,
         "n_chrf": 34,
@@ -800,17 +800,17 @@
         "translation_fr_kab": {
           "n": 25,
           "n_graded": 25,
-          "human_mean": 2.48,
-          "human_pct": 82.7,
+          "human_mean": 2.44,
+          "human_pct": 81.3,
           "human_pct_ci95": [
-            69.3,
+            68.0,
             93.3
           ],
           "score_distribution": {
             "0": 2,
             "1": 2,
-            "2": 3,
-            "3": 18
+            "2": 4,
+            "3": 17
           },
           "chrf": 35.8,
           "n_chrf": 25,
@@ -2084,16 +2084,16 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 0.68,
-        "human_pct": 22.8,
+        "human_mean": 0.71,
+        "human_pct": 23.6,
         "human_pct_ci95": [
-          14.6,
-          30.9
+          15.4,
+          32.5
         ],
         "score_distribution": {
           "0": 22,
-          "1": 11,
-          "2": 7,
+          "1": 10,
+          "2": 8,
           "3": 1
         },
         "chrf": 28.5,
@@ -2165,16 +2165,16 @@
         "translation_fr_kab": {
           "n": 25,
           "n_graded": 25,
-          "human_mean": 0.72,
-          "human_pct": 24.0,
+          "human_mean": 0.76,
+          "human_pct": 25.3,
           "human_pct_ci95": [
-            14.7,
-            33.3
+            16.0,
+            34.7
           ],
           "score_distribution": {
             "0": 11,
-            "1": 10,
-            "2": 4,
+            "1": 9,
+            "2": 5,
             "3": 0
           },
           "chrf": 29.3,
@@ -3012,12 +3012,12 @@
         "n_paired": 41,
         "n_paired_chrf": 34,
         "before_pct": 39.0,
-        "after_pct": 74.0,
-        "gain_points": 35.0,
-        "gain_relative_pct": 89.6,
+        "after_pct": 73.2,
+        "gain_points": 34.1,
+        "gain_relative_pct": 87.5,
         "gain_points_ci95": [
           17.9,
-          51.2
+          49.6
         ],
         "chrf_before": 31.2,
         "chrf_after": 42.4,
@@ -3028,11 +3028,11 @@
           "n_paired": 25,
           "n_paired_chrf": 25,
           "before_pct": 29.3,
-          "after_pct": 82.7,
-          "gain_points": 53.3,
-          "gain_relative_pct": 181.8,
+          "after_pct": 81.3,
+          "gain_points": 52.0,
+          "gain_relative_pct": 177.3,
           "gain_points_ci95": [
-            36.0,
+            34.7,
             69.3
           ],
           "chrf_before": 25.9,
@@ -3761,12 +3761,12 @@
         "n_paired": 41,
         "n_paired_chrf": 34,
         "before_pct": 0.0,
-        "after_pct": 22.8,
-        "gain_points": 22.8,
+        "after_pct": 23.6,
+        "gain_points": 23.6,
         "gain_relative_pct": null,
         "gain_points_ci95": [
-          14.6,
-          30.9
+          15.4,
+          32.5
         ],
         "chrf_before": 9.2,
         "chrf_after": 28.5,
@@ -3777,12 +3777,12 @@
           "n_paired": 25,
           "n_paired_chrf": 25,
           "before_pct": 0.0,
-          "after_pct": 24.0,
-          "gain_points": 24.0,
+          "after_pct": 25.3,
+          "gain_points": 25.3,
           "gain_relative_pct": null,
           "gain_points_ci95": [
-            14.7,
-            33.3
+            16.0,
+            34.7
           ],
           "chrf_before": 8.5,
           "chrf_after": 29.3,
@@ -3969,7 +3969,7 @@
   ],
   "metric_agreement": {
     "n": 576,
-    "spearman_human_chrf": 0.705
+    "spearman_human_chrf": 0.704
   },
   "examples": [],
   "items": [
@@ -6533,7 +6533,7 @@
         {
           "model_key": "gemini-flash-lite-rag",
           "output": "Yettagad ṭlam",
-          "score": 3,
+          "score": 2,
           "chrf": 48.48
         },
         {
@@ -6593,7 +6593,7 @@
         {
           "model_key": "qwen3.5-4b-fewshot",
           "output": "Tettagad ṭṭlam.",
-          "score": 1,
+          "score": 2,
           "chrf": 25.7
         },
         {
