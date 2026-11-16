@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-16T11:12:05+00:00",
+  "generated_at": "2026-11-16T11:13:27+00:00",
   "test_set": {
     "name": "kab-bench",
     "version": "1.0.2",
@@ -2084,17 +2084,17 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 0.73,
-        "human_pct": 24.4,
+        "human_mean": 0.71,
+        "human_pct": 23.6,
         "human_pct_ci95": [
-          16.3,
-          33.3
+          15.4,
+          31.7
         ],
         "score_distribution": {
           "0": 21,
           "1": 12,
-          "2": 6,
-          "3": 2
+          "2": 7,
+          "3": 1
         },
         "chrf": 28.5,
         "n_chrf": 34,
@@ -2165,17 +2165,17 @@
         "translation_fr_kab": {
           "n": 25,
           "n_graded": 25,
-          "human_mean": 0.8,
-          "human_pct": 26.7,
+          "human_mean": 0.76,
+          "human_pct": 25.3,
           "human_pct_ci95": [
             17.3,
-            37.3
+            34.7
           ],
           "score_distribution": {
             "0": 10,
             "1": 11,
-            "2": 3,
-            "3": 1
+            "2": 4,
+            "3": 0
           },
           "chrf": 29.3,
           "n_chrf": 25,
@@ -3761,12 +3761,12 @@
         "n_paired": 41,
         "n_paired_chrf": 34,
         "before_pct": 0.0,
-        "after_pct": 24.4,
-        "gain_points": 24.4,
+        "after_pct": 23.6,
+        "gain_points": 23.6,
         "gain_relative_pct": null,
         "gain_points_ci95": [
-          16.3,
-          33.3
+          15.4,
+          31.7
         ],
         "chrf_before": 9.2,
         "chrf_after": 28.5,
@@ -3777,12 +3777,12 @@
           "n_paired": 25,
           "n_paired_chrf": 25,
           "before_pct": 0.0,
-          "after_pct": 26.7,
-          "gain_points": 26.7,
+          "after_pct": 25.3,
+          "gain_points": 25.3,
           "gain_relative_pct": null,
           "gain_points_ci95": [
             17.3,
-            37.3
+            34.7
           ],
           "chrf_before": 8.5,
           "chrf_after": 29.3,
@@ -3969,7 +3969,7 @@
   ],
   "metric_agreement": {
     "n": 576,
-    "spearman_human_chrf": 0.707
+    "spearman_human_chrf": 0.705
   },
   "examples": [],
   "items": [
@@ -5903,7 +5903,7 @@
         {
           "model_key": "qwen3.5-4b-fewshot",
           "output": "D gma ameqqran ixeddem deg Fransa.",
-          "score": 3,
+          "score": 2,
           "chrf": 88.76
         },
         {
