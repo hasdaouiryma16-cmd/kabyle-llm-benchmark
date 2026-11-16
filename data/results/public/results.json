@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-16T11:46:37+00:00",
+  "generated_at": "2026-11-16T11:46:49+00:00",
   "test_set": {
     "name": "kab-bench",
     "version": "1.0.3",
@@ -1021,16 +1021,16 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 1.98,
-        "human_pct": 65.9,
+        "human_mean": 1.95,
+        "human_pct": 65.0,
         "human_pct_ci95": [
-          52.8,
-          78.0
+          51.2,
+          77.2
         ],
         "score_distribution": {
           "0": 9,
-          "1": 4,
-          "2": 7,
+          "1": 5,
+          "2": 6,
           "3": 21
         },
         "chrf": 41.5,
@@ -1122,16 +1122,16 @@
         "translation_kab_fr": {
           "n": 4,
           "n_graded": 4,
-          "human_mean": 2.75,
-          "human_pct": 91.7,
+          "human_mean": 2.5,
+          "human_pct": 83.3,
           "human_pct_ci95": [
-            75.0,
+            50.0,
             100.0
           ],
           "score_distribution": {
             "0": 0,
-            "1": 0,
-            "2": 1,
+            "1": 1,
+            "2": 0,
             "3": 3
           },
           "chrf": 65.2,
@@ -3226,12 +3226,12 @@
         "n_paired": 41,
         "n_paired_chrf": 34,
         "before_pct": 36.6,
-        "after_pct": 65.9,
-        "gain_points": 29.3,
-        "gain_relative_pct": 80.0,
+        "after_pct": 65.0,
+        "gain_points": 28.5,
+        "gain_relative_pct": 77.8,
         "gain_points_ci95": [
-          15.4,
-          42.3
+          14.6,
+          41.5
         ],
         "chrf_before": 29.2,
         "chrf_after": 41.5,
@@ -3257,11 +3257,11 @@
           "n_paired": 4,
           "n_paired_chrf": 4,
           "before_pct": 91.7,
-          "after_pct": 91.7,
-          "gain_points": 0.0,
-          "gain_relative_pct": 0.0,
+          "after_pct": 83.3,
+          "gain_points": -8.3,
+          "gain_relative_pct": -9.1,
           "gain_points_ci95": [
-            -25.0,
+            -50.0,
             25.0
           ],
           "chrf_before": 43.5,
@@ -8076,7 +8076,7 @@
         {
           "model_key": "mistral-large-4-rag",
           "output": "Je sors dehors.",
-          "score": 2,
+          "score": 1,
           "chrf": 27.04
         },
         {
