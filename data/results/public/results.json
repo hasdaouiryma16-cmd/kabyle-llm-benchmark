@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-16T11:14:30+00:00",
+  "generated_at": "2026-11-16T11:15:00+00:00",
   "test_set": {
     "name": "kab-bench",
     "version": "1.0.2",
@@ -1325,15 +1325,15 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 1.2,
-        "human_pct": 39.8,
+        "human_mean": 1.17,
+        "human_pct": 39.0,
         "human_pct_ci95": [
-          28.5,
-          51.2
+          27.6,
+          50.4
         ],
         "score_distribution": {
-          "0": 14,
-          "1": 13,
+          "0": 15,
+          "1": 12,
           "2": 6,
           "3": 8
         },
@@ -1406,15 +1406,15 @@
         "translation_fr_kab": {
           "n": 25,
           "n_graded": 25,
-          "human_mean": 0.92,
-          "human_pct": 30.7,
+          "human_mean": 0.88,
+          "human_pct": 29.3,
           "human_pct_ci95": [
-            17.3,
-            44.0
+            16.0,
+            42.7
           ],
           "score_distribution": {
-            "0": 10,
-            "1": 10,
+            "0": 11,
+            "1": 9,
             "2": 2,
             "3": 3
           },
@@ -2904,13 +2904,13 @@
       "overall": {
         "n_paired": 41,
         "n_paired_chrf": 34,
-        "before_pct": 39.8,
+        "before_pct": 39.0,
         "after_pct": 75.6,
-        "gain_points": 35.8,
-        "gain_relative_pct": 89.8,
+        "gain_points": 36.6,
+        "gain_relative_pct": 93.7,
         "gain_points_ci95": [
           19.5,
-          50.4
+          52.0
         ],
         "chrf_before": 31.2,
         "chrf_after": 43.2,
@@ -2920,13 +2920,13 @@
         "translation_fr_kab": {
           "n_paired": 25,
           "n_paired_chrf": 25,
-          "before_pct": 30.7,
+          "before_pct": 29.3,
           "after_pct": 85.3,
-          "gain_points": 54.7,
-          "gain_relative_pct": 178.3,
+          "gain_points": 56.0,
+          "gain_relative_pct": 190.9,
           "gain_points_ci95": [
-            37.3,
-            72.0
+            38.7,
+            73.3
           ],
           "chrf_before": 25.9,
           "chrf_after": 38.8,
@@ -3011,13 +3011,13 @@
       "overall": {
         "n_paired": 41,
         "n_paired_chrf": 34,
-        "before_pct": 39.8,
+        "before_pct": 39.0,
         "after_pct": 74.0,
-        "gain_points": 34.1,
-        "gain_relative_pct": 85.7,
+        "gain_points": 35.0,
+        "gain_relative_pct": 89.6,
         "gain_points_ci95": [
           17.9,
-          49.6
+          51.2
         ],
         "chrf_before": 31.2,
         "chrf_after": 42.4,
@@ -3027,13 +3027,13 @@
         "translation_fr_kab": {
           "n_paired": 25,
           "n_paired_chrf": 25,
-          "before_pct": 30.7,
+          "before_pct": 29.3,
           "after_pct": 82.7,
-          "gain_points": 52.0,
-          "gain_relative_pct": 169.6,
+          "gain_points": 53.3,
+          "gain_relative_pct": 181.8,
           "gain_points_ci95": [
-            34.7,
-            66.7
+            36.0,
+            69.3
           ],
           "chrf_before": 25.9,
           "chrf_after": 35.8,
@@ -3969,7 +3969,7 @@
   ],
   "metric_agreement": {
     "n": 576,
-    "spearman_human_chrf": 0.706
+    "spearman_human_chrf": 0.705
   },
   "examples": [],
   "items": [
@@ -5946,7 +5946,7 @@
         {
           "model_key": "gemini-flash-lite",
           "output": "Iraten uraren zdat uxxam.",
-          "score": 1,
+          "score": 0,
           "chrf": 29.05
         },
         {
