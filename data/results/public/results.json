@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-14T09:11:58+00:00",
+  "generated_at": "2026-11-16T08:10:43+00:00",
   "test_set": {
     "name": "kab-bench",
     "version": "1.0.2",
@@ -101,6 +101,157 @@
     }
   ],
   "models": [
+    {
+      "key": "gemini-flash-fewshot",
+      "label": "Gemini Flash + few-shot",
+      "provider": "gemini",
+      "model": "gemini-3.6-flash",
+      "variant": "fewshot",
+      "base": "gemini-flash",
+      "overall": {
+        "n": 41,
+        "n_graded": 41,
+        "human_mean": 2.71,
+        "human_pct": 90.2,
+        "human_pct_ci95": [
+          82.1,
+          96.7
+        ],
+        "score_distribution": {
+          "0": 2,
+          "1": 0,
+          "2": 6,
+          "3": 33
+        },
+        "chrf": 49.3,
+        "n_chrf": 34,
+        "lang_ok_rate": 80.0,
+        "n_lang_checked": 5
+      },
+      "by_category": {
+        "comprehension": {
+          "n": 3,
+          "n_graded": 3,
+          "human_mean": 3,
+          "human_pct": 100.0,
+          "human_pct_ci95": [
+            100.0,
+            100.0
+          ],
+          "score_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 3
+          },
+          "chrf": 59.0,
+          "n_chrf": 3,
+          "lang_ok_rate": null,
+          "n_lang_checked": 0
+        },
+        "conversation": {
+          "n": 4,
+          "n_graded": 4,
+          "human_mean": 1,
+          "human_pct": 33.3,
+          "human_pct_ci95": [
+            0.0,
+            66.7
+          ],
+          "score_distribution": {
+            "0": 2,
+            "1": 0,
+            "2": 2,
+            "3": 0
+          },
+          "chrf": null,
+          "n_chrf": 0,
+          "lang_ok_rate": 0.0,
+          "n_lang_checked": 1
+        },
+        "culture": {
+          "n": 3,
+          "n_graded": 3,
+          "human_mean": 2.67,
+          "human_pct": 88.9,
+          "human_pct_ci95": [
+            66.7,
+            100.0
+          ],
+          "score_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 1,
+            "3": 2
+          },
+          "chrf": null,
+          "n_chrf": 0,
+          "lang_ok_rate": 100.0,
+          "n_lang_checked": 1
+        },
+        "translation_fr_kab": {
+          "n": 25,
+          "n_graded": 25,
+          "human_mean": 2.88,
+          "human_pct": 96.0,
+          "human_pct_ci95": [
+            92.0,
+            100.0
+          ],
+          "score_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 3,
+            "3": 22
+          },
+          "chrf": 40.4,
+          "n_chrf": 25,
+          "lang_ok_rate": null,
+          "n_lang_checked": 0
+        },
+        "translation_kab_fr": {
+          "n": 4,
+          "n_graded": 4,
+          "human_mean": 3,
+          "human_pct": 100.0,
+          "human_pct_ci95": [
+            100.0,
+            100.0
+          ],
+          "score_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 4
+          },
+          "chrf": 72.2,
+          "n_chrf": 4,
+          "lang_ok_rate": 100.0,
+          "n_lang_checked": 3
+        },
+        "writing": {
+          "n": 2,
+          "n_graded": 2,
+          "human_mean": 3,
+          "human_pct": 100.0,
+          "human_pct_ci95": [
+            100.0,
+            100.0
+          ],
+          "score_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 2
+          },
+          "chrf": 100.0,
+          "n_chrf": 2,
+          "lang_ok_rate": null,
+          "n_lang_checked": 0
+        }
+      },
+      "error_tags": {}
+    },
     {
       "key": "gemini-flash",
       "label": "Gemini Flash",
@@ -253,6 +404,157 @@
       "error_tags": {
         "refusal": 1
       }
+    },
+    {
+      "key": "gemini-flash-rag",
+      "label": "Gemini Flash + RAG",
+      "provider": "gemini",
+      "model": "gemini-3.6-flash",
+      "variant": "rag",
+      "base": "gemini-flash",
+      "overall": {
+        "n": 41,
+        "n_graded": 41,
+        "human_mean": 2.63,
+        "human_pct": 87.8,
+        "human_pct_ci95": [
+          80.5,
+          95.1
+        ],
+        "score_distribution": {
+          "0": 2,
+          "1": 1,
+          "2": 7,
+          "3": 31
+        },
+        "chrf": 50.5,
+        "n_chrf": 34,
+        "lang_ok_rate": 66.7,
+        "n_lang_checked": 6
+      },
+      "by_category": {
+        "comprehension": {
+          "n": 3,
+          "n_graded": 3,
+          "human_mean": 3,
+          "human_pct": 100.0,
+          "human_pct_ci95": [
+            100.0,
+            100.0
+          ],
+          "score_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 3
+          },
+          "chrf": 67.7,
+          "n_chrf": 3,
+          "lang_ok_rate": null,
+          "n_lang_checked": 0
+        },
+        "conversation": {
+          "n": 4,
+          "n_graded": 4,
+          "human_mean": 1,
+          "human_pct": 33.3,
+          "human_pct_ci95": [
+            0.0,
+            66.7
+          ],
+          "score_distribution": {
+            "0": 2,
+            "1": 0,
+            "2": 2,
+            "3": 0
+          },
+          "chrf": null,
+          "n_chrf": 0,
+          "lang_ok_rate": 0.0,
+          "n_lang_checked": 2
+        },
+        "culture": {
+          "n": 3,
+          "n_graded": 3,
+          "human_mean": 2.67,
+          "human_pct": 88.9,
+          "human_pct_ci95": [
+            66.7,
+            100.0
+          ],
+          "score_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 1,
+            "3": 2
+          },
+          "chrf": null,
+          "n_chrf": 0,
+          "lang_ok_rate": 100.0,
+          "n_lang_checked": 1
+        },
+        "translation_fr_kab": {
+          "n": 25,
+          "n_graded": 25,
+          "human_mean": 2.76,
+          "human_pct": 92.0,
+          "human_pct_ci95": [
+            85.3,
+            97.3
+          ],
+          "score_distribution": {
+            "0": 0,
+            "1": 1,
+            "2": 4,
+            "3": 20
+          },
+          "chrf": 42.1,
+          "n_chrf": 25,
+          "lang_ok_rate": null,
+          "n_lang_checked": 0
+        },
+        "translation_kab_fr": {
+          "n": 4,
+          "n_graded": 4,
+          "human_mean": 3,
+          "human_pct": 100.0,
+          "human_pct_ci95": [
+            100.0,
+            100.0
+          ],
+          "score_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 4
+          },
+          "chrf": 65.4,
+          "n_chrf": 4,
+          "lang_ok_rate": 100.0,
+          "n_lang_checked": 3
+        },
+        "writing": {
+          "n": 2,
+          "n_graded": 2,
+          "human_mean": 3,
+          "human_pct": 100.0,
+          "human_pct_ci95": [
+            100.0,
+            100.0
+          ],
+          "score_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 2
+          },
+          "chrf": 100.0,
+          "n_chrf": 2,
+          "lang_ok_rate": null,
+          "n_lang_checked": 0
+        }
+      },
+      "error_tags": {}
     },
     {
       "key": "gemini-flash-lite-fewshot",
@@ -2381,6 +2683,220 @@
   ],
   "gains": [
     {
+      "variant": "gemini-flash-fewshot",
+      "variant_label": "Gemini Flash + few-shot",
+      "variant_type": "fewshot",
+      "base": "gemini-flash",
+      "overall": {
+        "n_paired": 41,
+        "n_paired_chrf": 33,
+        "before_pct": 89.4,
+        "after_pct": 90.2,
+        "gain_points": 0.8,
+        "gain_relative_pct": 0.9,
+        "gain_points_ci95": [
+          -5.7,
+          7.3
+        ],
+        "chrf_before": 48.8,
+        "chrf_after": 47.7,
+        "chrf_gain": -1.1
+      },
+      "by_category": {
+        "translation_fr_kab": {
+          "n_paired": 25,
+          "n_paired_chrf": 25,
+          "before_pct": 94.7,
+          "after_pct": 96.0,
+          "gain_points": 1.3,
+          "gain_relative_pct": 1.4,
+          "gain_points_ci95": [
+            -4.0,
+            6.7
+          ],
+          "chrf_before": 41.6,
+          "chrf_after": 40.4,
+          "chrf_gain": -1.2
+        },
+        "translation_kab_fr": {
+          "n_paired": 4,
+          "n_paired_chrf": 4,
+          "before_pct": 100.0,
+          "after_pct": 100.0,
+          "gain_points": 0.0,
+          "gain_relative_pct": 0.0,
+          "gain_points_ci95": [
+            0.0,
+            0.0
+          ],
+          "chrf_before": 78.1,
+          "chrf_after": 72.2,
+          "chrf_gain": -6.0
+        },
+        "comprehension": {
+          "n_paired": 3,
+          "n_paired_chrf": 3,
+          "before_pct": 100.0,
+          "after_pct": 100.0,
+          "gain_points": 0.0,
+          "gain_relative_pct": 0.0,
+          "gain_points_ci95": [
+            0.0,
+            0.0
+          ],
+          "chrf_before": 52.8,
+          "chrf_after": 59.0,
+          "chrf_gain": 6.3
+        },
+        "culture": {
+          "n_paired": 3,
+          "n_paired_chrf": 0,
+          "before_pct": 100.0,
+          "after_pct": 88.9,
+          "gain_points": -11.1,
+          "gain_relative_pct": -11.1,
+          "gain_points_ci95": [
+            -33.3,
+            0.0
+          ]
+        },
+        "writing": {
+          "n_paired": 2,
+          "n_paired_chrf": 1,
+          "before_pct": 66.7,
+          "after_pct": 100.0,
+          "gain_points": 33.3,
+          "gain_relative_pct": 50.0,
+          "gain_points_ci95": [
+            0.0,
+            66.7
+          ],
+          "chrf_before": 100.0,
+          "chrf_after": 100.0,
+          "chrf_gain": 0.0
+        },
+        "conversation": {
+          "n_paired": 4,
+          "n_paired_chrf": 0,
+          "before_pct": 41.7,
+          "after_pct": 33.3,
+          "gain_points": -8.3,
+          "gain_relative_pct": -20.0,
+          "gain_points_ci95": [
+            -50.0,
+            41.7
+          ]
+        }
+      }
+    },
+    {
+      "variant": "gemini-flash-rag",
+      "variant_label": "Gemini Flash + RAG",
+      "variant_type": "rag",
+      "base": "gemini-flash",
+      "overall": {
+        "n_paired": 41,
+        "n_paired_chrf": 33,
+        "before_pct": 89.4,
+        "after_pct": 87.8,
+        "gain_points": -1.6,
+        "gain_relative_pct": -1.8,
+        "gain_points_ci95": [
+          -8.1,
+          5.7
+        ],
+        "chrf_before": 48.8,
+        "chrf_after": 49.0,
+        "chrf_gain": 0.2
+      },
+      "by_category": {
+        "translation_fr_kab": {
+          "n_paired": 25,
+          "n_paired_chrf": 25,
+          "before_pct": 94.7,
+          "after_pct": 92.0,
+          "gain_points": -2.7,
+          "gain_relative_pct": -2.8,
+          "gain_points_ci95": [
+            -9.3,
+            4.0
+          ],
+          "chrf_before": 41.6,
+          "chrf_after": 42.1,
+          "chrf_gain": 0.4
+        },
+        "translation_kab_fr": {
+          "n_paired": 4,
+          "n_paired_chrf": 4,
+          "before_pct": 100.0,
+          "after_pct": 100.0,
+          "gain_points": 0.0,
+          "gain_relative_pct": 0.0,
+          "gain_points_ci95": [
+            0.0,
+            0.0
+          ],
+          "chrf_before": 78.1,
+          "chrf_after": 65.4,
+          "chrf_gain": -12.7
+        },
+        "comprehension": {
+          "n_paired": 3,
+          "n_paired_chrf": 3,
+          "before_pct": 100.0,
+          "after_pct": 100.0,
+          "gain_points": 0.0,
+          "gain_relative_pct": 0.0,
+          "gain_points_ci95": [
+            0.0,
+            0.0
+          ],
+          "chrf_before": 52.8,
+          "chrf_after": 67.7,
+          "chrf_gain": 15.0
+        },
+        "culture": {
+          "n_paired": 3,
+          "n_paired_chrf": 0,
+          "before_pct": 100.0,
+          "after_pct": 88.9,
+          "gain_points": -11.1,
+          "gain_relative_pct": -11.1,
+          "gain_points_ci95": [
+            -33.3,
+            0.0
+          ]
+        },
+        "writing": {
+          "n_paired": 2,
+          "n_paired_chrf": 1,
+          "before_pct": 66.7,
+          "after_pct": 100.0,
+          "gain_points": 33.3,
+          "gain_relative_pct": 50.0,
+          "gain_points_ci95": [
+            0.0,
+            66.7
+          ],
+          "chrf_before": 100.0,
+          "chrf_after": 100.0,
+          "chrf_gain": 0.0
+        },
+        "conversation": {
+          "n_paired": 4,
+          "n_paired_chrf": 0,
+          "before_pct": 41.7,
+          "after_pct": 33.3,
+          "gain_points": -8.3,
+          "gain_relative_pct": -20.0,
+          "gain_points_ci95": [
+            -50.0,
+            41.7
+          ]
+        }
+      }
+    },
+    {
       "variant": "gemini-flash-lite-fewshot",
       "variant_label": "Gemini Flash-Lite + few-shot",
       "variant_type": "fewshot",
@@ -3452,8 +3968,8 @@
     }
   ],
   "metric_agreement": {
-    "n": 531,
-    "spearman_human_chrf": 0.723
+    "n": 576,
+    "spearman_human_chrf": 0.72
   },
   "examples": [],
   "items": [
@@ -3475,6 +3991,12 @@
           "chrf": 55.5
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "**Yeswa lqahwa.** \n\n(Nefren ad d-nini : *Yeswa lqahwa akked yemma-s.*)",
+          "score": 3,
+          "chrf": 66.72
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Deg teswizt-agi (lweqt-agi) i d-tessawled, yeswa **lqahwa akked yemma-s** (yecča-tt neɣ yesva-tt yid-s). \n\nS teqbaylit: **Yeswa lqahwa d yemma-s** (he did coffee with his mother / he had coffee together with his mother).",
           "score": 1,
@@ -3491,6 +4013,12 @@
           "output": "Deg tesfift (le texte) i d-yefkan, awal **« sbah »** (neɣ *ssebah*) yekka-d seg tefṛansist « le matin » (asebhia). Ma d **« yemma »** yebɣa-d ad yini « (akked) yemma-s » neɣ « (akked) yemma ». \n\nMa ttaruḍ-d ɣef tzemt-a (la phrase) : \n> *« Ass-agi kreɣ-d sbah zik, swiɣ lqahwa akked yemma. »*\n\nAnamek-is s tefransist : \n> **« Aujourd'hui je me suis levé tôt le matin, j'ai bu le café avec ma mère. »**\n\nDɣa deg tefyirt-a, **yemma** ur d-tecli εla « smah » (le pardon), wa d **yemma-k / yemma** (ma mère / la mère) i d-yuckan akked win i d-yettmeslayen, mačči d yemma-s (sa mère à lui/elle).",
           "score": 0,
           "chrf": 13.15
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "**Yeswa lqahwa** akked yemma-s.",
+          "score": 3,
+          "chrf": 71.38
         },
         {
           "model_key": "ministral3-8b",
@@ -3578,6 +4106,12 @@
           "chrf": 53.16
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Baba-s **d aselmad** deg uɣerbaz.",
+          "score": 3,
+          "chrf": 63.55
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Baba-s yexdem d **aselmad** deg uɣerbaz.",
           "score": 3,
@@ -3594,6 +4128,12 @@
           "output": "D aselmad deg uɣerbaz (Il est enseignant dans une école).",
           "score": 3,
           "chrf": 53.98
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Baba-s **d aselmad deg uɣerbaz**.",
+          "score": 3,
+          "chrf": 72.65
         },
         {
           "model_key": "ministral3-8b",
@@ -3681,6 +4221,12 @@
           "chrf": 49.62
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Yelxes wurgaz-nni **axaṭer yekkat ugfur** (ageffur) mi d-yuɣal seg ssuq.",
+          "score": 3,
+          "chrf": 46.86
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Yelxes wurgaz akhater **yekkat ugfur** (akken i d-tenniḍ deg tefyirt: \"yuɣal-d illexs akk akhater yekkat ugfur\").",
           "score": 3,
@@ -3697,6 +4243,12 @@
           "output": "Lebleɛ (lebsel) n wurgaz yelxes acku yekkat ugfur (\"lebsel a y-ixedmen yelxes acku yekkat ugfur\" / Il a plu, ce qui a fait pourrir ses oignons). \n\nD usentif (la raison) i d-yettunefkan deg tefyirt: **akhater yekkat ugfur** (parce qu'il a plu).",
           "score": 0,
           "chrf": 28.75
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Yelxes wurgaz **axater yekkat ugfur** (imi d-yewwet ugeffur).",
+          "score": 3,
+          "chrf": 59.18
         },
         {
           "model_key": "ministral3-8b",
@@ -3782,6 +4334,12 @@
           "chrf": null
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Azul! Ur lḥiɣ s aniwer, da kan i lliɣ i wakken ad k-awseɣ. \n\n*(Bonjour ! Je ne vais nulle part, je suis juste là pour t'aider. Comment puis-je t'aider aujourd'hui ?)*",
+          "score": 2,
+          "chrf": null
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Azul! Labas الحمد لله، ɣer-i yelha. \n\nKeč/Kemini amek telliḍ? Amek ara k-iɛawneɣ ass-a? (Keč for male, Kemini for female).",
           "score": 1,
@@ -3797,6 +4355,12 @@
           "model_key": "gemini-flash-lite-rag",
           "output": "Voici une traduction et une explication de cette phrase kabyle :\n\n* **Kabyle :** *Azul, aniwer akka telḥuḍ ?*\n* **Français :** Salut, où vas-tu comme ça ? / Salut, où te balades-tu ainsi ?\n\n**Détail des mots :**\n* *Azul* : Salut / Bonjour\n* *Aniwer* (ou *anwi* / *anda*) : Où\n* *akka* : comme ça / ainsi\n* *telḥuḍ* : tu marches / tu te déplaces (du verbe *aliḥ* / *leḥḥu*)",
           "score": 0,
+          "chrf": null
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Azul! Ur la ttedduɣ ɣer waniwer, da kan i lliɣ ad k-ɛawneɣ (neɣ ad kem-ɛawneɣ) u ad d-rreɣ ɣef yesteqsiyen-ik. \n\nAmek i telliḍ? D acu i tebɣiḍ ad teẓreḍ neɣ ad t-nxedmeḍ ass-a?",
+          "score": 2,
           "chrf": null
         },
         {
@@ -3883,6 +4447,12 @@
           "chrf": null
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "En français, cela se traduit par :\n\n« **Dis-moi s'il te plaît le nom de ce médicament.** » \n\n*(Note : pour être parfaitement exact en kabyle, on dit plutôt « isem **n** dwa-nni » au lieu de « isem-is »).*",
+          "score": 0,
+          "chrf": null
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Ma ulac aɣilif, ɣef wacu n idthan (dwa) i d-tessawaleḍ? \n\nM'ara d-tiniḍ isem-is neɣ talɣa-ines (amek i t-id-tettuɣaleḍ, neɣ i wacu i t-tseqdaceḍ), ad ak-d-iniɣ isem-is s tmaziɣt, neɣ s tɛrabt / tafransist ma yella ɣur-i.",
           "score": 1,
@@ -3897,6 +4467,12 @@
         {
           "model_key": "gemini-flash-lite-rag",
           "output": "D acu i d isem n dwa-nni? \n\n*(Remarque : La phrase kabyle \"Iniyid deg laɛnaya-k isem-is dwa-nni ?\" est un peu maladroite car elle mélange une demande polie \"dis-moi s'il te plaît\" et \"quel est le nom de ce remède ?\". La formulation la plus naturelle pour dire \"Quel est le nom de ce remède, s'il te plaît ?\" serait : **« Ini-iyi-d, ma ulac aɣbel, isem n dwa-nni? »** ou **« D acu i d isem n dwa-nni deg laɛnaya-k? »**)*",
+          "score": 0,
+          "chrf": null
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Voici la traduction de cette phrase en français :\n\n**« Dis-moi, s'il te plaît, quel est le nom de ce médicament ? »** \n*(ou « Dis-moi, je t'en prie, le nom de ce médicament-là ? »)*\n\n---\n**Détail des mots :**\n* **Ini-yid** = Dis-moi\n* **Deg laɛnaya-k** = S'il te plaît / Je t'en prie (en t'adressant à un homme)\n* **Isem-is** = Son nom\n* **Dwa-nni** = Ce médicament-là",
           "score": 0,
           "chrf": null
         },
@@ -3984,6 +4560,12 @@
           "chrf": null
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "**Macahu!** (i yellan d tazwart n temcuha deg leqbayel).\n\nYewwet n wass, tella yiwet n tyaziḍt teqqim sennig n ufeṣnaq (neɣ ɣef tjeṛṛat). Yusa-d wuccen s ddaw-as, yebɣa ad tt-yečč, maca yufa-tt d aɛlayi ur tsawad ara afus-is.\n\nYenna-as wuccen s taḥila:\n— « Ṣub-d a tyaziḍt! Yak tesliḍ s lexbaṛ amaynut? Agellid n tẓegwa yerra-d lqanun d amaynut: akk iɣersiwen d imeddukal tura, ur yelli uuccen i yettaɣen tyaziḍt, ur yelli uweɣni i yettaɣen awtul. D lhena i gellan! Ṣub-d ad nmud afus, ad nqeṣṣer! »\n\nTyaziḍt-nni tḥeṛṛeṣ, tessent wallaɣ-is. Tmuqel s elbeɛd, tzuzzer iẓri-s, tenna-as:\n— « D ayen igerrzen aṭas! Ah, daymi iwalaɣ sin n yiḍan n ṣṣeyyad i d-yettazzalen s ya s tazzla tameqrant! »\n\nMi yesla wuccen s w-awal \"iḍan\", yebda yettaggad, yewweḍ ad yerwel.\nTenneṭq-d tyaziḍt s taḍsa:\n— « Acuɣeṛ i trewleḍ a dda uccen? Yak tenneḍ-iyi-d belli akk iɣersiwen uɣalen d imeddukal deg lhena? »\n\nYerra-as-d wuccen d azerbaz, leḥṣun yejbed irewlen:\n— « Īḥih, d tidet... maca ugadeɣ iḍan-nni ur slin ara s lexbaṛ-a amaynut! »\n\n***\n\n*Tamacahut-inu am asaru, ad tt-id-y",
+          "score": 2,
+          "chrf": null
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Akka tella yiwet n tmacahutt tamecṭuḥt:\n\nYiwen n wass, yiwen n wuccen (aɣydi) yekcem s yiwen n wurtan n lfakya. Iwala ibawen d iẓidanen, yuɣal yesla i yiwen n uqjun (aydi) yettasen s lemɣawla. \n\nUccen yugi ansi ara yerwel, imi ula d abrid yewwi-t uqjun. ɣtas ad yeddel iman-is s yibawen akken ur t-id-yufi ara. \n\nYenna-yas uqjun: \"Anwa i yellan da?\"\nYerra-yas wuccen s taɣect n yiwen n wergaz: \"Ur illi ula yiwen, d lebɣi n Sidi Rebbi kan!\"\n\nAqjun mi yesla i taɣect-nni, yugi ad yessekyed, yuzzel yekka-d abrid-niḍen. Uccen effeɣ-d seg wurtan, yeffeɣ seg wuggugen, yeqqar: *\"Tura walaɣ belli awal yessufuɣ-d seg lxiq!\"*\n\n---\nTzemreḍ ad iyi-d-iniḍ ma tebɣiḍ tamacahutt ɣef kra n uɣersiw niḍen!",
           "score": 2,
@@ -3998,6 +4580,12 @@
         {
           "model_key": "gemini-flash-lite-rag",
           "output": "Dagi tella yiwet n tmacahut tamecṭuḥt (Voici un petit conte) :\n\nYiwen n wass, yiwen n uydi yufa yiwen n wuxulis (os) deg ubrid. Iɛawed yessaweḍ-it s axxam-is akken ad t-yečč s talwit. Mi geffeɣ ad yerr aman, yusa-d yiwen n wuccen, yebɣa ad awi aɣrum-nni neɣ ulac wi t-yeččin.\n\nAkken i d-yuɣal uydi, yufa-t-id wuccen... \n\n(M'ɛeddan wussan, ulac ayen i d-yettwaḥkan seg-sen!)\n\n---\n*Si tu veux que je te raconte une autre histoire, dis-le-moi ! (Ḥku-iyi-d taqsiṭ-nni)*",
+          "score": 2,
+          "chrf": null
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "A-tt-ah tmacahutt tamecṭuḥt n **« Izem d uɣeṛda »** :\n\n---\n\n**Machaho! (Tellemuho!)**\n\nYiwen wass, izem ameqqran yella yiṭṭes ddaw n ttejṛa. Iɛedda-d s zdat-is yiwen uɣeṛda amecṭuḥ, issaki-t-id. \n\nIzem iṭṭef aɣeṛda-nni s tfettust-is, yebɣa ad t-yečč. Aɣeṛda-nni iḥellel-it, yenna-yas: \n— *« Suref-iyi a agellid! Ma tesserḥeḍ-iyi-d ass-a, ahat ad k-iɛawneɣ ass nniḍen. »*\n\nIzem iḍsa, yenna-yas: \n— *« D kecč a tamecṭuḥt ad iyi-tiɛawneḍ?! »* \nLamaɛna iḥenney-as, iserreḥ-as ad iruḥ.\n\nSeld kra n nussan, izem-nni yeḥseṛ deg uṣeṭṭa n uṣeyyad. Yebda asḥerḥer d usweccweč, ur yezmir ara ad iḥrek. Isla-yas uɣeṛda-nni, yewweḍ-d s tazzla, yebda iqerred deg uṣeṭṭa-nni s tuɣmas-is almi t-id-iqqers. Izem-nni ittserriḥ-d.\n\nYenna-yas uɣeṛda: \n— *« Twalaḍ? Ula d amecṭuḥ yezmer ad iɛawen ameqqran. »*\n\n---\n\n### Traduction en français :\n\n**Titre : Le Lion et la Souris**\n\nUn jour, un grand lion dormait sous un arbre. Une petite souris passa devant lui et",
           "score": 2,
           "chrf": null
         },
@@ -4085,6 +4673,12 @@
           "chrf": null
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Voici la traduction en français :\n\n« **Où aimes-tu aller en été ?** » \n*(ou « Où penses-tu aller en été ? »)*",
+          "score": 0,
+          "chrf": null
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Anida tḥemmleḍ ad tṛuḥeḍ deg unebdu ? (Where do you like to go in the summer?)\n\nTzemreḍ ad d-terreḍ s yiwet n tewsit seg tewsatin-a:\n\n* **S lebḥer:** \"Deg unebdu, ḥemmleḥ ad ṛuḥeɣ s lebḥer (lebḥira).\" (In the summer, I like to go to the beach.)\n* **S idurar:** \"Deg unebdu, ḥemmleḥ ad ṛuḥeɣ s idurar.\" (In the summer, I like to go to the mountains.)\n* **S tmurt (aɣrfu):** \"Deg unebdu, ḥemmleḥ ad ṛuḥeɣ s tmurt.\" (In the summer, I like to go to the countryside/home village.)\n* **S berra n tmurt:** \"Deg unebdu, ḥemmleḥ ad ṛuḥeɣ s tmurt nniḍen.\" (In the summer, I like to travel abroad.)\n\nKečč / Keččini, anida i tḥemmleḍ ad tṛuḥeḍ?",
           "score": 2,
@@ -4099,6 +4693,12 @@
         {
           "model_key": "gemini-flash-lite-rag",
           "output": "Voici la traduction de cette phrase en français :\n\n**Où aimerais-tu aller en été ?**",
+          "score": 0,
+          "chrf": null
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Voici la traduction de la phrase en français :\n\n**« Où aimes-tu aller en été ? »** \n*(ou : « Où préfères-tu aller en été ? »)*",
           "score": 0,
           "chrf": null
         },
@@ -4188,6 +4788,12 @@
           "chrf": null
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Le proverbe kabyle **« Yiwen n ufus ur yettseffiq-ara »** (ou *Yiwen ufus ur yettseṛfiq*) se traduit littéralement par : **« Une seule main ne peut pas applaudir. »**\n\nVoici l'explication détaillée de son sens :\n\n### 1. Le sens figuré : L'importance de la solidarité\nDe même qu'il est physiquement impossible d'applaudir ou de faire du bruit avec une seule main, **un individu seul ne peut pas accomplir grand-chose sans l'aide des autres**. \n\nCe proverbe souligne que :\n* **L'union fait la force :** Les grandes réalisations, la paix ou le succès nécessitent l'effort combiné de plusieurs personnes.\n* **L'entraide est indispensable :** Face aux épreuves de la vie ou aux grands travaux, l'isolement mène à l'impuissance.\n* **Le dialogue nécessite deux parties :** Dans une négociation ou une relation, on ne peut pas résoudre un problème ou créer de l'harmonie tout seul.\n\n### 2. Le contexte culturel kabyle\nDans la société traditionnelle kabyle, ce proverbe illustre des valeurs fondamentales :\n* **La *Tiwizi* :** C'est la tradition ancestrale de l'entraide communautaire (pour la moisson, la récolte des olives, la construction d'une maison, etc.).\n* **La *Tajmaɛt* (l'assemblée du village) :** La gestion de la cité repose sur le collectif et le consensus, jamais sur une seule personne.\n\n### Équivalents en français\n* *« L'union fait la force. »*\n* *« Un seul homme ne peut tout faire. »*\n* *« On ne peut applaudir d'une seule main. »* (expression également utilisée en français).",
+          "score": 3,
+          "chrf": null
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Ce proverbe kabyle **« Yiwen n ufus ur yettseffiq-ara »** se traduit littéralement en français par : **« Une seule main ne peut pas applaudir »** (ou plus exactement : *« Une seule main ne fait pas de bruit en frappant »*).\n\nVoici l'explication de son sens et de sa portée :\n\n### 1. Le sens littéral et physique\nPour applaudir, on a besoin de deux mains. Si l'on essaie de le faire avec une seule main, aucun son ne sort. \n\n### 2. Le sens figuré et moral\nCe proverbe est une métaphore qui met en avant **l'importance de la solidarité, de la coopération et du travail d'équipe**. \n\nIl signifie que :\n* **L'homme est un être social :** Personne ne peut réussir seul dans la vie. Pour accomplir de grandes choses, surmonter des épreuves ou résoudre des problèmes complexes, on a besoin de l'aide des autres.\n* **L'union fait la force :** Le proverbe rappelle que l'isolement mène à l'impuissance. C'est en unissant nos forces (nos deux mains) que l'on peut agir efficacement et se faire entendre (« faire du bruit »).\n\n### En résumé\nCe proverbe kabyle équivaut à l'expression française : **« Seul on va plus vite, ensemble on va plus loin »** ou encore **« Une seule main ne lave pas le visage »** (un autre proverbe africain aux \n\nIl est souvent utilisé pour inciter à l'entraide au sein de la famille, du village ou de la société.",
           "score": 3,
@@ -4202,6 +4808,12 @@
         {
           "model_key": "gemini-flash-lite-rag",
           "output": "Le proverbe kabyle **« Yiwen n ufus ur yettseffiq-ara »** se traduit littéralement par : *« Une seule main ne peut pas applaudir »*. \n\nVoici l'explication de son sens :\n\n* **Le sens propre :** Pour applaudir, faire du bruit et exprimer la joie ou l'approbation, on a impérativement besoin de deux mains. Une seule main ne produit aucun son.\n* **Le sens figuré (moral) :** Ce proverbe est une ode à la **solidarité**, à la **coopération** et au **travail d'équipe**. Il signifie qu'aucun individu ne peut réussir de grandes choses, relever des défis complexes ou faire face aux difficultés de la vie tout seul. L'entraide et l'union des forces sont indispensables pour accomplir un travail efficace.",
+          "score": 3,
+          "chrf": null
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Le proverbe kabyle **« Yiwen n ufus ur yettseffiq-ara »** se traduit littéralement par :  \n**« Une seule main ne peut pas applaudir »** *(ou « Seule, une main n'applaudit pas »)*.\n\n### Sens et explication :\n\nCe proverbe repose sur une image très concrète : tout comme il est physiquement impossible d'applaudir avec une seule main, **un individu seul ne peut pas tout accomplir sans l'aide des autres**.\n\nIl véhicule plusieurs valeurs essentielles :\n\n1. **La solidarité et l'entraide :** On a toujours besoin du soutien de sa communauté, de sa famille ou de ses proches pour mener à bien un projet ou surmonter une difficulté.\n2. **Le travail d'équipe et la coopération :** Les grandes réalisations nécessitent l'union des forces et des compétences de plusieurs personnes.\n3. **Les limites de l'individualisme :** L'homme est un être social ; l'isolement mène à l'incompétence ou à l'impuissance face à certains obstacles.\n\n### Contexte culturel :\nDans la culture kabyle, ce proverbe illustre parfaitement des valeurs traditionnelles comme la **Tiwizi** (l'entraide communautaire bénévolat pour les récoltes, la construction de maisons, etc.).\n\n### Équivalents en français :\n* « L'union fait la force. »\n* « Seul on va plus vite, ensemble on va plus loin. »",
           "score": 3,
           "chrf": null
         },
@@ -4291,6 +4903,12 @@
           "chrf": null
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "**Yennayer** d ass amezwaru n useggas amaynut amaziɣ (neɣ aseggas afellaḥ). Yettili-d deg wass n 12 di yennayer n tfada tagrigurit. Deg yidles amaziɣ d uqbayli, ass-a yemmal-d tazwara n useggas n tfelaḥt d uneqlab n semmuddan di tgejdit n tagrest.\n\nDi Tmurt n Yiqbayliyen, Yennayer d tafaska tameqqrant i d-isewwayen lfeṛḥ d lbaraka, w'a d-yessentayen s waṭas n yinsayen (coutumes):\n\n**1. Imensi n Yennayer:**\nDeg yiḍ n 11 ɣer 12 di yennayer, tiwaculin meṛṛa nseɣment s ussebbeɣ n « Imensi n Yennayer ». Ssebbayen seksu s uyaziḍ (aṭas n tikkal d ayaziḍ n dduḥ, d asfel i ussegas ad yili d ameggaz) akked lxeḍra tanesbaɣurt (sebaɛ n ssnef n lxeḍra) akken ad yili useggas d abaɣur d uṛbiḥ.\n\n**2. Ansayen n uxxam:**\n* **Abeddel n yinekfayen (yinyen) n ukanun:** Zik, tilawin beddlent iẓra n ukanun s yixfawen yezdigen, akken ad ssirdent axxam i useggas amaynut ad yili d azedgan u d amaynut.\n* **Aseṭṭel n umenzu:** Seṭṭlen (qeṭṭlen) acebbub n uqcici i d-ilulen deg useggas-nni s tkeffest n teqbaylit, akken ad yali s lxeyr d tezmert.\n* **Aseddeq:** Fkan ammur n lqut i yigellilen neɣ i yibeṛṛaniyen akken ad tdum lbaraka deg uxxam.\n\n**3. Isfugluten di tudrin d tɣiwan",
+          "score": 3,
+          "chrf": null
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Yennayer, d yettwassen d Yennayer 2974 (neɣ 2975), d amezwaru n useggas amaziɣ. D ass amezwaru n waggur amezwaru n useggas aɣelnaw amaziɣ. Yennayer d azamul n tdukli, n lɣella, d tmurt (la terre). Yettwasefti yal aseggas ass n 12 Yennayer.\n\n**Amek i t-ssugun (i t-cettilin) deg Leqbayel:**\n\nDeg Leqbayel, tameɣra n Yennayer tella s wazal-isameqran. Tessawal ɣef usirem n useggas i d-iteddun ad yili d win n lɣella, n lhreḍ, d talwit. Ahat deg tɣawsiwin tiεlayanen i d-yellan deg wass-a:\n\n1. **Imensi n Yennayer (Imensi n Useggas):** \n   Deg tmeddit n 11 ɣuct (neɣ 11 Yennayer), twaculin ttnadin ad sswent imensi yesɛan azal. Yettuɣal d lwaḥd, anda i ttilin yemdanen lqewt deg lɣella.\n\n2. **Seksu s lqueda (neɣ dɣa d lbuṭa / aksum n tɣat):**\n   Tameɣra-agi tettwasnen s ussefti n seksu. Deg wazaɣen yemgaraden n tmurt n Leqbayel, ttwaseftin seksu s lqueda (poulet de ferme) neɣ s uksum n tɣat (viande de chèvre), ladɣa mi ara yili lhal yefka lɣella.\n\n3. **Asiggez n uqcic (Amezwaru n tlalit):**\n   Deg kra n tamiwin, ass-a yettwasemma daɣen i usiggez (coupe de cheveux) amezwaru i uqcic ameẓyan mi ara d-yawweḍ aseggas-is amezwaru, akken ad as-d-yawi aseggas amcum (heureux).\n\n4. **Tira d ccna:**\n   Tudrin tteddunt s tmeɣriwin, ccna, d wuraren iqburen. Lɣaci ttnadin ad rren tajmilt i tutlayt d yilugan imaziɣen.\n\nAss-a, Yennayer yuɣal d ass aɣelnaw aɣlaf deg Lezzayer (seg 2018), d ayen i d-yessufɣen tameɣra-agi s wazal-is anaddal d unhib. \n\n**Assegu ameggaz !**",
           "score": 2,
@@ -4306,6 +4924,12 @@
           "model_key": "gemini-flash-lite-rag",
           "output": "Yennayer d amezwaru n useggas amaziɣ (aseggas amaynut). Yettwasfugel yal aseggas ass n 1 জানুয়ারি (1 Yennayer) deg umazray, maca ass-a deg Tefrikt n Ugafa, ladɣa deg Leqbayel, yettwasfugel s waṭas deg 12 Yennayer.\n\nDeg Tkabburt (Leqbayel), Yennayer yettwasfugel s tɣaltin timuqranin:\n- Ttɛebbiwen-d imdanen imkli n Yennayer (am Wass n Yennayer neɣ Imensi n Yennayer) iwakken ad yili useggas-nni d aɣezzfan, yesɛan lɣella d lxiṛ.\n- Skanen-d tiɣawsiwin n tmeddurt d yidles amaziɣ.\n- Ɛessun-t s wurar, s tmedyazt, d tmuɣliwin.",
           "score": 2,
+          "chrf": null
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "**D aču i d Yennayer ?**\n\nYennayer d ass amezwaru n useggas amaynut amazeɣ (i d-yettasen deg 12 yennayer deg uwitay agregori). D tafaska tanagant i d-yessazayen assay (leqder) i nesɛa akked wakal, tfellaḥt, d tgemmi (lḥeṛma) n yidles amazeɣ. D tagnit i deg d-itettu umdan azemz n zik, yexs ad d-yerr lbaraka d usirem i useggas i d-ikeccmen.\n\n---\n\n**Amek i t-sfugulen deg Tamurt n Leqbayel ?**\n\nDeg Tamurt n Leqbayel, Yennayer d ass n lfeṛḥ d tiddukla n twacult. Sfugulen-t s waṭas n wansayen d tmyurin i d-ǧǧan imarawen-nneɣ:\n\n1. **Imensi n Yennayer :** \n   Deg yiḍ n Yennayer, ttgen imensi d ameqqran deg uxxam. Ssewwen **seksu** (sumata s 7 n yisufar/yibawen) s ukeccuḍ n teyaziḍt neɣ uyaziḍ. Ansay yeqqar ad zlen ayaziḍ i yal argaz, d teyaziḍt i yal tameṭṭut deg uxxam, i wakken ad textil lbaraka.\n\n2. **Asfel :** \n   Azel n uyaziḍ d asfel (sacrifce) i wakken ad kksen yir leḥwayeǧ, waṭṭan d usirem ad yili useggas d amell",
+          "score": 3,
           "chrf": null
         },
         {
@@ -4394,6 +5018,12 @@
           "chrf": null
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Deg tuddar tiqbayliyin, **tiwizi** d tansayt taqdimt n tallalt (aɛawan) d umɛawed gar yimezdaɣ deg leqdicat n lǧemaɛa neɣ n yimdanen gar-asen. D axeddim i xeddmen s yifassen, baṭel (ur yelli ara s yidrimen), s wul yeṣfan d tegmat.\n\nTiwizi teţţili-d deg waṭas n lḥalat, am:\n\n*   **Tukksa n uzemmur d lḥeṣad:** i wakken ad fken afus n tallalt i twaculin neɣ i win ur nezmir ara ad yexdem weḥd-s.\n*   **Lebni n yixxamen:** mi ara yebɣu walebbaḍ ad yebnu axxam neɣ ad isqef, taddart teţnefka-d ad s-tfeckel.\n*   **Aseggem d usizdeg n taddart:** am uṣlah n yiberdan, usizdeg n tala, n tregwa n waman d temḍelt (lḥara n yimeqranen).\n*   **Aɛawan n yigellilen d tuǧǧal:** i wakken ur ţţaǧǧan ara win yellan deg tegnit waɛren weḥd-s.\n\nS umata, d **Tajmaɛt n taddart** i d-iţxeyyiren ass d wawen i wakken ad d-teglu s yimezdaɣ ad xedmen tiwizi. Tiwizi d azamul n tdukli, n lḥeṛma d tegmat deg tmetti taqbaylit.",
+          "score": 2,
+          "chrf": null
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "**Tiwizi** d yiwen n wazal ameqqran n tdukli d tallelt gar imezdaɣ n tudrin n tmurt n Leqbayel. D taɣara n leqder, n tdukli d wamek ttɛawanen yemdanen gar-asen war ma fkan-d idrimen neɣ aɣbalu n tedrimt. \n\nDeg tiwizi, imezdaɣ n taddart ttnadin ad fken afus n tallelt i yiwen n urgaz neɣ i twaculin i gḥwajen tiwizi, am deg:\n- **Ugani n uxxam** (tizi n lebni).\n- **Tmekksa n uzemmur** neɣ **amejjay n lɣella** (lweqt n lǧemɛ n uzemmur neɣ n leɛmer).\n- **Asifeḍ n waman** neɣ **asbeddi n tfuliyin** i taddart (leǧwameɛ, tagenzut, aBRID).\n- **Tudert n yal ass** ideg yettili umdan yeɛya neɣ yesɛa lxilaf deg ttrebga n twacult-is.\n\nTiwizi tella deg-s daɣen tmentilt n tmetti (cohésion sociale) d tdukli n taddart. Teqqen imezdaɣ s yiwen n leqdic ara d-yawinlfayda i taddart akk. Amek ara nini, tiwizi d leqdic n wid yellan d atmaten d tdukkli n wulawen.",
           "score": 2,
@@ -4409,6 +5039,12 @@
           "model_key": "gemini-flash-lite-rag",
           "output": "Tiwizi d abrid n tallelt gar yimezdaɣ n udar (neɣ n taddart), anda i d-tettili tdukli akken ad xedmen kra n leqdic neɣ n uxdam ameqqran (am tukksa n lɣella, lebni, neɣ tizizelt n taddart) s wudem amaddud neɣ war tiɣmi, i lfayda n yiwen neɣ n taddart akk.",
           "score": 3,
+          "chrf": null
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "**Tiwizi** d ansay aqdim n tallelt (afus n tallelt) d teddukli deg tmetti taqbaylit. \n\nDeg twizi, imezdaɣ n taddart d-jemmɛen meṛṛa i wakken ad xedmen axeddim baṭel (bla ad yili usutey n yidrimen) i wakken ad ɣawnen yiwen n umezdaɣ (am win yebnan axxam) neɣ i lfaida n taddart meṛṛa.\n\nAmedya n leqdicat i deg tettili twizi:\n* **Tukksi n uzemmur** akked usebni n yixxamen.\n* **Aseggem n yiberdan**, n targa n waman neɣ n Tajmaɛt n taddart.\n* **Aḥecced n yirden** akked leqdicat n tfellaḥt.\n\nTiwizi tessejhad tagmat, lḥerma d teddukli gar yimezdaɣ n taddart. D lsas n wayen yebnan ɣef tallelt d twizi deg tmetti taqbaylit.",
+          "score": 2,
           "chrf": null
         },
         {
@@ -4497,6 +5133,12 @@
           "chrf": 65.63
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Azul, amek i telliḍ?",
+          "score": 3,
+          "chrf": 57.33
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Azul, amek tella?",
           "score": 1,
@@ -4513,6 +5155,12 @@
           "output": "Azul, amek i tetteddu tukkist-ik?",
           "score": 0,
           "chrf": 50.49
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Azul, amek i tellaḍ?",
+          "score": 2,
+          "chrf": 52.71
         },
         {
           "model_key": "ministral3-8b",
@@ -4600,6 +5248,12 @@
           "chrf": 31.43
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Ttesseɣ lqahwa yal taṣebḥit.",
+          "score": 3,
+          "chrf": 35.27
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Sseɣ lqahwa yal azekka.",
           "score": 1,
@@ -4616,6 +5270,12 @@
           "output": "Ssweɣ lqahwa yal tasebḥit.",
           "score": 3,
           "chrf": 28.54
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Tteseɣ lqahwa yal ṣṣbeḥ.",
+          "score": 3,
+          "chrf": 32.47
         },
         {
           "model_key": "ministral3-8b",
@@ -4703,6 +5363,12 @@
           "chrf": 30.41
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Mdel tawwurt, ttxil-k.",
+          "score": 3,
+          "chrf": 32.8
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Mdel tawwurt, amkan.",
           "score": 1,
@@ -4719,6 +5385,12 @@
           "output": "Sekkeṛ tawwurt, ma ulac aɣilif.",
           "score": 3,
           "chrf": 31.03
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Sekkeṛ tawwurt, di lḥawel-ik.",
+          "score": 2,
+          "chrf": 31.55
         },
         {
           "model_key": "ministral3-8b",
@@ -4806,6 +5478,12 @@
           "chrf": 64.59
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Ad nruḥ ɣer ssuq azekka.",
+          "score": 3,
+          "chrf": 41.92
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Ad nṛuḥ ɣer ssuq azekka.",
           "score": 3,
@@ -4822,6 +5500,12 @@
           "output": "Neddu ɣer ssuq azekka.",
           "score": 2,
           "chrf": 40.63
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Ad nruḥ ɣer ssuq azekka.",
+          "score": 3,
+          "chrf": 41.92
         },
         {
           "model_key": "ministral3-8b",
@@ -4909,6 +5593,12 @@
           "chrf": 66.13
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Anda-tt tsarut n uxxam?",
+          "score": 3,
+          "chrf": 32.87
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Anida i yella tasarut n uxxam ?",
           "score": 2,
@@ -4923,6 +5613,12 @@
         {
           "model_key": "gemini-flash-lite-rag",
           "output": "Anda-tt tsarut n uxxam ?",
+          "score": 3,
+          "chrf": 32.87
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Anda-tt tsarut n uxxam?",
           "score": 3,
           "chrf": 32.87
         },
@@ -5012,6 +5708,12 @@
           "chrf": 31.86
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Setti tesfurruy seksu.",
+          "score": 3,
+          "chrf": 21.18
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Yemma-s n yemma tessexla seksu.",
           "score": 1,
@@ -5025,6 +5727,12 @@
         },
         {
           "model_key": "gemini-flash-lite-rag",
+          "output": "Setti tettheyyi-d seksu.",
+          "score": 3,
+          "chrf": 36.18
+        },
+        {
+          "model_key": "gemini-flash-rag",
           "output": "Setti tettheyyi-d seksu.",
           "score": 3,
           "chrf": 36.18
@@ -5115,6 +5823,12 @@
           "chrf": 76.44
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Gma ameqqran ixeddem deg Fransa.",
+          "score": 3,
+          "chrf": 98.4
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Gma ameqqran yettخدم di Fransa.",
           "score": 1,
@@ -5128,6 +5842,12 @@
         },
         {
           "model_key": "gemini-flash-lite-rag",
+          "output": "Gma ameqqran ixeddem deg Fransa.",
+          "score": 3,
+          "chrf": 98.4
+        },
+        {
+          "model_key": "gemini-flash-rag",
           "output": "Gma ameqqran ixeddem deg Fransa.",
           "score": 3,
           "chrf": 98.4
@@ -5218,6 +5938,12 @@
           "chrf": 29.65
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Arrac tturaren zdat uxxam.",
+          "score": 3,
+          "chrf": 29.65
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Iraten uraren zdat uxxam.",
           "score": 1,
@@ -5231,6 +5957,12 @@
         },
         {
           "model_key": "gemini-flash-lite-rag",
+          "output": "Arrac tturaren zdat uxxam.",
+          "score": 3,
+          "chrf": 29.65
+        },
+        {
+          "model_key": "gemini-flash-rag",
           "output": "Arrac tturaren zdat uxxam.",
           "score": 3,
           "chrf": 29.65
@@ -5321,6 +6053,12 @@
           "chrf": 31.56
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Baba itnekkar qbel ad d-yecreq yiṭij.",
+          "score": 2,
+          "chrf": 28.52
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Baba yettakker-d uqbel tafat n yiṭij.",
           "score": 2,
@@ -5337,6 +6075,12 @@
           "output": "Baba yettenkar-d uqbel ad icerq yiṭij.",
           "score": 3,
           "chrf": 36.05
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Baba yettenkar-d uqbel yiṭij.",
+          "score": 3,
+          "chrf": 26.92
         },
         {
           "model_key": "ministral3-8b",
@@ -5424,6 +6168,12 @@
           "chrf": 23.78
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Yekkat udfel ɣef udrar.",
+          "score": 3,
+          "chrf": 56.71
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Tella adfel ɣef adrar.",
           "score": 1,
@@ -5440,6 +6190,12 @@
           "output": "Adfel yekkat deg udrar.",
           "score": 3,
           "chrf": 33.66
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Yekkat udfel deg udrar.",
+          "score": 3,
+          "chrf": 76.01
         },
         {
           "model_key": "ministral3-8b",
@@ -5527,6 +6283,12 @@
           "chrf": 14.78
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Yettsuḍ waḍu mliḥ tameddit-a.",
+          "score": 2,
+          "chrf": 18.82
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Aḍu ihedder-d ǧǧehd deg yiḍ-a.",
           "score": 1,
@@ -5543,6 +6305,12 @@
           "output": "Aḍu yettzuffu-d s tezmert tameqqrant deg yiḍ-a.",
           "score": 3,
           "chrf": 15.05
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Yettsuḍ waḍu mliḥ tmeddit-a.",
+          "score": 2,
+          "chrf": 18.99
         },
         {
           "model_key": "ministral3-8b",
@@ -5630,6 +6398,12 @@
           "chrf": 43.51
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Tibexsisin wwent deg wɣuct.",
+          "score": 3,
+          "chrf": 27.84
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Lǧewzi d tislit deg furar.",
           "score": 0,
@@ -5646,6 +6420,12 @@
           "output": "Iniɣman nnuɣmin deg ɣuct.",
           "score": 3,
           "chrf": 27.92
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Iniɣman nnuɣmen deg ɣuct.",
+          "score": 3,
+          "chrf": 28.49
         },
         {
           "model_key": "ministral3-8b",
@@ -5733,6 +6513,12 @@
           "chrf": 23.79
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Yettagad ṭṭlam.",
+          "score": 3,
+          "chrf": 30.01
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Yezla seg ṭlam.",
           "score": 1,
@@ -5749,6 +6535,12 @@
           "output": "Yettagad ṭlam",
           "score": 3,
           "chrf": 48.48
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Yettagad ṭṭlam.",
+          "score": 3,
+          "chrf": 30.01
         },
         {
           "model_key": "ministral3-8b",
@@ -5836,6 +6628,12 @@
           "chrf": 60.97
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Teḥzen acku iruḥ umeddakel-is.",
+          "score": 3,
+          "chrf": 54.85
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Tḥezzen acku yerwa-d umeddakel-is.",
           "score": 0,
@@ -5852,6 +6650,12 @@
           "output": "Teḥzen acku yemmut umdakel-is.",
           "score": 1,
           "chrf": 46.82
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Teḥzen axaṭer iṛuḥ wamdakel-is.",
+          "score": 2,
+          "chrf": 38.67
         },
         {
           "model_key": "ministral3-8b",
@@ -5939,6 +6743,12 @@
           "chrf": 21.25
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Ur feqqaɛ ara.",
+          "score": 3,
+          "chrf": 39.21
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Ur tettuɣaled ara deg leɛqel-ik.",
           "score": 0,
@@ -5952,6 +6762,12 @@
         },
         {
           "model_key": "gemini-flash-lite-rag",
+          "output": "Ur feqqeε ara.",
+          "score": 3,
+          "chrf": 20.87
+        },
+        {
+          "model_key": "gemini-flash-rag",
           "output": "Ur feqqeε ara.",
           "score": 3,
           "chrf": 20.87
@@ -6042,6 +6858,12 @@
           "chrf": 68.76
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Ɣur-i tlata n watmaten d snat n yessetma.",
+          "score": 3,
+          "chrf": 39.2
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Sεni yetmawtni d snat khwatati.",
           "score": 0,
@@ -6058,6 +6880,12 @@
           "output": "Sɛiɣ tlata n lǧwary d snat n tiysetmatin.",
           "score": 1,
           "chrf": 38.19
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Sɛiɣ tlata n watmaten d snat n yisetmatin.",
+          "score": 3,
+          "chrf": 48.78
         },
         {
           "model_key": "ministral3-8b",
@@ -6145,6 +6973,12 @@
           "chrf": 42.73
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Taddart tesɛa miyya n yexxamen.",
+          "score": 3,
+          "chrf": 34.94
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Taddart tella s twat n tmezduɣin.",
           "score": 1,
@@ -6161,6 +6995,12 @@
           "output": "Taddart tella s twaculin... / Taddart tesɛa 100 n takatin.\n(Ou plus exactement selon les structures kabyles courantes : Taddart tesɛa 100 n takatin.)",
           "score": 0,
           "chrf": 14.18
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Deg taddart llan meyya n yixxamen.",
+          "score": 3,
+          "chrf": 42.99
         },
         {
           "model_key": "ministral3-8b",
@@ -6248,6 +7088,12 @@
           "chrf": 25.42
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Yesɛa simraw d semmus n yiseggasen.",
+          "score": 3,
+          "chrf": 26.76
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Ɛشر d mraw xemsa iseggasen-is.",
           "score": 0,
@@ -6264,6 +7110,12 @@
           "output": "Yesεa 25 iseggasen.",
           "score": 3,
           "chrf": 7.32
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Yesɛa xemseɛrin iseggasen.",
+          "score": 1,
+          "chrf": 13.47
         },
         {
           "model_key": "ministral3-8b",
@@ -6351,6 +7203,12 @@
           "chrf": 78.13
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Iḍelli, yewwet-d ugeffur ass kamel.",
+          "score": 3,
+          "chrf": 78.13
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Iḍelli, Issed g ass-aɣrif.",
           "score": 0,
@@ -6364,6 +7222,12 @@
         },
         {
           "model_key": "gemini-flash-lite-rag",
+          "output": "Iḍelli, tekkat lehwa ɣef teɣzi n wass.",
+          "score": 3,
+          "chrf": 27.02
+        },
+        {
+          "model_key": "gemini-flash-rag",
           "output": "Iḍelli, tekkat lehwa ɣef teɣzi n wass.",
           "score": 3,
           "chrf": 27.02
@@ -6454,6 +7318,12 @@
           "chrf": 35.88
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Ad d-uɣaleɣ dduṛt i d-iteddun.",
+          "score": 3,
+          "chrf": 35.88
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Ad uɣaleɣ di dduṛt i d-yettasen.",
           "score": 3,
@@ -6470,6 +7340,12 @@
           "output": "Ssmanat i d-iteddun ad d-uɣaleɣ.",
           "score": 2,
           "chrf": 42.14
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Ad d-uɣaleɣ dduṛt i d-iteddun.",
+          "score": 3,
+          "chrf": 35.88
         },
         {
           "model_key": "ministral3-8b",
@@ -6557,6 +7433,12 @@
           "chrf": 22.71
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Tagrest d taɣezfant deg yidurar.",
+          "score": 3,
+          "chrf": 22.96
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Tefsut tɣezzif deg wedrar.",
           "score": 0,
@@ -6573,6 +7455,12 @@
           "output": "Tagrest teɣzif deg yidurar.",
           "score": 3,
           "chrf": 25.72
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Tagrest ɣezzifet deg yidurar.",
+          "score": 3,
+          "chrf": 30.89
         },
         {
           "model_key": "ministral3-8b",
@@ -6660,6 +7548,12 @@
           "chrf": 53.04
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Acḥal d ssaɛa ?",
+          "score": 3,
+          "chrf": 53.04
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Achhal ayaɣ?",
           "score": 0,
@@ -6676,6 +7570,12 @@
           "output": "Acḥal tasaɛet?",
           "score": 3,
           "chrf": 35.12
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Acḥal ssaɛa?",
+          "score": 3,
+          "chrf": 95.34
         },
         {
           "model_key": "ministral3-8b",
@@ -6763,6 +7663,12 @@
           "chrf": 32.38
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Aɣrum-nni mazal-it iḥma.",
+          "score": 3,
+          "chrf": 20.04
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Aɣrum mazal-it iḥma.",
           "score": 3,
@@ -6776,6 +7682,12 @@
         },
         {
           "model_key": "gemini-flash-lite-rag",
+          "output": "Mazal yeḥma uɣrum.",
+          "score": 3,
+          "chrf": 67.71
+        },
+        {
+          "model_key": "gemini-flash-rag",
           "output": "Mazal yeḥma uɣrum.",
           "score": 3,
           "chrf": 67.71
@@ -6866,6 +7778,12 @@
           "chrf": 35.74
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Nettečč zzit n uzemmur s uɣrum.",
+          "score": 2,
+          "chrf": 52.53
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Nettella zzit n uzemmur d teɣrut.",
           "score": 0,
@@ -6882,6 +7800,12 @@
           "output": "Nečča zzit n uzemmur s temtunt.",
           "score": 2,
           "chrf": 33.47
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Ntett zzit n uzemmur s uɣrum.",
+          "score": 3,
+          "chrf": 59.01
         },
         {
           "model_key": "ministral3-8b",
@@ -6969,6 +7893,12 @@
           "chrf": 29.87
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Aseggas aya mi ittnadi axeddim.",
+          "score": 3,
+          "chrf": 40.56
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Yenadi ɣef uxeddim seg useggas.",
           "score": 1,
@@ -6985,6 +7915,12 @@
           "output": "Yettnadi axeddim aya n useggas.",
           "score": 3,
           "chrf": 28.71
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Yettnadi axeddim seg useggas aya.",
+          "score": 3,
+          "chrf": 34.66
         },
         {
           "model_key": "ministral3-8b",
@@ -7072,6 +8008,12 @@
           "chrf": 28.19
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Sortons dehors.",
+          "score": 3,
+          "chrf": 27.61
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Sortez",
           "score": 1,
@@ -7088,6 +8030,12 @@
           "output": "Je sors",
           "score": 1,
           "chrf": 8.9
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Sortons dehors.",
+          "score": 3,
+          "chrf": 27.61
         },
         {
           "model_key": "ministral3-8b",
@@ -7175,6 +8123,12 @@
           "chrf": 100.0
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Je t'aime beaucoup.",
+          "score": 3,
+          "chrf": 97.21
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Je t'aime beaucoup",
           "score": 3,
@@ -7191,6 +8145,12 @@
           "output": "Je t'aime beaucoup",
           "score": 3,
           "chrf": 100.0
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Je t'aime beaucoup.",
+          "score": 3,
+          "chrf": 97.21
         },
         {
           "model_key": "ministral3-8b",
@@ -7278,6 +8238,12 @@
           "chrf": 96.47
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Il fait froid.",
+          "score": 3,
+          "chrf": 96.47
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "Il fait nuit.",
           "score": 0,
@@ -7294,6 +8260,12 @@
           "output": "Il fait froid",
           "score": 3,
           "chrf": 100.0
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Il fait froid.",
+          "score": 3,
+          "chrf": 96.47
         },
         {
           "model_key": "ministral3-8b",
@@ -7381,6 +8353,12 @@
           "chrf": 87.79
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "Je vais boire de l’eau.",
+          "score": 3,
+          "chrf": 67.34
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "J'ai soif",
           "score": 0,
@@ -7397,6 +8375,12 @@
           "output": "Je boirai de l'eau",
           "score": 3,
           "chrf": 41.02
+        },
+        {
+          "model_key": "gemini-flash-rag",
+          "output": "Je boirai de l'eau.",
+          "score": 3,
+          "chrf": 40.25
         },
         {
           "model_key": "ministral3-8b",
@@ -7484,6 +8468,12 @@
           "chrf": null
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "ⴰⵎⴰⵏ",
+          "score": 3,
+          "chrf": 100.0
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "ⴰⵏⵙⴰⴼⴰ",
           "score": 0,
@@ -7497,6 +8487,12 @@
         },
         {
           "model_key": "gemini-flash-lite-rag",
+          "output": "ⴰⵎⴰⵏ",
+          "score": 3,
+          "chrf": 100.0
+        },
+        {
+          "model_key": "gemini-flash-rag",
           "output": "ⴰⵎⴰⵏ",
           "score": 3,
           "chrf": 100.0
@@ -7587,6 +8583,12 @@
           "chrf": 100.0
         },
         {
+          "model_key": "gemini-flash-fewshot",
+          "output": "ⴰⴷ ⵙⵡⴻⵖ ⴰⵎⴰⵏ",
+          "score": 3,
+          "chrf": 100.0
+        },
+        {
           "model_key": "gemini-flash-lite",
           "output": "ⴰⴷ ⵙⵡⴻⵖ ⴰⵎⴰⵏ",
           "score": 3,
@@ -7600,6 +8602,12 @@
         },
         {
           "model_key": "gemini-flash-lite-rag",
+          "output": "ⴰⴷ ⵙⵡⴻⵖ ⴰⵎⴰⵏ",
+          "score": 3,
+          "chrf": 100.0
+        },
+        {
+          "model_key": "gemini-flash-rag",
           "output": "ⴰⴷ ⵙⵡⴻⵖ ⴰⵎⴰⵏ",
           "score": 3,
           "chrf": 100.0

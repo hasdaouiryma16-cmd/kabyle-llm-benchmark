@@ -32,7 +32,7 @@ const fr = {
   greeting: "Azul !",
   heroTitle: "Les IA parlent‑elles kabyle ?",
   heroLead:
-    "15 configurations de modèles de langage, 41 tests écrits par l'autrice, locutrice native du kabyle, 615 réponses notées à l'aveugle. Ce que les modèles savent vraiment du kabyle, et ce qu'on peut leur apprendre.",
+    "17 configurations de modèles de langage, 41 tests écrits par l'autrice, locutrice native du kabyle, 697 réponses notées à l'aveugle. Ce que les modèles savent vraiment du kabyle, et ce qu'on peut leur apprendre.",
   heroCta: "Voir les résultats",
   heroCta2: "Lire les réponses",
   kpi: {
@@ -45,7 +45,7 @@ const fr = {
   findings: (v: FindingValues) => [
     {
       h: "Un seul modèle sait déjà le kabyle",
-      p: `${v.bestLabel} atteint ${v.bestPct} % sans aucune aide. Aucun autre modèle n'en approche, même avec les meilleures aides.`,
+      p: `${v.bestLabel} atteint ${v.bestPct} % sans aucune aide. Aucun autre modèle n'en approche, même avec les meilleures aides. Et les aides ne l'améliorent pas de façon significative : ${v.bestHelp}.`,
     },
     {
       h: "Pour les grands modèles, 5 exemples suffisent",
@@ -108,7 +108,7 @@ const fr = {
 
   // ── Réponses ──
   answersLead:
-    "Choisissez un test pour lire les réponses des 15 configurations, avec la note qu'elles ont reçue. Les références sont celles de l'autrice ; les réponses des modèles sont publiées telles quelles.",
+    "Choisissez un test pour lire les réponses des 17 configurations, avec la note qu'elles ont reçue. Les références sont celles de l'autrice ; les réponses des modèles sont publiées telles quelles.",
   pickCategory: "Catégorie",
   allCategories: "Toutes",
   pickTest: "Test",
@@ -173,7 +173,7 @@ const fr = {
     "Une seule annotatrice : les notes reflètent une variété de kabyle et des choix d'orthographe. Plusieurs références par test limitent ce biais sans le supprimer.",
     "41 tests publics : les fourchettes sont larges, et les petits écarts entre modèles ne sont pas significatifs. Les scores par catégorie (2 à 4 tests hors traduction) sont indicatifs.",
     "Les 11 tests privés n'ont pas été utilisés ici : les offres gratuites des API peuvent réutiliser les requêtes, seuls les tests publics leur ont été envoyés.",
-    "Les modèles évoluent vite : les résultats valent pour les versions et la date indiquées.",
+    "Pour Gemini Flash, le modèle seul a été interrogé via gemini-flash-latest, mais few-shot et RAG via gemini-3.6-flash, la version « latest » étant saturée pendant des jours. Leurs écarts avec le modèle seul mêlent donc l'effet de l'aide et celui de la version.",
   ],
   reproduceTitle: "Tout est ouvert",
   reproduceBody: "Code, jeu de test public, données préparées, notebooks d'entraînement et résultats bruts sont publiés sur GitHub : chaque chiffre de ce site peut être vérifié et refait.",
@@ -190,7 +190,7 @@ const fr = {
   points: "pts",
 
   // ── Habillage ──
-  announce: ["41 tests écrits par l'autrice, locutrice native", "15 configurations de modèles", "615 réponses notées à l'aveugle"],
+  announce: ["41 tests écrits par l'autrice, locutrice native", "17 configurations de modèles", "697 réponses notées à l'aveugle"],
   onThisPage: "Sur cette page",
   sections: {
     results: [
@@ -228,6 +228,7 @@ const fr = {
 export interface FindingValues {
   bestLabel: string;
   bestPct: string;
+  bestHelp: string;
   fewshotLarge: string;
   fewshotLargeLabels: string;
   smallLabels: string;
@@ -259,7 +260,7 @@ const en: Dict = {
   greeting: "Azul!",
   heroTitle: "Do AI models speak Kabyle?",
   heroLead:
-    "15 language-model configurations, 41 tests written by the author, a native Kabyle speaker, 615 answers graded blind. What models really know about Kabyle, and what we can teach them.",
+    "17 language-model configurations, 41 tests written by the author, a native Kabyle speaker, 697 answers graded blind. What models really know about Kabyle, and what we can teach them.",
   heroCta: "See the results",
   heroCta2: "Read the answers",
   kpi: {
@@ -270,7 +271,7 @@ const en: Dict = {
   },
   findingsTitle: "Key takeaways",
   findings: (v) => [
-    { h: "Only one model already knows Kabyle", p: `${v.bestLabel} reaches ${v.bestPct}% with no help. No other model comes close, even with the best help.` },
+    { h: "Only one model already knows Kabyle", p: `${v.bestLabel} reaches ${v.bestPct}% with no help. No other model comes close, even with the best help. And help does not improve it significantly: ${v.bestHelp}.` },
     { h: "For large models, 5 examples are enough", p: `Adding a few translated sentences to the prompt (few-shot) gains ${v.fewshotLarge} points for ${v.fewshotLargeLabels}. It is the simplest and most effective help for them.` },
     { h: "Small models start from zero", p: `${v.smallLabels} score ${v.smallBase}: they answer in another language, or make up Kabyle-looking words.` },
     { h: "Fine-tuning transforms a small model", p: `Trained on Kabyle–French pairs, ${v.ftLabel} goes from ${v.ftBefore}% to ${v.ftAfter}%. It then beats much larger models used without help: ${v.ftBeats}.` },
@@ -317,7 +318,7 @@ const en: Dict = {
   metaLine: (version, hash, date) => `Test set ${version} · SHA-256 ${hash}… · results exported on ${date}`,
 
   answersLead:
-    "Pick a test to read the answers of all 15 configurations, with the grade each received. References are the author's; model answers are published as-is.",
+    "Pick a test to read the answers of all 17 configurations, with the grade each received. References are the author's; model answers are published as-is.",
   pickCategory: "Category",
   allCategories: "All",
   pickTest: "Test",
@@ -381,6 +382,7 @@ const en: Dict = {
     "A single annotator: grades reflect one variety of Kabyle and particular spelling choices. Several references per test reduce this bias without removing it.",
     "41 public tests: ranges are wide, and small gaps between models are not significant. Per-category scores (2 to 4 tests outside translation) are indicative.",
     "The 11 private tests were not used here: free API tiers may reuse requests, so only public tests were sent to them.",
+    "For Gemini Flash, the model alone was queried through gemini-flash-latest, but few-shot and RAG through gemini-3.6-flash, as the “latest” version was overloaded for days. Their gaps with the model alone therefore mix the effect of the help with that of the version.",
     "Models change fast: results hold for the versions and date shown.",
   ],
   reproduceTitle: "Everything is open",
@@ -396,7 +398,7 @@ const en: Dict = {
   license: "Code: Apache-2.0 · Data: CC BY 4.0",
   points: "pts",
 
-  announce: ["41 tests written by the author, a native speaker", "15 model configurations", "615 answers graded blind"],
+  announce: ["41 tests written by the author, a native speaker", "17 model configurations", "697 answers graded blind"],
   onThisPage: "On this page",
   sections: {
     results: [

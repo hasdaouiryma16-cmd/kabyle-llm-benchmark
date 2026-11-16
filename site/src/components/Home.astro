@@ -18,9 +18,17 @@ const fams = r ? families(r) : [];
 const gains = r?.gains.filter((g) => g.overall.gain_points !== undefined) ?? [];
 const familyOf = (key: string) => fams.find((f) => f.key === key);
 
-const best = order[0];
+// Meilleur modèle *sans aide* : le premier du classement peut être une configuration aidée
+const best = order.find((m) => (m.variant ?? "base") === "base") ?? order[0];
+const bestKey = best?.base ?? best?.key;
+const signed = (v: number | undefined) => `${(v ?? 0) >= 0 ? "+" : "−"}${fmt(Math.abs(v ?? 0), lang)}`;
+const bestHelp = gains
+  .filter((g) => g.base === bestKey && (g.variant_type === "fewshot" || g.variant_type === "rag"))
+  .map((g) => `${d.method[g.variant_type]} ${signed(g.overall.gain_points)} ${d.points}`)
+  .join(", ");
 const ftGain = [...gains].filter((g) => g.variant_type === "finetuned").sort((a, b) => (b.overall.gain_points ?? 0) - (a.overall.gain_points ?? 0))[0];
-const largeFewshot = gains.filter((g) => g.variant_type === "fewshot" && !familyOf(g.base)?.local);
+// Le meilleur modèle connaît déjà le kabyle : son gain few-shot est traité à part (bestHelp)
+const largeFewshot = gains.filter((g) => g.variant_type === "fewshot" && !familyOf(g.base)?.local && g.base !== bestKey);
 const fsMin = Math.min(...largeFewshot.map((g) => g.overall.gain_points ?? 0));
 const fsMax = Math.max(...largeFewshot.map((g) => g.overall.gain_points ?? 0));
 const small = fams.filter((f) => f.local);
@@ -32,6 +40,7 @@ const findings =
     ? d.findings({
         bestLabel: best.label,
         bestPct: fmt(best.overall.human_pct, lang),
+        bestHelp,
         fewshotLarge:
           Math.round(fsMin) === Math.round(fsMax)
             ? `${Math.round(fsMax)}`
@@ -157,7 +166,7 @@ const stats = r
       </a>
       <a class="link-card" href={href(base, "answers", lang)}>
         <strong>{d.nav.answers}</strong>
-        <span>{lang === "fr" ? "Les 615 réponses des modèles, test par test, avec leur note." : "All 615 model answers, test by test, with their grade."}</span>
+        <span>{lang === "fr" ? `Les ${r ? totalGraded(r) : ""} réponses des modèles, test par test, avec leur note.` : `All ${r ? totalGraded(r) : ""} model answers, test by test, with their grade.`}</span>
       </a>
       <a class="link-card" href={REPO_URL}>
         <strong>GitHub</strong>
