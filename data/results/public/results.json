@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-16T11:30:48+00:00",
+  "generated_at": "2026-11-16T11:35:11+00:00",
   "test_set": {
     "name": "kab-bench",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "content_hash": "2004fad2988a0ceb64e8c039e484d1d2068b71d35b3eddbba289fc7a9bcd71e2",
-    "manifest_benchmark_hash": "2004fad2988a0ceb64e8c039e484d1d2068b71d35b3eddbba289fc7a9bcd71e2",
+    "manifest_benchmark_hash": "751a4d75264fb22b54db9cd70ce2431498bbc95f1cccce4215deb78378915ad4",
     "items": 52,
     "public_items": 41,
     "private_items": 11,
@@ -1021,17 +1021,17 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 2,
-        "human_pct": 66.7,
+        "human_mean": 1.98,
+        "human_pct": 65.9,
         "human_pct_ci95": [
-          53.7,
-          78.9
+          52.8,
+          78.0
         ],
         "score_distribution": {
           "0": 9,
           "1": 4,
-          "2": 6,
-          "3": 22
+          "2": 7,
+          "3": 21
         },
         "chrf": 41.5,
         "n_chrf": 34,
@@ -1102,17 +1102,17 @@
         "translation_fr_kab": {
           "n": 25,
           "n_graded": 25,
-          "human_mean": 2.12,
-          "human_pct": 70.7,
+          "human_mean": 2.08,
+          "human_pct": 69.3,
           "human_pct_ci95": [
-            54.7,
-            85.3
+            53.3,
+            84.0
           ],
           "score_distribution": {
             "0": 4,
             "1": 3,
-            "2": 4,
-            "3": 14
+            "2": 5,
+            "3": 13
           },
           "chrf": 33.2,
           "n_chrf": 25,
@@ -1325,15 +1325,15 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 1.17,
-        "human_pct": 39.0,
+        "human_mean": 1.15,
+        "human_pct": 38.2,
         "human_pct_ci95": [
-          27.6,
-          50.4
+          26.8,
+          49.6
         ],
         "score_distribution": {
-          "0": 15,
-          "1": 12,
+          "0": 16,
+          "1": 11,
           "2": 6,
           "3": 8
         },
@@ -1406,15 +1406,15 @@
         "translation_fr_kab": {
           "n": 25,
           "n_graded": 25,
-          "human_mean": 0.88,
-          "human_pct": 29.3,
+          "human_mean": 0.84,
+          "human_pct": 28.0,
           "human_pct_ci95": [
-            16.0,
+            14.7,
             42.7
           ],
           "score_distribution": {
-            "0": 11,
-            "1": 9,
+            "0": 12,
+            "1": 8,
             "2": 2,
             "3": 3
           },
@@ -2084,15 +2084,15 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 0.71,
-        "human_pct": 23.6,
+        "human_mean": 0.68,
+        "human_pct": 22.8,
         "human_pct_ci95": [
-          15.4,
-          32.5
+          14.6,
+          31.7
         ],
         "score_distribution": {
-          "0": 22,
-          "1": 10,
+          "0": 23,
+          "1": 9,
           "2": 8,
           "3": 1
         },
@@ -2165,15 +2165,15 @@
         "translation_fr_kab": {
           "n": 25,
           "n_graded": 25,
-          "human_mean": 0.76,
-          "human_pct": 25.3,
+          "human_mean": 0.72,
+          "human_pct": 24.0,
           "human_pct_ci95": [
-            16.0,
+            14.7,
             34.7
           ],
           "score_distribution": {
-            "0": 11,
-            "1": 9,
+            "0": 12,
+            "1": 8,
             "2": 5,
             "3": 0
           },
@@ -2904,13 +2904,13 @@
       "overall": {
         "n_paired": 41,
         "n_paired_chrf": 34,
-        "before_pct": 39.0,
+        "before_pct": 38.2,
         "after_pct": 75.6,
-        "gain_points": 36.6,
-        "gain_relative_pct": 93.7,
+        "gain_points": 37.4,
+        "gain_relative_pct": 97.9,
         "gain_points_ci95": [
-          19.5,
-          52.0
+          20.3,
+          52.8
         ],
         "chrf_before": 31.2,
         "chrf_after": 43.2,
@@ -2920,13 +2920,13 @@
         "translation_fr_kab": {
           "n_paired": 25,
           "n_paired_chrf": 25,
-          "before_pct": 29.3,
+          "before_pct": 28.0,
           "after_pct": 85.3,
-          "gain_points": 56.0,
-          "gain_relative_pct": 190.9,
+          "gain_points": 57.3,
+          "gain_relative_pct": 204.8,
           "gain_points_ci95": [
-            38.7,
-            73.3
+            40.0,
+            74.7
           ],
           "chrf_before": 25.9,
           "chrf_after": 38.8,
@@ -3011,10 +3011,10 @@
       "overall": {
         "n_paired": 41,
         "n_paired_chrf": 34,
-        "before_pct": 39.0,
+        "before_pct": 38.2,
         "after_pct": 72.4,
-        "gain_points": 33.3,
-        "gain_relative_pct": 85.4,
+        "gain_points": 34.1,
+        "gain_relative_pct": 89.4,
         "gain_points_ci95": [
           17.1,
           49.6
@@ -3027,12 +3027,12 @@
         "translation_fr_kab": {
           "n_paired": 25,
           "n_paired_chrf": 25,
-          "before_pct": 29.3,
+          "before_pct": 28.0,
           "after_pct": 80.0,
-          "gain_points": 50.7,
-          "gain_relative_pct": 172.7,
+          "gain_points": 52.0,
+          "gain_relative_pct": 185.7,
           "gain_points_ci95": [
-            32.0,
+            34.7,
             68.0
           ],
           "chrf_before": 25.9,
@@ -3226,12 +3226,12 @@
         "n_paired": 41,
         "n_paired_chrf": 34,
         "before_pct": 37.4,
-        "after_pct": 66.7,
-        "gain_points": 29.3,
-        "gain_relative_pct": 78.3,
+        "after_pct": 65.9,
+        "gain_points": 28.5,
+        "gain_relative_pct": 76.1,
         "gain_points_ci95": [
-          15.4,
-          42.3
+          14.6,
+          41.5
         ],
         "chrf_before": 29.2,
         "chrf_after": 41.5,
@@ -3242,12 +3242,12 @@
           "n_paired": 25,
           "n_paired_chrf": 25,
           "before_pct": 26.7,
-          "after_pct": 70.7,
-          "gain_points": 44.0,
-          "gain_relative_pct": 165.0,
+          "after_pct": 69.3,
+          "gain_points": 42.7,
+          "gain_relative_pct": 160.0,
           "gain_points_ci95": [
-            26.7,
-            61.3
+            25.3,
+            60.0
           ],
           "chrf_before": 23.4,
           "chrf_after": 33.2,
@@ -3761,12 +3761,12 @@
         "n_paired": 41,
         "n_paired_chrf": 34,
         "before_pct": 0.0,
-        "after_pct": 23.6,
-        "gain_points": 23.6,
+        "after_pct": 22.8,
+        "gain_points": 22.8,
         "gain_relative_pct": null,
         "gain_points_ci95": [
-          15.4,
-          32.5
+          14.6,
+          31.7
         ],
         "chrf_before": 9.2,
         "chrf_after": 28.5,
@@ -3777,11 +3777,11 @@
           "n_paired": 25,
           "n_paired_chrf": 25,
           "before_pct": 0.0,
-          "after_pct": 25.3,
-          "gain_points": 25.3,
+          "after_pct": 24.0,
+          "gain_points": 24.0,
           "gain_relative_pct": null,
           "gain_points_ci95": [
-            16.0,
+            14.7,
             34.7
           ],
           "chrf_before": 8.5,
@@ -3969,7 +3969,7 @@
   ],
   "metric_agreement": {
     "n": 576,
-    "spearman_human_chrf": 0.702
+    "spearman_human_chrf": 0.703
   },
   "examples": [],
   "items": [
@@ -6963,7 +6963,7 @@
       "source_text": "Le village compte cent maisons.",
       "context": null,
       "references": [
-        "Tesɛa taddart meyyan ixxamen"
+        "Tesɛa taddart meyya n yixxamen"
       ],
       "answers": [
         {
@@ -6981,7 +6981,7 @@
         {
           "model_key": "gemini-flash-lite",
           "output": "Taddart tella s twat n tmezduɣin.",
-          "score": 1,
+          "score": 0,
           "chrf": 18.44
         },
         {
@@ -7041,7 +7041,7 @@
         {
           "model_key": "mistral-large-4-rag",
           "output": "Taddart-a ideg llan miya n tixxamin",
-          "score": 3,
+          "score": 2,
           "chrf": 24.3
         },
         {
@@ -7053,7 +7053,7 @@
         {
           "model_key": "qwen3.5-4b-fewshot",
           "output": "Taddart d-ɣer 100 axxam.",
-          "score": 1,
+          "score": 0,
           "chrf": 18.65
         },
         {
