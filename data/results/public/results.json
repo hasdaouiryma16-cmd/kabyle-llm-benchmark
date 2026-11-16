@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-16T08:10:43+00:00",
+  "generated_at": "2026-11-16T09:19:39+00:00",
   "test_set": {
     "name": "kab-bench",
     "version": "1.0.2",
@@ -557,159 +557,6 @@
       "error_tags": {}
     },
     {
-      "key": "gemini-flash-lite-fewshot",
-      "label": "Gemini Flash-Lite + few-shot",
-      "provider": "gemini",
-      "model": "gemini-flash-lite-latest",
-      "variant": "fewshot",
-      "base": "gemini-flash-lite",
-      "overall": {
-        "n": 41,
-        "n_graded": 41,
-        "human_mean": 2.29,
-        "human_pct": 76.4,
-        "human_pct_ci95": [
-          65.0,
-          86.2
-        ],
-        "score_distribution": {
-          "0": 4,
-          "1": 6,
-          "2": 5,
-          "3": 26
-        },
-        "chrf": 43.2,
-        "n_chrf": 34,
-        "lang_ok_rate": 50.0,
-        "n_lang_checked": 8
-      },
-      "by_category": {
-        "comprehension": {
-          "n": 3,
-          "n_graded": 3,
-          "human_mean": 1,
-          "human_pct": 33.3,
-          "human_pct_ci95": [
-            33.3,
-            33.3
-          ],
-          "score_distribution": {
-            "0": 0,
-            "1": 3,
-            "2": 0,
-            "3": 0
-          },
-          "chrf": 27.6,
-          "n_chrf": 3,
-          "lang_ok_rate": null,
-          "n_lang_checked": 0
-        },
-        "conversation": {
-          "n": 4,
-          "n_graded": 4,
-          "human_mean": 0.75,
-          "human_pct": 25.0,
-          "human_pct_ci95": [
-            0.0,
-            58.3
-          ],
-          "score_distribution": {
-            "0": 2,
-            "1": 1,
-            "2": 1,
-            "3": 0
-          },
-          "chrf": null,
-          "n_chrf": 0,
-          "lang_ok_rate": 0.0,
-          "n_lang_checked": 3
-        },
-        "culture": {
-          "n": 3,
-          "n_graded": 3,
-          "human_mean": 3,
-          "human_pct": 100.0,
-          "human_pct_ci95": [
-            100.0,
-            100.0
-          ],
-          "score_distribution": {
-            "0": 0,
-            "1": 0,
-            "2": 0,
-            "3": 3
-          },
-          "chrf": null,
-          "n_chrf": 0,
-          "lang_ok_rate": 100.0,
-          "n_lang_checked": 1
-        },
-        "translation_fr_kab": {
-          "n": 25,
-          "n_graded": 25,
-          "human_mean": 2.56,
-          "human_pct": 85.3,
-          "human_pct_ci95": [
-            73.3,
-            94.7
-          ],
-          "score_distribution": {
-            "0": 1,
-            "1": 2,
-            "2": 4,
-            "3": 18
-          },
-          "chrf": 38.8,
-          "n_chrf": 25,
-          "lang_ok_rate": null,
-          "n_lang_checked": 0
-        },
-        "translation_kab_fr": {
-          "n": 4,
-          "n_graded": 4,
-          "human_mean": 3,
-          "human_pct": 100.0,
-          "human_pct_ci95": [
-            100.0,
-            100.0
-          ],
-          "score_distribution": {
-            "0": 0,
-            "1": 0,
-            "2": 0,
-            "3": 4
-          },
-          "chrf": 78.5,
-          "n_chrf": 4,
-          "lang_ok_rate": 100.0,
-          "n_lang_checked": 3
-        },
-        "writing": {
-          "n": 2,
-          "n_graded": 2,
-          "human_mean": 1.5,
-          "human_pct": 50.0,
-          "human_pct_ci95": [
-            0.0,
-            100.0
-          ],
-          "score_distribution": {
-            "0": 1,
-            "1": 0,
-            "2": 0,
-            "3": 1
-          },
-          "chrf": 50.0,
-          "n_chrf": 2,
-          "lang_ok_rate": 0.0,
-          "n_lang_checked": 1
-        }
-      },
-      "error_tags": {
-        "script": 1
-      }
-    },
-    {
       "key": "mistral-large-4-fewshot",
       "label": "Mistral Large 4 + few-shot",
       "provider": "mistral",
@@ -859,6 +706,159 @@
         }
       },
       "error_tags": {}
+    },
+    {
+      "key": "gemini-flash-lite-fewshot",
+      "label": "Gemini Flash-Lite + few-shot",
+      "provider": "gemini",
+      "model": "gemini-flash-lite-latest",
+      "variant": "fewshot",
+      "base": "gemini-flash-lite",
+      "overall": {
+        "n": 41,
+        "n_graded": 41,
+        "human_mean": 2.27,
+        "human_pct": 75.6,
+        "human_pct_ci95": [
+          64.2,
+          86.2
+        ],
+        "score_distribution": {
+          "0": 5,
+          "1": 5,
+          "2": 5,
+          "3": 26
+        },
+        "chrf": 43.2,
+        "n_chrf": 34,
+        "lang_ok_rate": 50.0,
+        "n_lang_checked": 8
+      },
+      "by_category": {
+        "comprehension": {
+          "n": 3,
+          "n_graded": 3,
+          "human_mean": 0.67,
+          "human_pct": 22.2,
+          "human_pct_ci95": [
+            0.0,
+            33.3
+          ],
+          "score_distribution": {
+            "0": 1,
+            "1": 2,
+            "2": 0,
+            "3": 0
+          },
+          "chrf": 27.6,
+          "n_chrf": 3,
+          "lang_ok_rate": null,
+          "n_lang_checked": 0
+        },
+        "conversation": {
+          "n": 4,
+          "n_graded": 4,
+          "human_mean": 0.75,
+          "human_pct": 25.0,
+          "human_pct_ci95": [
+            0.0,
+            58.3
+          ],
+          "score_distribution": {
+            "0": 2,
+            "1": 1,
+            "2": 1,
+            "3": 0
+          },
+          "chrf": null,
+          "n_chrf": 0,
+          "lang_ok_rate": 0.0,
+          "n_lang_checked": 3
+        },
+        "culture": {
+          "n": 3,
+          "n_graded": 3,
+          "human_mean": 3,
+          "human_pct": 100.0,
+          "human_pct_ci95": [
+            100.0,
+            100.0
+          ],
+          "score_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 3
+          },
+          "chrf": null,
+          "n_chrf": 0,
+          "lang_ok_rate": 100.0,
+          "n_lang_checked": 1
+        },
+        "translation_fr_kab": {
+          "n": 25,
+          "n_graded": 25,
+          "human_mean": 2.56,
+          "human_pct": 85.3,
+          "human_pct_ci95": [
+            73.3,
+            94.7
+          ],
+          "score_distribution": {
+            "0": 1,
+            "1": 2,
+            "2": 4,
+            "3": 18
+          },
+          "chrf": 38.8,
+          "n_chrf": 25,
+          "lang_ok_rate": null,
+          "n_lang_checked": 0
+        },
+        "translation_kab_fr": {
+          "n": 4,
+          "n_graded": 4,
+          "human_mean": 3,
+          "human_pct": 100.0,
+          "human_pct_ci95": [
+            100.0,
+            100.0
+          ],
+          "score_distribution": {
+            "0": 0,
+            "1": 0,
+            "2": 0,
+            "3": 4
+          },
+          "chrf": 78.5,
+          "n_chrf": 4,
+          "lang_ok_rate": 100.0,
+          "n_lang_checked": 3
+        },
+        "writing": {
+          "n": 2,
+          "n_graded": 2,
+          "human_mean": 1.5,
+          "human_pct": 50.0,
+          "human_pct_ci95": [
+            0.0,
+            100.0
+          ],
+          "score_distribution": {
+            "0": 1,
+            "1": 0,
+            "2": 0,
+            "3": 1
+          },
+          "chrf": 50.0,
+          "n_chrf": 2,
+          "lang_ok_rate": 0.0,
+          "n_lang_checked": 1
+        }
+      },
+      "error_tags": {
+        "script": 1
+      }
     },
     {
       "key": "gemini-flash-lite-rag",
@@ -1172,17 +1172,17 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 1.41,
-        "human_pct": 47.2,
+        "human_mean": 1.39,
+        "human_pct": 46.3,
         "human_pct_ci95": [
           33.3,
-          61.8
+          61.0
         ],
         "score_distribution": {
           "0": 17,
           "1": 5,
-          "2": 4,
-          "3": 15
+          "2": 5,
+          "3": 14
         },
         "chrf": 33.0,
         "n_chrf": 34,
@@ -1193,17 +1193,17 @@
         "comprehension": {
           "n": 3,
           "n_graded": 3,
-          "human_mean": 1.67,
-          "human_pct": 55.6,
+          "human_mean": 1.33,
+          "human_pct": 44.4,
           "human_pct_ci95": [
             0.0,
-            100.0
+            66.7
           ],
           "score_distribution": {
             "0": 1,
             "1": 0,
-            "2": 1,
-            "3": 1
+            "2": 2,
+            "3": 0
           },
           "chrf": 48.1,
           "n_chrf": 3,
@@ -1325,15 +1325,15 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 1.24,
-        "human_pct": 41.5,
+        "human_mean": 1.22,
+        "human_pct": 40.7,
         "human_pct_ci95": [
-          30.1,
-          52.0
+          29.3,
+          51.2
         ],
         "score_distribution": {
-          "0": 12,
-          "1": 15,
+          "0": 13,
+          "1": 14,
           "2": 6,
           "3": 8
         },
@@ -1366,15 +1366,15 @@
         "conversation": {
           "n": 4,
           "n_graded": 4,
-          "human_mean": 1.5,
-          "human_pct": 50.0,
+          "human_mean": 1.25,
+          "human_pct": 41.7,
           "human_pct_ci95": [
-            33.3,
+            16.7,
             66.7
           ],
           "score_distribution": {
-            "0": 0,
-            "1": 2,
+            "0": 1,
+            "1": 1,
             "2": 2,
             "3": 0
           },
@@ -1476,15 +1476,15 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 1.12,
-        "human_pct": 37.4,
+        "human_mean": 1.1,
+        "human_pct": 36.6,
         "human_pct_ci95": [
-          26.0,
-          49.6
+          25.2,
+          48.8
         ],
         "score_distribution": {
-          "0": 17,
-          "1": 10,
+          "0": 18,
+          "1": 9,
           "2": 6,
           "3": 8
         },
@@ -1497,15 +1497,15 @@
         "comprehension": {
           "n": 3,
           "n_graded": 3,
-          "human_mean": 1.33,
-          "human_pct": 44.4,
+          "human_mean": 1,
+          "human_pct": 33.3,
           "human_pct_ci95": [
             0.0,
             100.0
           ],
           "score_distribution": {
-            "0": 1,
-            "1": 1,
+            "0": 2,
+            "1": 0,
             "2": 0,
             "3": 1
           },
@@ -1627,15 +1627,15 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 0.98,
-        "human_pct": 32.5,
+        "human_mean": 0.95,
+        "human_pct": 31.7,
         "human_pct_ci95": [
-          22.0,
-          44.7
+          20.3,
+          43.9
         ],
         "score_distribution": {
-          "0": 20,
-          "1": 10,
+          "0": 21,
+          "1": 9,
           "2": 3,
           "3": 8
         },
@@ -1648,15 +1648,15 @@
         "comprehension": {
           "n": 3,
           "n_graded": 3,
-          "human_mean": 0.67,
-          "human_pct": 22.2,
+          "human_mean": 0.33,
+          "human_pct": 11.1,
           "human_pct_ci95": [
             0.0,
             33.3
           ],
           "score_distribution": {
-            "0": 1,
-            "1": 2,
+            "0": 2,
+            "1": 1,
             "2": 0,
             "3": 0
           },
@@ -2897,113 +2897,6 @@
       }
     },
     {
-      "variant": "gemini-flash-lite-fewshot",
-      "variant_label": "Gemini Flash-Lite + few-shot",
-      "variant_type": "fewshot",
-      "base": "gemini-flash-lite",
-      "overall": {
-        "n_paired": 41,
-        "n_paired_chrf": 34,
-        "before_pct": 41.5,
-        "after_pct": 76.4,
-        "gain_points": 35.0,
-        "gain_relative_pct": 84.3,
-        "gain_points_ci95": [
-          18.7,
-          49.6
-        ],
-        "chrf_before": 31.2,
-        "chrf_after": 43.2,
-        "chrf_gain": 11.9
-      },
-      "by_category": {
-        "translation_fr_kab": {
-          "n_paired": 25,
-          "n_paired_chrf": 25,
-          "before_pct": 32.0,
-          "after_pct": 85.3,
-          "gain_points": 53.3,
-          "gain_relative_pct": 166.7,
-          "gain_points_ci95": [
-            36.0,
-            70.7
-          ],
-          "chrf_before": 25.9,
-          "chrf_after": 38.8,
-          "chrf_gain": 12.9
-        },
-        "translation_kab_fr": {
-          "n_paired": 4,
-          "n_paired_chrf": 4,
-          "before_pct": 33.3,
-          "after_pct": 100.0,
-          "gain_points": 66.7,
-          "gain_relative_pct": 200.0,
-          "gain_points_ci95": [
-            25.0,
-            100.0
-          ],
-          "chrf_before": 39.7,
-          "chrf_after": 78.5,
-          "chrf_gain": 38.8
-        },
-        "comprehension": {
-          "n_paired": 3,
-          "n_paired_chrf": 3,
-          "before_pct": 77.8,
-          "after_pct": 33.3,
-          "gain_points": -44.4,
-          "gain_relative_pct": -57.1,
-          "gain_points_ci95": [
-            -66.7,
-            0.0
-          ],
-          "chrf_before": 45.3,
-          "chrf_after": 27.6,
-          "chrf_gain": -17.8
-        },
-        "culture": {
-          "n_paired": 3,
-          "n_paired_chrf": 0,
-          "before_pct": 77.8,
-          "after_pct": 100.0,
-          "gain_points": 22.2,
-          "gain_relative_pct": 28.6,
-          "gain_points_ci95": [
-            0.0,
-            33.3
-          ]
-        },
-        "writing": {
-          "n_paired": 2,
-          "n_paired_chrf": 2,
-          "before_pct": 50.0,
-          "after_pct": 50.0,
-          "gain_points": 0.0,
-          "gain_relative_pct": 0.0,
-          "gain_points_ci95": [
-            0.0,
-            0.0
-          ],
-          "chrf_before": 59.8,
-          "chrf_after": 50.0,
-          "chrf_gain": -9.8
-        },
-        "conversation": {
-          "n_paired": 4,
-          "n_paired_chrf": 0,
-          "before_pct": 50.0,
-          "after_pct": 25.0,
-          "gain_points": -25.0,
-          "gain_relative_pct": -50.0,
-          "gain_points_ci95": [
-            -58.3,
-            16.7
-          ]
-        }
-      }
-    },
-    {
       "variant": "mistral-large-4-fewshot",
       "variant_label": "Mistral Large 4 + few-shot",
       "variant_type": "fewshot",
@@ -3011,13 +2904,13 @@
       "overall": {
         "n_paired": 41,
         "n_paired_chrf": 34,
-        "before_pct": 37.4,
+        "before_pct": 36.6,
         "after_pct": 76.4,
-        "gain_points": 39.0,
-        "gain_relative_pct": 104.3,
+        "gain_points": 39.8,
+        "gain_relative_pct": 108.9,
         "gain_points_ci95": [
           25.2,
-          52.8
+          53.7
         ],
         "chrf_before": 29.2,
         "chrf_after": 41.1,
@@ -3057,10 +2950,10 @@
         "comprehension": {
           "n_paired": 3,
           "n_paired_chrf": 3,
-          "before_pct": 44.4,
+          "before_pct": 33.3,
           "after_pct": 100.0,
-          "gain_points": 55.6,
-          "gain_relative_pct": 125.0,
+          "gain_points": 66.7,
+          "gain_relative_pct": 200.0,
           "gain_points_ci95": [
             0.0,
             100.0
@@ -3111,6 +3004,113 @@
       }
     },
     {
+      "variant": "gemini-flash-lite-fewshot",
+      "variant_label": "Gemini Flash-Lite + few-shot",
+      "variant_type": "fewshot",
+      "base": "gemini-flash-lite",
+      "overall": {
+        "n_paired": 41,
+        "n_paired_chrf": 34,
+        "before_pct": 40.7,
+        "after_pct": 75.6,
+        "gain_points": 35.0,
+        "gain_relative_pct": 86.0,
+        "gain_points_ci95": [
+          18.7,
+          49.6
+        ],
+        "chrf_before": 31.2,
+        "chrf_after": 43.2,
+        "chrf_gain": 11.9
+      },
+      "by_category": {
+        "translation_fr_kab": {
+          "n_paired": 25,
+          "n_paired_chrf": 25,
+          "before_pct": 32.0,
+          "after_pct": 85.3,
+          "gain_points": 53.3,
+          "gain_relative_pct": 166.7,
+          "gain_points_ci95": [
+            36.0,
+            70.7
+          ],
+          "chrf_before": 25.9,
+          "chrf_after": 38.8,
+          "chrf_gain": 12.9
+        },
+        "translation_kab_fr": {
+          "n_paired": 4,
+          "n_paired_chrf": 4,
+          "before_pct": 33.3,
+          "after_pct": 100.0,
+          "gain_points": 66.7,
+          "gain_relative_pct": 200.0,
+          "gain_points_ci95": [
+            25.0,
+            100.0
+          ],
+          "chrf_before": 39.7,
+          "chrf_after": 78.5,
+          "chrf_gain": 38.8
+        },
+        "comprehension": {
+          "n_paired": 3,
+          "n_paired_chrf": 3,
+          "before_pct": 77.8,
+          "after_pct": 22.2,
+          "gain_points": -55.6,
+          "gain_relative_pct": -71.4,
+          "gain_points_ci95": [
+            -100.0,
+            0.0
+          ],
+          "chrf_before": 45.3,
+          "chrf_after": 27.6,
+          "chrf_gain": -17.8
+        },
+        "culture": {
+          "n_paired": 3,
+          "n_paired_chrf": 0,
+          "before_pct": 77.8,
+          "after_pct": 100.0,
+          "gain_points": 22.2,
+          "gain_relative_pct": 28.6,
+          "gain_points_ci95": [
+            0.0,
+            33.3
+          ]
+        },
+        "writing": {
+          "n_paired": 2,
+          "n_paired_chrf": 2,
+          "before_pct": 50.0,
+          "after_pct": 50.0,
+          "gain_points": 0.0,
+          "gain_relative_pct": 0.0,
+          "gain_points_ci95": [
+            0.0,
+            0.0
+          ],
+          "chrf_before": 59.8,
+          "chrf_after": 50.0,
+          "chrf_gain": -9.8
+        },
+        "conversation": {
+          "n_paired": 4,
+          "n_paired_chrf": 0,
+          "before_pct": 41.7,
+          "after_pct": 25.0,
+          "gain_points": -16.7,
+          "gain_relative_pct": -40.0,
+          "gain_points_ci95": [
+            -50.0,
+            16.7
+          ]
+        }
+      }
+    },
+    {
       "variant": "gemini-flash-lite-rag",
       "variant_label": "Gemini Flash-Lite + RAG",
       "variant_type": "rag",
@@ -3118,13 +3118,13 @@
       "overall": {
         "n_paired": 41,
         "n_paired_chrf": 34,
-        "before_pct": 41.5,
+        "before_pct": 40.7,
         "after_pct": 74.0,
-        "gain_points": 32.5,
-        "gain_relative_pct": 78.4,
+        "gain_points": 33.3,
+        "gain_relative_pct": 82.0,
         "gain_points_ci95": [
-          15.4,
-          48.8
+          17.1,
+          49.6
         ],
         "chrf_before": 31.2,
         "chrf_after": 42.4,
@@ -3206,13 +3206,13 @@
         "conversation": {
           "n_paired": 4,
           "n_paired_chrf": 0,
-          "before_pct": 50.0,
+          "before_pct": 41.7,
           "after_pct": 16.7,
-          "gain_points": -33.3,
-          "gain_relative_pct": -66.7,
+          "gain_points": -25.0,
+          "gain_relative_pct": -60.0,
           "gain_points_ci95": [
-            -58.3,
-            -8.3
+            -50.0,
+            0.0
           ]
         }
       }
@@ -3225,13 +3225,13 @@
       "overall": {
         "n_paired": 41,
         "n_paired_chrf": 34,
-        "before_pct": 37.4,
+        "before_pct": 36.6,
         "after_pct": 69.1,
-        "gain_points": 31.7,
-        "gain_relative_pct": 84.8,
+        "gain_points": 32.5,
+        "gain_relative_pct": 88.9,
         "gain_points_ci95": [
-          17.9,
-          45.5
+          18.7,
+          46.3
         ],
         "chrf_before": 29.2,
         "chrf_after": 41.5,
@@ -3271,12 +3271,12 @@
         "comprehension": {
           "n_paired": 3,
           "n_paired_chrf": 3,
-          "before_pct": 44.4,
+          "before_pct": 33.3,
           "after_pct": 66.7,
-          "gain_points": 22.2,
-          "gain_relative_pct": 50.0,
+          "gain_points": 33.3,
+          "gain_relative_pct": 100.0,
           "gain_points_ci95": [
-            -33.3,
+            0.0,
             100.0
           ],
           "chrf_before": 30.3,
@@ -3333,12 +3333,12 @@
         "n_paired": 41,
         "n_paired_chrf": 34,
         "before_pct": 0.8,
-        "after_pct": 47.2,
-        "gain_points": 46.3,
-        "gain_relative_pct": 5700.0,
+        "after_pct": 46.3,
+        "gain_points": 45.5,
+        "gain_relative_pct": 5600.0,
         "gain_points_ci95": [
           31.7,
-          61.8
+          60.2
         ],
         "chrf_before": 2.7,
         "chrf_after": 33.0,
@@ -3379,12 +3379,12 @@
           "n_paired": 3,
           "n_paired_chrf": 3,
           "before_pct": 0.0,
-          "after_pct": 55.6,
-          "gain_points": 55.6,
+          "after_pct": 44.4,
+          "gain_points": 44.4,
           "gain_relative_pct": null,
           "gain_points_ci95": [
             0.0,
-            100.0
+            66.7
           ],
           "chrf_before": 6.4,
           "chrf_after": 48.1,
@@ -3440,12 +3440,12 @@
         "n_paired": 41,
         "n_paired_chrf": 34,
         "before_pct": 0.0,
-        "after_pct": 32.5,
-        "gain_points": 32.5,
+        "after_pct": 31.7,
+        "gain_points": 31.7,
         "gain_relative_pct": null,
         "gain_points_ci95": [
-          22.0,
-          44.7
+          20.3,
+          43.9
         ],
         "chrf_before": 9.2,
         "chrf_after": 28.7,
@@ -3486,8 +3486,8 @@
           "n_paired": 3,
           "n_paired_chrf": 3,
           "before_pct": 0.0,
-          "after_pct": 22.2,
-          "gain_points": 22.2,
+          "after_pct": 11.1,
+          "gain_points": 11.1,
           "gain_relative_pct": null,
           "gain_points_ci95": [
             0.0,
@@ -3969,7 +3969,7 @@
   ],
   "metric_agreement": {
     "n": 576,
-    "spearman_human_chrf": 0.72
+    "spearman_human_chrf": 0.717
   },
   "examples": [],
   "items": [
@@ -4035,7 +4035,7 @@
         {
           "model_key": "ministral3-8b-lora",
           "output": "Sbeḥ-nni swiɣ lqahwa akked yemma.",
-          "score": 3,
+          "score": 2,
           "chrf": 58.51
         },
         {
@@ -4047,7 +4047,7 @@
         {
           "model_key": "mistral-large-4",
           "output": "Tawuri-agi d **taṣebḥit** (neɣ **lqahwa n ṣṣbeḥ**) — d ayen i sweɣen akked yemma zik zik ṣbeḥ.\n\n**Aglam n wawal:**\n- *Ass-agi kreɣ-d sbah zik* = Ass-a, kkiɣ-d zik ṣṣbeḥ\n- *Swiɣ lqahwa akked yemma* = Swiɣ lqahwa akked yemma\n- *Mi selkeɣ 3eddaɣ lsiɣ lqecc-iw akken ad ffɣeɣ* = Mi sliɣ i \"tlata\" (neɣ mi wwteɣ tlata n wass), lsiɣ lqecc-iw akken ad ffɣeɣ\n\nIhi, \"sbah akked yemma-s\" yeswa **taṣebḥit** (lqahwa akked wayen-nniḍen i yettwacaren zik ṣṣbeḥ).",
-          "score": 1,
+          "score": 0,
           "chrf": 17.36
         },
         {
@@ -4083,7 +4083,7 @@
         {
           "model_key": "qwen3.5-4b-rag",
           "output": "D ayen i y-irzan, **Ass-agi kreɣ-d sbah zik, swiɣ lqahwa akked yemma.**\n\n*(Traduction : C'est vrai que j'ai bu du vin hier, je bois le café avec ma mère.)*",
-          "score": 1,
+          "score": 0,
           "chrf": 30.84
         }
       ]
@@ -4235,7 +4235,7 @@
         {
           "model_key": "gemini-flash-lite-fewshot",
           "output": "Wagi d ungif (lǧensa)! Ma yella d **wurgaz**, ur yelxis ara, axir ma yella d **lebsel** (isennariyen) i yelxisen. \n\nTukkksa n wawal (la source) n ungif-agi:\n« Irwḥ wurgaz ɣer ssuq akken ad izenz **lebsel**, yuɣal-d **illexs** akk axater yekkat ugfur »\n\nIhi, **lebsel** (isennariyen) i yelxisen, mačči d argaz.",
-          "score": 1,
+          "score": 0,
           "chrf": 25.28
         },
         {
@@ -4322,7 +4322,7 @@
       "id": "conv-0001",
       "category": "conversation",
       "script": "latin",
-      "prompt": "Azul, aniwe akka telḥuḍ ?",
+      "prompt": "Azul, aniwer akka telḥuḍ ?",
       "source_text": null,
       "context": null,
       "references": [],
@@ -4342,7 +4342,7 @@
         {
           "model_key": "gemini-flash-lite",
           "output": "Azul! Labas الحمد لله، ɣer-i yelha. \n\nKeč/Kemini amek telliḍ? Amek ara k-iɛawneɣ ass-a? (Keč for male, Kemini for female).",
-          "score": 1,
+          "score": 0,
           "chrf": null
         },
         {
@@ -4661,7 +4661,7 @@
       "id": "conv-0004",
       "category": "conversation",
       "script": "latin",
-      "prompt": "Aniwe tḥemmleḍ ad tṛuḥeḍ deg unebdu ?",
+      "prompt": "Aniwer tḥemmleḍ ad tṛuḥeḍ deg unebdu ?",
       "source_text": null,
       "context": null,
       "references": [],

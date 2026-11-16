@@ -8,10 +8,10 @@ paramètre de configuration locale, aucun texte de la partie privée du jeu de t
 import json
 from typing import Any
 
-from sqlmodel import Session
+from sqlmodel import Session, select
 
 from app.config import Settings
-from app.models import CATEGORY_LABEL_FR, Category, utcnow
+from app.models import CATEGORY_LABEL_FR, BenchItem, Category, utcnow
 from app.results import ERROR_TAGS, compute_results, response_rows
 from app.testset import read_manifest
 
@@ -44,15 +44,21 @@ PUBLIC_ITEM_FIELDS = ("id", "category", "script", "prompt", "source_text", "cont
 def build_public_results(session: Session, settings: Settings) -> dict[str, Any]:
     results = compute_results(session)
     manifest = read_manifest(settings) or {}
+    # Texte des tests : celui du jeu de test actuel (corrections de coquilles comprises),
+    # pas la copie figée dans chaque exécution, qui peut dater d'avant une correction.
+    current = {i.id: i.model_dump(mode="json") for i in session.exec(select(BenchItem)).all()}
+
+    def public_fields(item: dict[str, Any]) -> dict[str, Any]:
+        source = current.get(item["id"], item)
+        return {k: source.get(k) for k in PUBLIC_ITEM_FIELDS}
+
     examples = []
     items: dict[str, dict[str, Any]] = {}
     for row in response_rows(session, results["test_set_hash"]):
         item = row["item"]
         if item.get("split") != "public":
             continue
-        public_item = items.setdefault(
-            item["id"], {**{k: item.get(k) for k in PUBLIC_ITEM_FIELDS}, "answers": []}
-        )
+        public_item = items.setdefault(item["id"], {**public_fields(item), "answers": []})
         public_item["answers"].append(
             {
                 "model_key": row["model_key"],
@@ -69,7 +75,7 @@ def build_public_results(session: Session, settings: Settings) -> dict[str, Any]
                 "note": row["favorite"]["note"],
                 "model": row["model_label"],
                 "model_key": row["model_key"],
-                "item": {k: item.get(k) for k in PUBLIC_ITEM_FIELDS},
+                "item": public_fields(item),
                 "output": row["output"],
                 "score": row["score"],
                 "error_tags": row["error_tags"],

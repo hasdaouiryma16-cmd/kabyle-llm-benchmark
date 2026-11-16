@@ -102,3 +102,18 @@ def test_export_public_publishes_only_public_favorites(client, settings):
     answer = data["items"][0]["answers"][0]
     assert len(data["items"][0]["answers"]) == 1
     assert (answer["model_key"], answer["output"], answer["score"]) == ("mock-a", "ref-a", 2)
+
+
+def test_export_public_uses_current_item_text(client, settings):
+    """Une coquille corrigée après l'exécution doit apparaître corrigée sur le site."""
+    item = client.post("/api/tests", json=make_item(prompt="Consigne avec coquile")).json()
+    run_id = client.post("/api/runs", json={"name": "r", "model_keys": ["mock-a"]}).json()["run_id"]
+    wait_run(client, run_id)
+    _grade_all(client, lambda m: 2)
+    update = {k: v for k, v in item.items() if k not in ("id", "created_at", "updated_at")}
+    client.put(f"/api/tests/{item['id']}", json={**update, "prompt": "Consigne avec coquille"})
+
+    client.post("/api/results/export-public")
+    data = json.loads((settings.results_dir / "results.json").read_text(encoding="utf-8"))
+    assert data["items"][0]["prompt"] == "Consigne avec coquille"
+    assert data["items"][0]["answers"][0]["score"] == 2
