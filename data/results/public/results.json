@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-11-16T11:00:08+00:00",
+  "generated_at": "2026-11-16T11:00:45+00:00",
   "test_set": {
     "name": "kab-bench",
     "version": "1.0.2",
@@ -1778,15 +1778,15 @@
       "overall": {
         "n": 41,
         "n_graded": 41,
-        "human_mean": 0.88,
-        "human_pct": 29.3,
+        "human_mean": 0.85,
+        "human_pct": 28.5,
         "human_pct_ci95": [
-          17.9,
-          39.8
+          17.1,
+          39.0
         ],
         "score_distribution": {
-          "0": 23,
-          "1": 7,
+          "0": 24,
+          "1": 6,
           "2": 4,
           "3": 7
         },
@@ -1859,15 +1859,15 @@
         "translation_fr_kab": {
           "n": 25,
           "n_graded": 25,
-          "human_mean": 1.16,
-          "human_pct": 38.7,
+          "human_mean": 1.12,
+          "human_pct": 37.3,
           "human_pct_ci95": [
-            24.0,
-            56.0
+            22.7,
+            54.7
           ],
           "score_distribution": {
-            "0": 11,
-            "1": 5,
+            "0": 12,
+            "1": 4,
             "2": 3,
             "3": 6
           },
@@ -3547,12 +3547,12 @@
         "n_paired": 41,
         "n_paired_chrf": 34,
         "before_pct": 0.0,
-        "after_pct": 29.3,
-        "gain_points": 29.3,
+        "after_pct": 28.5,
+        "gain_points": 28.5,
         "gain_relative_pct": null,
         "gain_points_ci95": [
-          17.9,
-          39.8
+          17.1,
+          39.0
         ],
         "chrf_before": 9.2,
         "chrf_after": 28.2,
@@ -3563,12 +3563,12 @@
           "n_paired": 25,
           "n_paired_chrf": 25,
           "before_pct": 0.0,
-          "after_pct": 38.7,
-          "gain_points": 38.7,
+          "after_pct": 37.3,
+          "gain_points": 37.3,
           "gain_relative_pct": null,
           "gain_points_ci95": [
-            24.0,
-            56.0
+            22.7,
+            54.7
           ],
           "chrf_before": 8.5,
           "chrf_after": 28.4,
@@ -3969,7 +3969,7 @@
   ],
   "metric_agreement": {
     "n": 576,
-    "spearman_human_chrf": 0.713
+    "spearman_human_chrf": 0.712
   },
   "examples": [],
   "items": [
@@ -5334,7 +5334,7 @@
         {
           "model_key": "qwen3.5-4b-lora",
           "output": "Ttsewwiɣ lqahwa yal tanezzayt.",
-          "score": 1,
+          "score": 0,
           "chrf": 27.67
         },
         {
