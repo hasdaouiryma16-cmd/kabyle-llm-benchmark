@@ -37,6 +37,7 @@ Jeu de test destiné à évaluer la maîtrise du kabyle (taqbaylit, ISO 639-3 `k
 
 ## Versions
 
+- **1.0.3** : correction par l'autrice de la réponse de référence du test public `tr-fr-kab-0022` (« Tesɛa taddart meyya n yixxamen » au lieu de « meyyan ixxamen »). Les énoncés et les tests privés ne changent pas. Les notes humaines ne sont pas modifiées ; les scores chrF++ déjà publiés pour ce test ont été calculés avec l'ancienne référence.
 - **1.0.2** : correction par l'autrice d'une faute de frappe (une lettre manquante) dans l'énoncé de deux tests publics, `conv-0001` et `conv-0004`. Les réponses de référence et les tests privés ne changent pas. Tous les runs Qwen et Gemini antérieurs ont été faits sur la version 1.0.1 ; la consigne de notation pour ces deux tests était de ne pas pénaliser les modèles pour la faute de l'énoncé.
 - **1.0.1** : version utilisée pour les runs de la phase 1 et de la phase 2.
 
